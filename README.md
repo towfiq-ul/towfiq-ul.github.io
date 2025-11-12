@@ -1,7 +1,7 @@
 # Towfiqul Islam
 ## Senior Software Engineer
 
-📧 towfiq.106@gmail.com | 📱 +8801823923023 | 🌐 [Portfolio](https://laziestcoder.github.io) | 📍 Bangladesh
+📧 towfiq.106@gmail.com | 📱 +8801823923023 | 🌐 [Portfolio](https://towfiq-ul.github.io) | 📍 Bangladesh
 
 ---
 
