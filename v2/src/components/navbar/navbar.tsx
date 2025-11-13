@@ -16,7 +16,7 @@ export function Navbar({ onNavigateToContact }: NavbarProps = {}) {
       setIsScrolled(window.scrollY > 50);
 
       // Determine active section based on scroll position
-      const sections = ["hero", "overview", "skills", "experience", "education", "awards", "contact"];
+      const sections = ["hero", "overview", "skills", "experience", 'project', "education", "awards", "contact"];
       const scrollPosition = window.scrollY + window.innerHeight / 2;
       const documentHeight = document.documentElement.scrollHeight;
       const windowHeight = window.innerHeight;
@@ -35,9 +35,11 @@ export function Navbar({ onNavigateToContact }: NavbarProps = {}) {
         if (element) {
           const offsetTop = element.offsetTop;
           const offsetBottom = offsetTop + element.offsetHeight;
-
           if (scrollPosition >= offsetTop && scrollPosition < offsetBottom) {
             foundSection = sectionId;
+            if(foundSection === 'project') {
+                foundSection = 'experience';
+            }
             break;
           }
         }

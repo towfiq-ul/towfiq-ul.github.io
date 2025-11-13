@@ -10,8 +10,8 @@
 
 .navbar.scrolled {
   background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
@@ -120,7 +120,7 @@
 .navLink.active {
   background: transparent;
   color: var(--color-accent-11);
-  border-color: var(--color-accent-9);
+  /*border-color: var(--color-accent-9);*/
   position: relative;
 }
 
@@ -216,11 +216,12 @@
     }
   }
 
-  .navLinks.mobileOpen {
-    transform: translateY(0);
-    opacity: 1;
-    pointer-events: all;
-  }
+    .navLinks.mobileOpen {
+        transform: translateY(0);
+        opacity: 0.90;
+        pointer-events: all;
+        width: 50%;
+    }
 
   .navLink {
     width: 100%;

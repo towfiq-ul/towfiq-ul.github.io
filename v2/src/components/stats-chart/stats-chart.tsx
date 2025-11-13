@@ -11,15 +11,15 @@ import { calculateExperience } from "../../utils/date-utils";
 
 function calculateTechExperience() {
   const now = new Date();
-  
-  const javaStart = new Date(2019, 11); // October 2018
-  const phpStart = new Date(2015, 4); // September 2019
-  const cloudStart = new Date(2019, 11); // December 2019
-  const dbStart = new Date(2015, 4); // October 2018
-  const devopsStart = new Date(2019, 11); // December 2019
-  
+
+    const phpStart = new Date(2016, 4); // May 2016
+    const dbStart = new Date(2018, 4); // May 2018
+    const devopsStart = new Date(2019, 8); // September 2019
+    const javaStart = new Date(2019, 11); // December 2019
+    const cloudStart = new Date(2020, 3); // April 2020
+
   const javaExp = calculateExperience(javaStart, now);
-  const phpExp = calculateExperience(phpStart, now);
+  const phpExp = calculateExperience(phpStart, javaStart);
   const cloudExp = calculateExperience(cloudStart, now);
   const dbExp = calculateExperience(dbStart, now);
   const devopsExp = calculateExperience(devopsStart, now);

@@ -11,19 +11,18 @@ export const personalInfo = {
 };
 
 export const overview = {
-  summary: "Accomplished Senior Software Engineer with expertise in designing and delivering scalable enterprise solutions. Specialized in Java Spring Boot ecosystem, microservices architecture, and cloud technologies. Proven track record of leading high-impact projects for fintech and IoT domains, mentoring engineering teams, and driving technical excellence. Passionate about clean code, system design, and continuous learning.",
+  summary: "Accomplished " + personalInfo.title + " with expertise in designing and delivering scalable enterprise solutions. Specialized in Java Spring Boot ecosystem, microservices architecture, and cloud technologies. Proven track record of impactful contribution in high-impact projects for fintech and IoT domains, mentoring engineering teams, and driving technical excellence. Passionate about clean code, system design, and continuous learning.",
   highlights: [
-    "Led architecture design for bK-MFS payment platform handling millions of daily transactions",
+    "Impactful contribution in architecture design for bK-MFS financial platform handling millions of daily transactions",
     "Achieved 40% performance improvement through database optimization and caching strategies",
-    "Mentored 5+ junior engineers on best practices and technical decision-making",
+    "Mentored junior engineers on best practices and technical decision-making",
     "Contributed to open-source IoT platform ThingsBoard with merged pull requests",
-    "Migrated 0.5GB legacy data to blockchain with fault-tolerant transaction system",
     "Established CI/CD pipelines and coding standards improving team productivity by 30%",
   ],
   expertise: [
     "Backend Development: Java, Spring Boot, Spring Cloud, Microservices",
     "Cloud & DevOps: AWS, Docker, Kubernetes, Jenkins, CI/CD",
-    "Databases: MySQL, Oracle, PostgreSQL, DynamoDB, Cassandra, Redis",
+    "Databases: MySQL, Oracle, PostgreSQL, DynamoDB, Redis",
     "Message Queues: Kafka, RabbitMQ, AWS SNS/SQS",
     "Architecture: RESTful APIs, Event-Driven Systems, Domain-Driven Design",
     "IoT: MQTT, CoAP, SNMP, WebSocket, Real-time Data Processing",
@@ -32,7 +31,7 @@ export const overview = {
 
 
 export const skills = {
-  "Programming Languages": ["Java 7, 8, 11, 17", "PHP (Laravel)", "C/C++", "Python", "JavaScript (jQuery)", "Bash"],
+  "Programming Languages": ["Java 7, 8, 11, 17, 21, 24", "PHP (Laravel)", "C/C++", "Python", "JavaScript (jQuery)", "Bash"],
   "Frameworks & Libraries": [
     "Spring Boot",
     "Spring MVC",
@@ -83,8 +82,8 @@ export const workExperience = [
     description:
       "Exabyting, a software consultancy company works both on big scale government & private projects. Currently working at bK-MFS as Augmented Resource which is a Unicorn MFS Company in Bangladesh.",
     responsibilities: [
-      "Lead architecture design and implementation of microservices for bK-MFS's core payment platform handling millions of daily transactions",
-      "Mentor and guide team of 5+ junior engineers on best practices, code reviews, and technical decisions",
+      "Contributed in architecture design and implementation of microservices for bK-MFS's core payment platform handling millions of daily transactions",
+      "Mentor and guide team of junior engineers on best practices, code reviews, and technical decisions",
       "Design and implement scalable REST APIs using Spring Boot, ensuring high availability and performance optimization",
       "Collaborate with cross-functional teams including Product, QA, and DevOps to deliver features end-to-end",
       "Optimize database queries and implement caching strategies using Redis, improving response time by 40%",
@@ -167,127 +166,6 @@ export const workExperience = [
       "Taught C++ and Python Languages on the context of Programming Contest along with Basic Algorithms and Data Structures",
       "Arranged various offline and online contest for the students",
     ],
-  },
-];
-
-export const projects = [
-  {
-    name: "Tesenso Middleware - An IoT Based Project",
-    client: "Tesenso (via SELISE)",
-    technologies: [
-      "Java (Spring Boot)",
-      "PostgreSQL",
-      "Cassandra",
-      "TimescaleDB",
-      "Kafka",
-      "RabbitMQ",
-      "Redis",
-      "Angular",
-      "WebSocket",
-      "MQTT",
-      "CoAP",
-      "SNMP",
-    ],
-    description:
-      "An IoT project developed for a company that produces electrical vehicles and spaceships. Multi-tenant and multi-role-based platform handling millions of data points. Extended ThingsBoard with custom features, implemented MBUS decoder, designed custom rule nodes, and orchestrated Swisscom integration.",
-    highlights: [
-      "Handles millions of IoT data points",
-      "Multi-tenant architecture",
-      "Real-time WebSocket updates",
-      "Custom rule nodes for enhanced functionality",
-      "Optimized time-series data handling",
-    ],
-  },
-  {
-    name: "Financial Document Processing System",
-    client: "IMTF (via SELISE)",
-    technologies: ["Java (Apache Camel)", "Kafka", "Active MQ"],
-    description:
-      "A financial document processing system providing a proxy route system for a renowned financial organization, making their workflow more efficient.",
-    highlights: ["Automated document processing", "Proxy routing system", "High-volume transaction handling"],
-  },
-  {
-    name: "Urstamm - Swiss Date Wood with Digital Proof of Origin",
-    client: "Switzerland-based Digital Solution Company (via SELISE)",
-    technologies: ["Java 11", "Spring Boot", "Web3J", "PostgreSQL", "Spring Batch", "Blockchain"],
-    description:
-      "A project focusing on sustainable wood sourcing with blockchain integration for secure data storage. Achieved 20% performance enhancement and developed comprehensive batch process pipeline for legacy data migration.",
-    highlights: [
-      "Blockchain integration for data integrity",
-      "20% performance improvement",
-      "Supply chain visualization",
-      "Fault-tolerant transaction system",
-      "0.5GB legacy data migration to blockchain",
-    ],
-  },
-  {
-    name: "bK-MFS Agent App Middleware",
-    client: "bK-MFS Limited",
-    technologies: ["Java (Spring Boot)", "DynamoDB", "AWS", "Firebase"],
-    description:
-      "Middleware service supporting bK-MFS Agent App, one of the most popular financial apps for bK-MFS Agents. Implemented Pay Bill service integration.",
-    highlights: ["Core product of bK-MFS Limited", "High-availability architecture", "AWS cloud infrastructure"],
-  },
-  {
-    name: "Airtime Management System (AMS)",
-    client: "bK-MFS Limited",
-    technologies: ["Java (Spring Boot)", "Oracle", "JavaScript"],
-    description:
-      "Internal web application for automated airtime management. Features automated CSV/XLS/PDF generation, financial calculations, and email notifications.",
-    highlights: [
-      "Automated SFTP operations",
-      "Maker-checker approval flow",
-      "Async email notifications",
-      "Logback integration",
-    ],
-  },
-  {
-    name: "Saving-DPS",
-    client: "bK-MFS Limited",
-    technologies: ["Java (Spring Boot)", "MySQL", "AWS", "JavaScript"],
-    description: "Internal service for bK-MFS App allowing customers to open DPS (Deposit Pension Scheme) accounts.",
-    highlights: ["Customer-facing feature", "Integrated with bK-MFS App", "Secure financial transactions"],
-  },
-  {
-    name: "MULTIBANK",
-    client: "bK-MFS Limited",
-    technologies: ["Java (Spring Boot)", "Spring Integration", "MySQL", "jQuery"],
-    description:
-      "Internal web application for automated bank transactions. Features SFTP inbound/outbound, configurable email notifications, and maker-checker approval flow.",
-    highlights: [
-      "Automated SFTP operations",
-      "Multi-bank integration",
-      "Async email system",
-      "Financial report generation",
-    ],
-  },
-  {
-    name: "PREVENTO",
-    client: "Exabyting",
-    technologies: ["PHP (Laravel)", "MySQL", "AWS", "jQuery", "Google Analytics", "Firebase"],
-    description:
-      "Healthcare app creating personalized health care plans based on user information (gender, age, height, weight, diagnosed illnesses, risk factors). Includes doctor messaging feature.",
-    highlights: [
-      "Personalized healthcare plans",
-      "Doctor-patient messaging",
-      "Monthly task assignments",
-      "Medical partner integration",
-    ],
-  },
-  {
-    name: "HR ACR",
-    client: "Ministry of ICT",
-    technologies: ["PHP (Laravel)", "MySQL", "Docker", "jQuery"],
-    description: "Application for Ministry of ICT for generating Annual Confidential Report of employees.",
-    highlights: ["Government project", "Automated report generation", "Employee performance tracking"],
-  },
-  {
-    name: "IMS - Inventory Management System",
-    client: "Electoral Training Institute",
-    technologies: ["PHP (Laravel)", "MySQL", "Docker", "jQuery"],
-    description:
-      "Inventory management system for managing different types of products, stock, purchases, and tracking distributed items.",
-    highlights: ["Complete inventory tracking", "Purchase management", "Distribution tracking"],
   },
 ];
 

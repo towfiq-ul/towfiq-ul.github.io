@@ -1,17 +1,29 @@
-import { useState } from "react";
+import {useState} from "react";
 import styles from "./Home.module.css";
-import { Mail, Phone, Linkedin, Github, MapPin, Briefcase, Calendar, ExternalLink, TrendingUp, Award as AwardIcon, Sparkles } from "lucide-react";
-import { Badge } from "../components/ui/badge/badge";
-import { SectionHeader } from "../components/section-header";
-import { Navbar } from "../components/navbar/navbar";
-import { SkillModal } from "../components/skill-modal/skill-modal";
-import { StatsChart } from "../components/stats-chart/stats-chart";
-import { ExperienceChart } from "../components/experience-chart/experience-chart";
-import { ScrollToTop } from "../components/scroll-to-top/scroll-to-top";
-import { Particles } from "../components/particles/particles";
-import { WhatsAppChat } from "../components/whatsapp-chat/whatsapp-chat";
-import { personalInfo, overview, skills, workExperience, projects, education, awards, openSource } from "../data/portfolio-data";
-import { calculateTotalExperience, formatExperience } from "../utils/date-utils";
+import {
+    Award as AwardIcon,
+    Briefcase,
+    Calendar,
+    ExternalLink,
+    Github,
+    Linkedin,
+    Mail,
+    MapPin,
+    Phone,
+    TrendingUp
+} from "lucide-react";
+import {Badge} from "../components/ui/badge/badge";
+import {SectionHeader} from "../components/section-header";
+import {Navbar} from "../components/navbar/navbar";
+import {SkillModal} from "../components/skill-modal/skill-modal";
+import {StatsChart} from "../components/stats-chart/stats-chart";
+import {ExperienceChart} from "../components/experience-chart/experience-chart";
+import {ScrollToTop} from "../components/scroll-to-top/scroll-to-top";
+import {Particles} from "../components/particles/particles";
+import {WhatsAppChat} from "../components/whatsapp-chat/whatsapp-chat";
+import {awards, education, openSource, overview, personalInfo, skills, workExperience} from "../data/portfolio-data";
+import {calculateTotalExperience, formatExperience} from "../utils/date-utils";
+import {projects} from "../data/project-list";
 
 interface HomeProps {
   onNavigateToContact: () => void;
@@ -20,6 +32,8 @@ interface HomeProps {
 export default function Home({ onNavigateToContact }: HomeProps) {
   const [selectedSkill, setSelectedSkill] = useState<{ category: string; skills: string[] } | null>(null);
   const totalExp = calculateTotalExperience(workExperience);
+  const totalProjects = projects.length;
+  const totalTechnologies = 20;
 
   return (
     <div className={styles.page}>
@@ -53,11 +67,11 @@ export default function Home({ onNavigateToContact }: HomeProps) {
                 <div className={styles.statLabel}>Years Experience</div>
               </div>
               <div className={styles.statItem}>
-                <div className={styles.statNumber}>50+</div>
+                <div className={styles.statNumber}>{totalProjects}+</div>
                 <div className={styles.statLabel}>Projects Delivered</div>
               </div>
               <div className={styles.statItem}>
-                <div className={styles.statNumber}>15+</div>
+                <div className={styles.statNumber}>{totalTechnologies}+</div>
                 <div className={styles.statLabel}>Technologies</div>
               </div>
             </div>
@@ -138,7 +152,7 @@ export default function Home({ onNavigateToContact }: HomeProps) {
       <section id="skills" className={styles.section}>
         <SectionHeader
           title="Technical Skills"
-          subtitle="Click on any category to explore my expertise in detail"
+          // subtitle="Click on any category to explore my expertise in detail"
         />
         <div className={styles.skillsGrid}>
           {Object.entries(skills).map(([category, skillList], index) => (
@@ -163,7 +177,7 @@ export default function Home({ onNavigateToContact }: HomeProps) {
                     </Badge>
                   )}
                 </div>
-                <div className={styles.clickHint}>Click to view all →</div>
+                <div className={styles.clickHint}></div>
               </div>
             </div>
           ))}
@@ -219,7 +233,7 @@ export default function Home({ onNavigateToContact }: HomeProps) {
                       ))}
                     </ul>
                     {job.responsibilities.length > 3 && (
-                      <div className={styles.hoverHint}>Hover to see all responsibilities</div>
+                      <div className={styles.hoverHint}>see more</div>
                     )}
                   </div>
                 )}
@@ -230,7 +244,7 @@ export default function Home({ onNavigateToContact }: HomeProps) {
       </section>
 
       {/* Projects Section */}
-      <section className={styles.section}>
+      <section id="project" className={styles.section}>
         <SectionHeader
           title="Featured Projects"
           subtitle="Key projects showcasing expertise in enterprise software development"
@@ -369,8 +383,9 @@ export default function Home({ onNavigateToContact }: HomeProps) {
 
       {/* Footer */}
       <footer className={styles.footer}>
+          Crafted with passion and precision.
         <p className={styles.footerText}>
-          © {new Date().getFullYear()} {personalInfo.name}. Crafted with passion and precision.
+          © 2021-{new Date().getFullYear()} {personalInfo.name}. All rights reserved.
         </p>
       </footer>
 
