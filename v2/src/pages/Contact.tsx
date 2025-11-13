@@ -80,6 +80,7 @@ export function Contact({ onClose }: ContactProps) {
                 whatsapp: formData.whatsapp || "Not provided",
                 subject: formData.subject,
                 message: formData.message,
+                to_email: emailJsConfig.receiverEmail,
                 time: String(new Date()),
             },
             emailJsConfig.publicKey
