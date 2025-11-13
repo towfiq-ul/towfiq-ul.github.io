@@ -1,0 +1,5 @@
+- \`app/routes\` - Site routes.
+- \`app/components\` - React components.
+- \`app/hooks\` - React component hooks.
+- \`app/styles\` - Site-wide CSS files.
+- \`app/data\` - Fixture data files.

@@ -1,0 +1,131 @@
+.viewport {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  top: auto;
+  flex-direction: column;
+  z-index: 100;
+  display: flex;
+  max-height: 100vh;
+  width: 100%;
+  flex-direction: column-reverse;
+  padding: var(--space-6);
+  max-width: 420px;
+}
+
+.toast {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  overflow: hidden;
+  border-radius: var(--radius-2);
+  border: var(--border-size-1) solid var(--color-neutral-6);
+  background: var(--color-neutral-3);
+  color: var(--color-neutral-11);
+  padding: var(--space-4);
+  box-shadow: var(--shadow-4);
+  transition: all 150ms var(--ease);
+}
+
+.toast[data-state="open"] {
+  animation: slideIn 150ms var(--ease);
+}
+
+.toast[data-state="closed"] {
+  animation: fadeOut 100ms var(--ease);
+}
+
+.toast[data-swipe="move"] {
+  transform: translateX(var(--radix-toast-swipe-move-x));
+  transition: none;
+}
+
+.toast[data-swipe="cancel"] {
+  transform: translateX(0);
+}
+
+.toast[data-swipe="end"] {
+  animation: swipeOut 100ms var(--ease);
+}
+
+.destructive {
+  background: var(--color-error-9);
+  color: var(--color-error-contrast);
+}
+
+.close {
+  position: absolute;
+  right: var(--space-4);
+  top: var(--space-4);
+  aspect-ratio: 1;
+  width: 32px;
+  border-radius: var(--radius-2);
+  color: var(--color-neutral-11);
+  opacity: 0;
+  transition: opacity 150ms var(--ease);
+  background-color: transparent;
+}
+
+.close:hover {
+  color: var(--color-neutral-12);
+}
+
+.close:focus {
+  opacity: 1;
+  outline: none;
+  box-shadow: 0 0 0 2px var(--color-neutral-6);
+}
+
+.toast:hover .close {
+  opacity: 1;
+}
+
+.destructiveClose {
+  border: var(--border-size-1) solid var(--color-neutral-6);
+}
+
+.destructiveClose:focus {
+  box-shadow: 0 0 0 2px var(--color-error-9);
+}
+
+.title {
+  font-size: var(--font-size-2);
+  font-weight: 600;
+}
+
+.description {
+}
+
+.icon {
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes swipeOut {
+  from {
+    transform: translateX(var(--radix-toast-swipe-end-x));
+  }
+  to {
+    transform: translateX(100%);
+  }
+}

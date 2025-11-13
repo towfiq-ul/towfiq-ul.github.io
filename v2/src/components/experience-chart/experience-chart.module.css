@@ -1,0 +1,68 @@
+.chartContainer {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius-4);
+  padding: var(--space-6);
+  margin-top: var(--space-6);
+  animation: slideInUp 0.6s var(--ease-out) 0.2s both;
+}
+
+@media (prefers-color-scheme: dark) {
+  .chartContainer {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.chartGrid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.chartCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.chartTitle {
+  font: var(--font-subheading);
+  color: var(--color-accent-11);
+  margin: 0 0 var(--space-5) 0;
+  text-align: center;
+  font-weight: 700;
+}
+
+.customTooltip {
+  background: rgba(0, 0, 0, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-2);
+  padding: var(--space-3);
+  backdrop-filter: blur(10px);
+}
+
+.tooltipLabel {
+  color: var(--color-accent-11);
+  font-weight: 600;
+  margin: 0 0 var(--space-1) 0;
+}
+
+.tooltipValue {
+  color: white;
+  margin: 0;
+  font-size: 0.875rem;
+}

@@ -1,0 +1,7 @@
+.option[data-selected="true"] {
+  background: var(--color-accent-4);
+  color: var(--color-accent-12);
+}
+.option[data-selected="false"] {
+  cursor: pointer;
+}

@@ -1,0 +1,24 @@
+.textarea {
+  display: flex;
+  min-height: 96px;
+  border-radius: var(--radius-2);
+  border: var(--border-size-1) solid var(--color-neutral-7);
+  background: var(--color-neutral-1);
+  color: var(--color-neutral-11);
+  padding: var(--space-2) var(--space-3);
+}
+
+.textarea::placeholder {
+  color: var(--color-neutral-10);
+}
+
+.textarea:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 1px var(--color-accent-6);
+}
+
+.textarea:disabled {
+  cursor: not-allowed;
+  background-color: var(--color-neutral-2);
+  color: var(--color-neutral-9);
+}

@@ -1,0 +1,19 @@
+:where(html) {
+  --ease: cubic-bezier(0.25, 0, 0.3, 1);
+  --ease-in: cubic-bezier(0.7, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.5, 0, 0.5, 1);
+  --ease-bounce-out: cubic-bezier(0.5, 1.25, 0.75, 1.25);
+  --ease-bounce-in: cubic-bezier(0.5, -0.75, 0.75, 1);
+  --ease-bounce-in-out: cubic-bezier(0.5, -0.5, 0.1, 1.5);
+
+  --animation-fade-in: fade-in 0.5s var(--ease);
+  --animation-fade-out: fade-out 0.5s var(--ease);
+
+  --animation-scale-up: scale-up 0.5s var(--ease);
+  --animation-scale-down: scale-down 0.5s var(--ease);
+
+  --animation-spin: spin 2s linear infinite;
+  --animation-blink: blink 1s var(--ease-out) infinite;
+  --animation-bounce: bounce 2s var(--ease-bounce-in-out) infinite;
+}
