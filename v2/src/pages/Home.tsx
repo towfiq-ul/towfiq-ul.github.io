@@ -36,10 +36,10 @@ export default function Home({ onNavigateToContact }: HomeProps) {
         <div className={styles.heroContent}>
           <div className={styles.heroGlass}>
             <div className={styles.badgeContainer}>
-              <Badge variant="outline" className={styles.heroBadge}>
-                <Sparkles className={styles.badgeIcon} />
-                Available for Opportunities
-              </Badge>
+              {/*<Badge variant="outline" className={styles.heroBadge}>*/}
+              {/*  <Sparkles className={styles.badgeIcon} />*/}
+              {/*  Available for Opportunities*/}
+              {/*</Badge>*/}
             </div>
             <h1 className={styles.name}>{personalInfo.name}</h1>
             <p className={styles.jobTitle}>{personalInfo.title}</p>

@@ -13,7 +13,7 @@ export const personalInfo = {
 export const overview = {
   summary: "Accomplished Senior Software Engineer with expertise in designing and delivering scalable enterprise solutions. Specialized in Java Spring Boot ecosystem, microservices architecture, and cloud technologies. Proven track record of leading high-impact projects for fintech and IoT domains, mentoring engineering teams, and driving technical excellence. Passionate about clean code, system design, and continuous learning.",
   highlights: [
-    "Led architecture design for bKash payment platform handling millions of daily transactions",
+    "Led architecture design for bK-MFS payment platform handling millions of daily transactions",
     "Achieved 40% performance improvement through database optimization and caching strategies",
     "Mentored 5+ junior engineers on best practices and technical decision-making",
     "Contributed to open-source IoT platform ThingsBoard with merged pull requests",
@@ -81,9 +81,9 @@ export const workExperience = [
     type: "Full-time, Hybrid",
     period: "May 2024 - Current",
     description:
-      "Exabyting, a software consultancy company works both on big scale government & private projects. Currently working at bKash as Augmented Resource which is a Unicorn MFS Company in Bangladesh.",
+      "Exabyting, a software consultancy company works both on big scale government & private projects. Currently working at bK-MFS as Augmented Resource which is a Unicorn MFS Company in Bangladesh.",
     responsibilities: [
-      "Lead architecture design and implementation of microservices for bKash's core payment platform handling millions of daily transactions",
+      "Lead architecture design and implementation of microservices for bK-MFS's core payment platform handling millions of daily transactions",
       "Mentor and guide team of 5+ junior engineers on best practices, code reviews, and technical decisions",
       "Design and implement scalable REST APIs using Spring Boot, ensuring high availability and performance optimization",
       "Collaborate with cross-functional teams including Product, QA, and DevOps to deliver features end-to-end",
@@ -122,7 +122,7 @@ export const workExperience = [
       "Developed various Govt and Private Web Application and Services",
       "Planned development cycle and collected requirements for developing software",
       "Managed three members group and delivered task within deadline",
-      "Worked with bKash Limited as Partner Team with their Solution Engineering Team",
+      "Worked with bK-MFS Limited as Partner Team with their Solution Engineering Team",
       "Learned software design patterns, clean coding, communication and taking ownership",
       "Work in Agile/Scrum development process",
       "Review and Analyze Project requirement Document",
@@ -221,16 +221,16 @@ export const projects = [
     ],
   },
   {
-    name: "bKash Agent App Middleware",
-    client: "bKash Limited",
+    name: "bK-MFS Agent App Middleware",
+    client: "bK-MFS Limited",
     technologies: ["Java (Spring Boot)", "DynamoDB", "AWS", "Firebase"],
     description:
-      "Middleware service supporting bKash Agent App, one of the most popular financial apps for bKash Agents. Implemented Pay Bill service integration.",
-    highlights: ["Core product of bKash Limited", "High-availability architecture", "AWS cloud infrastructure"],
+      "Middleware service supporting bK-MFS Agent App, one of the most popular financial apps for bK-MFS Agents. Implemented Pay Bill service integration.",
+    highlights: ["Core product of bK-MFS Limited", "High-availability architecture", "AWS cloud infrastructure"],
   },
   {
     name: "Airtime Management System (AMS)",
-    client: "bKash Limited",
+    client: "bK-MFS Limited",
     technologies: ["Java (Spring Boot)", "Oracle", "JavaScript"],
     description:
       "Internal web application for automated airtime management. Features automated CSV/XLS/PDF generation, financial calculations, and email notifications.",
@@ -243,14 +243,14 @@ export const projects = [
   },
   {
     name: "Saving-DPS",
-    client: "bKash Limited",
+    client: "bK-MFS Limited",
     technologies: ["Java (Spring Boot)", "MySQL", "AWS", "JavaScript"],
-    description: "Internal service for bKash App allowing customers to open DPS (Deposit Pension Scheme) accounts.",
-    highlights: ["Customer-facing feature", "Integrated with bKash App", "Secure financial transactions"],
+    description: "Internal service for bK-MFS App allowing customers to open DPS (Deposit Pension Scheme) accounts.",
+    highlights: ["Customer-facing feature", "Integrated with bK-MFS App", "Secure financial transactions"],
   },
   {
     name: "MULTIBANK",
-    client: "bKash Limited",
+    client: "bK-MFS Limited",
     technologies: ["Java (Spring Boot)", "Spring Integration", "MySQL", "jQuery"],
     description:
       "Internal web application for automated bank transactions. Features SFTP inbound/outbound, configurable email notifications, and maker-checker approval flow.",
