@@ -45,7 +45,8 @@ jobs:
         working-directory: ./${{ env.APP_VERSION }}
         run: npm ci
 
-      - name: Build Frontend with Secrets
+      - name: Build project
+        working-directory: ./${{ env.APP_VERSION }}
         run: npm run build
         env:
           # This is the 'env' block.
@@ -55,10 +56,6 @@ jobs:
           VITE_EMAILJS_SERVICE_ID: ${{ secrets.VITE_EMAILJS_SERVICE_ID }}
           VITE_EMAILJS_TEMPLATE_ID: ${{ secrets.VITE_EMAILJS_TEMPLATE_ID }}
           VITE_RECEIVER_EMAIL: ${{ secrets.VITE_RECEIVER_EMAIL }}
-
-      - name: Build project
-        working-directory: ./${{ env.APP_VERSION }}
-        run: npm run build
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
