@@ -1,230 +1,232 @@
 .navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-  padding: var(--space-4) 0;
-  transition: all 0.3s var(--ease-out);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    padding: var(--space-4) 0;
+    transition: all 0.3s var(--ease-out);
 }
 
 .navbar.scrolled {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
 @media (prefers-color-scheme: dark) {
-  .navbar.scrolled {
-    background: rgba(0, 0, 0, 0.3);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  }
+    .navbar.scrolled {
+        background: rgba(0, 0, 0, 0.3);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
 }
 
 .navContainer {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 var(--space-6);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--space-6);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .logo {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 2px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  color: inherit;
-  transition: transform 0.2s var(--ease);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    color: inherit;
+    transition: transform 0.2s var(--ease);
 }
 
 .logo:hover {
-  transform: scale(1.05);
+    transform: scale(1.05);
 }
 
 .logoText {
-  font-size: var(--font-size-3);
-  font-weight: 700;
-  color: var(--color-accent-11);
-  letter-spacing: -0.02em;
+    font-size: var(--font-size-3);
+    font-weight: 700;
+    color: var(--color-accent-11);
+    letter-spacing: -0.02em;
 }
 
 .logoSubtext {
-  font-size: var(--font-size-0);
-  color: var(--color-neutral-11);
-  font-weight: 500;
+    font-size: var(--font-size-0);
+    color: var(--color-neutral-11);
+    font-weight: 500;
 }
 
 .navLinks {
-  display: flex;
-  gap: var(--space-2);
-  align-items: center;
+    display: flex;
+    gap: var(--space-2);
+    align-items: center;
 }
 
 .navLink {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-2) var(--space-4);
-  border-radius: var(--radius-3);
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: var(--color-neutral-12);
-  font-size: var(--font-size-1);
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s var(--ease);
-  position: relative;
-  overflow: hidden;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-3);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--color-neutral-12);
+    font-size: var(--font-size-1);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s var(--ease);
+    position: relative;
+    overflow: hidden;
 }
 
 @media (prefers-color-scheme: dark) {
-  .navLink {
-    background: rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-  }
+    .navLink {
+        background: rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
 }
 
 .navLink::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  transition: left 0.5s var(--ease);
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s var(--ease);
 }
 
 .navLink:hover::before {
-  left: 100%;
+    left: 100%;
 }
 
 .navLink:hover {
-  background: var(--color-accent-9);
-  color: var(--color-accent-contrast);
-  border-color: var(--color-accent-9);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    background: var(--color-accent-9);
+    color: var(--color-accent-contrast);
+    border-color: var(--color-accent-9);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .navLink.active {
-  background: transparent;
-  color: var(--color-accent-11);
-  /*border-color: var(--color-accent-9);*/
-  position: relative;
+    background: transparent;
+    color: var(--color-accent-11);
+    /*border-color: var(--color-accent-9);*/
+    position: relative;
 }
 
 .navLink.active::after {
-  content: "";
-  position: absolute;
-  bottom: -2px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80%;
-  height: 3px;
-  background: linear-gradient(
-    90deg,
-    var(--color-accent-11),
-    var(--color-accent-9),
-    var(--color-accent-7),
-    var(--color-accent-9),
-    var(--color-accent-11)
-  );
-  background-size: 200% 100%;
-  animation: gradientFlow 4s ease-in-out infinite;
-  border-radius: var(--radius-2);
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 3px;
+    background: linear-gradient(
+            90deg,
+            var(--color-accent-11),
+            var(--color-accent-9),
+            var(--color-accent-7),
+            var(--color-accent-9),
+            var(--color-accent-11)
+    );
+    background-size: 200% 100%;
+    animation: gradientFlow 4s ease-in-out infinite;
+    border-radius: var(--radius-2);
 }
 
 @keyframes gradientFlow {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
 }
 
 .navIcon {
-  width: 18px;
-  height: 18px;
+    width: 18px;
+    height: 18px;
 }
 
 .mobileMenuToggle {
-  display: none;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: var(--space-2);
-  border-radius: var(--radius-2);
-  color: var(--color-neutral-12);
-  cursor: pointer;
-  transition: all 0.3s var(--ease);
+    display: none;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: var(--space-2);
+    border-radius: var(--radius-2);
+    color: var(--color-neutral-12);
+    cursor: pointer;
+    transition: all 0.3s var(--ease);
 }
 
 @media (prefers-color-scheme: dark) {
-  .mobileMenuToggle {
-    background: rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-  }
+    .mobileMenuToggle {
+        background: rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
 }
 
 .mobileMenuToggle:hover {
-  background: var(--color-accent-9);
-  color: var(--color-accent-contrast);
-  border-color: var(--color-accent-9);
+    background: var(--color-accent-9);
+    color: var(--color-accent-contrast);
+    border-color: var(--color-accent-9);
 }
 
 @media (max-width: 768px) {
-  .mobileMenuToggle {
-    display: block;
-  }
-
-  .navLinks {
-    position: fixed;
-    top: 80px;
-    left: 0;
-    right: 0;
-    flex-direction: column;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    padding: var(--space-5);
-    gap: var(--space-3);
-    transform: translateY(-100%);
-    opacity: 0;
-    pointer-events: none;
-    transition: all 0.3s var(--ease-out);
-  }
-
-  @media (prefers-color-scheme: dark) {
-    .navLinks {
-      background: rgba(0, 0, 0, 0.95);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    .mobileMenuToggle {
+        display: block;
     }
-  }
 
-    .navLinks.mobileOpen {
-        transform: translateY(0);
+    .navLinks {
+        width: 50%;
+        position: absolute;
+        justify-content: flex-end;
+        position: fixed;
+        top: 70px;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        padding: var(--space-5);
+        gap: var(--space-3);
+        transform: translateY(100%)translateX(100%);
+        opacity: 0;
+        pointer-events: none;
+        transition: all 0.3s var(--ease-out);
+    }
+
+    @media (prefers-color-scheme: dark) {
+        .navLinks {
+            background: rgba(0, 0, 0, 0.95);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    }
+
+    .mobileOpen {
+        transform: translateY(0)translateX(100%);
         opacity: 0.90;
         pointer-events: all;
-        width: 50%;
     }
 
-  .navLink {
-    width: 100%;
-    justify-content: center;
-  }
+    .navLink {
+        width: 100%;
+        justify-content: flex-start;
+    }
 }
