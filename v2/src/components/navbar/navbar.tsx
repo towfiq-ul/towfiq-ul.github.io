@@ -67,6 +67,7 @@ export function Navbar({onNavigateToContact}: NavbarProps = {}) {
         {id: "experience", label: "Experience", icon: Briefcase},
         {id: "education", label: "Education", icon: GraduationCap},
         {id: "awards", label: "Awards", icon: Award},
+        {id: "contact", label: "Contact", icon: Mail},
     ];
 
     const handleContactClick = () => {
@@ -108,13 +109,13 @@ export function Navbar({onNavigateToContact}: NavbarProps = {}) {
                             </button>
                         );
                     })}
-                    <button
-                        onClick={handleContactClick}
-                        className={`${styles.navLink} ${activeSection === "contact" ? styles.active : ""}`}
-                    >
-                        <Mail className={styles.navIcon}/>
-                        <span>Contact</span>
-                    </button>
+                    {/*<button*/}
+                    {/*    onClick={handleContactClick}*/}
+                    {/*    className={`${styles.navLink} ${activeSection === "contact" ? styles.active : ""}`}*/}
+                    {/*>*/}
+                    {/*    <Mail className={styles.navIcon}/>*/}
+                    {/*    <span>Contact</span>*/}
+                    {/*</button>*/}
                 </div>
 
                 <button

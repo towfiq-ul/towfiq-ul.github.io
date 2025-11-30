@@ -233,7 +233,7 @@ export function Contact({ onClose }: ContactProps) {
               ) : (
                 <Send className={styles.buttonIcon} />
               )}
-              {isSubmitting ? "Sending..." : "Send Message"}
+              {isSubmitting ? "Sending..." : "Send Email"}
             </Button>
           </form>
 
