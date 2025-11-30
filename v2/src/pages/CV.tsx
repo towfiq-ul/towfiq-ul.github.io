@@ -1,4 +1,4 @@
-import { Download } from "lucide-react";
+import {ArrowLeft, Download} from "lucide-react";
 import { useRef } from "react";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
@@ -15,6 +15,7 @@ import {
 } from "../data/portfolio-data";
 import styles from "./CV.module.css";
 import {projects} from "../data/project-list";
+import {Particles} from "../components/particles/particles";
 
 interface CVProps {
   onClose?: () => void;
@@ -77,7 +78,12 @@ export function CV({ onClose }: CVProps) {
 
   return (
     <div className={styles.cvPage}>
-      <Navbar onNavigateToContact={onClose} />
+        <Particles />
+
+        <Button onClick={onClose} className={styles.backButton} aria-label="Go back">
+            <ArrowLeft />
+            <span>Back to Portfolio</span>
+        </Button>
       
       <Button className={styles.downloadButton} onClick={handleDownloadCV}>
         <Download />

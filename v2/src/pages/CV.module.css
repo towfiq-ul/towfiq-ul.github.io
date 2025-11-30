@@ -12,6 +12,15 @@
     align-items: center;
 }
 
+.backButton {
+    position: fixed;
+    top: calc(30px + var(--space-4));
+    right: var(--space-6);
+    z-index: 100;
+    gap: var(--space-2);
+    box-shadow: var(--shadow-3);
+}
+
 .downloadButton {
     position: fixed;
     top: calc(70px + var(--space-4));
@@ -328,6 +337,13 @@
 
 /* Responsive */
 @media (max-width: 768px) {
+    .backButton {
+        top: calc(30px + var(--space-3));
+        right: var(--space-4);
+        font-size: 0.875rem;
+        padding: var(--space-2) var(--space-3);
+    }
+
     .downloadButton {
         top: calc(60px + var(--space-3));
         right: var(--space-4);

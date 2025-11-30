@@ -1,13 +1,14 @@
-import {useState, useEffect} from "react";
-import {Menu, X, Home, FileText, Briefcase, Code, Award, GraduationCap, Mail, FileUser} from "lucide-react";
+import {useEffect, useState} from "react";
+import {Award, Briefcase, Code, FileText, GraduationCap, Home, Mail, Menu, X} from "lucide-react";
 import styles from "./navbar.module.css";
 
 interface NavbarProps {
     onNavigateToContact?: () => void;
     onNavigateToCV?: () => void;
+    currentPage?: string;
 }
 
-export function Navbar({onNavigateToContact, onNavigateToCV}: NavbarProps = {}) {
+export function Navbar({onNavigateToContact, onNavigateToCV, currentPage}: NavbarProps = {}) {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [activeSection, setActiveSection] = useState("hero");
@@ -17,15 +18,15 @@ export function Navbar({onNavigateToContact, onNavigateToCV}: NavbarProps = {}) 
             setIsScrolled(window.scrollY > 50);
 
             // Determine active section based on scroll position
-            const sections = ["hero", "overview", "skills", "experience", 'project', "education", "awards", "contact"];
+            const sections = ["hero", "overview", "skills", "experience", 'project', "education", "awards", "contact", "cv"];
             const scrollPosition = window.scrollY + window.innerHeight / 2;
             const documentHeight = document.documentElement.scrollHeight;
             const windowHeight = window.innerHeight;
             const scrollBottom = window.scrollY + windowHeight;
 
             // Check if we're near the bottom of the page (within 200px)
-            if (documentHeight - scrollBottom < 200) {
-                setActiveSection("contact");
+            if (currentPage === 'cv') {
+                setActiveSection("cv");
                 return;
             }
 
@@ -69,6 +70,7 @@ export function Navbar({onNavigateToContact, onNavigateToCV}: NavbarProps = {}) 
         {id: "education", label: "Education", icon: GraduationCap},
         {id: "awards", label: "Awards", icon: Award},
         {id: "contact", label: "Contact", icon: Mail},
+        {id: "cv", label: "CV", icon: FileText},
     ];
 
     const handleContactClick = () => {
@@ -90,7 +92,7 @@ export function Navbar({onNavigateToContact, onNavigateToCV}: NavbarProps = {}) 
     return (
         <nav className={`${styles.navbar} ${isScrolled ? styles.scrolled : ""}`}>
             <div className={styles.navContainer}>
-                {isScrolled || onNavigateToCV ? (
+                {isScrolled ? (
                     <button className={styles.logo} onClick={() => scrollToSection("hero")}>
                         <span className={styles.logoText}>Towfiqul Islam</span>
                         <span className={styles.logoSubtext}>Senior Software Engineer</span>
@@ -100,21 +102,26 @@ export function Navbar({onNavigateToContact, onNavigateToCV}: NavbarProps = {}) 
                         <span className={styles.logoText}></span>
                         <span className={styles.logoSubtext}></span>
                     </button>
-                )
-                }
+                )}
 
                 <div className={`${styles.navLinks} ${isMobileMenuOpen ? styles.mobileOpen : ""}`}>
                     {navItems.map((item) => {
                         const Icon = item.icon;
                         return (
-                            <button
-                                key={item.id}
-                                onClick={() => scrollToSection(item.id)}
-                                className={`${styles.navLink} ${activeSection === item.id ? styles.active : ""}`}
-                            >
-                                <Icon className={styles.navIcon}/>
-                                <span>{item.label}</span>
-                            </button>
+                            item.id === 'cv' ?
+                                (<button onClick={handleCVClick}
+                                         className={`${styles.navLink} ${activeSection === "cv" ? styles.active : ""}`}>
+                                    <FileText className={styles.navIcon}/>
+                                    <span>CV</span>
+                                </button>) :
+                                (<button
+                                    key={item.id}
+                                    onClick={() => scrollToSection(item.id)}
+                                    className={`${styles.navLink} ${activeSection === item.id ? styles.active : ""}`}
+                                >
+                                    <Icon className={styles.navIcon}/>
+                                    <span>{item.label}</span>
+                                </button>)
                         );
                     })}
                     {/*<button*/}
@@ -124,12 +131,6 @@ export function Navbar({onNavigateToContact, onNavigateToCV}: NavbarProps = {}) 
                     {/*    <Mail className={styles.navIcon}/>*/}
                     {/*    <span>Contact</span>*/}
                     {/*</button>*/}
-                    {onNavigateToCV && (
-                        <button onClick={handleCVClick} className={styles.navLink}>
-                            <FileUser className={styles.navIcon}/>
-                            <span>CV</span>
-                        </button>
-                    )}
                 </div>
 
                 <button

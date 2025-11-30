@@ -40,7 +40,7 @@ export default function Home({onNavigateToContact, onNavigateToCV}: HomeProps) {
     return (
         <div className={styles.page}>
             <Particles/>
-            <Navbar onNavigateToContact={onNavigateToContact} onNavigateToCV={onNavigateToCV}/>
+            <Navbar onNavigateToContact={onNavigateToContact} onNavigateToCV={onNavigateToCV} currentPage={'home'}/>
 
             {/* Hero Section */}
             <section id="hero" className={styles.hero}>
