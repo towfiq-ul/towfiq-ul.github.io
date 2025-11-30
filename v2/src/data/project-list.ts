@@ -1,6 +1,7 @@
 export const projects = [
     {
-        name: "Tesenso Middleware - An IoT Based Project",
+        name: "Tesenso MW",
+        subname: "An IoT Based Project",
         client: "Tesenso (via SELISE)",
         technologies: [
             "Java (Spring Boot)",
@@ -27,7 +28,8 @@ export const projects = [
         ],
     },
     {
-        name: "Financial Document Processing System",
+        name: "FDPS",
+        subname: "Financial Document Processing System",
         client: "IMTF (via SELISE)",
         technologies: ["Java (Apache Camel)", "Kafka", "Active MQ"],
         description:
@@ -35,7 +37,8 @@ export const projects = [
         highlights: ["Automated document processing", "Proxy routing system", "High-volume transaction handling"],
     },
     {
-        name: "Urstamm - Swiss Date Wood with Digital Proof of Origin",
+        name: "Urstamm",
+        subname: "Swiss Date Wood with Digital Proof of Origin",
         client: "Switzerland-based Digital Solution Company (via SELISE)",
         technologies: ["Java 11", "Spring Boot", "Web3J", "PostgreSQL", "Spring Batch", "Blockchain"],
         description:
@@ -49,7 +52,8 @@ export const projects = [
         ],
     },
     {
-        name: "bK-MFS Agent App Middleware",
+        name: "Agent App MW",
+        subname: "bK-MFS Agent App Middleware",
         client: "bK-MFS Limited",
         technologies: ["Java (Spring Boot)", "DynamoDB", "AWS", "Firebase"],
         description:
@@ -57,7 +61,8 @@ export const projects = [
         highlights: ["Core product of bK-MFS Limited", "High-availability architecture", "AWS cloud infrastructure"],
     },
     {
-        name: "Airtime Management System (AMS)",
+        name: "AMS",
+        subname: "Airtime Management System (AMS)",
         client: "bK-MFS Limited",
         technologies: ["Java (Spring Boot)", "Oracle", "JavaScript"],
         description:
@@ -71,6 +76,7 @@ export const projects = [
     },
     {
         name: "Saving-DPS",
+        subname: "Saving-DPS",
         client: "bK-MFS Limited",
         technologies: ["Java (Spring Boot)", "MySQL", "AWS", "JavaScript"],
         description: "Internal service for bK-MFS App allowing customers to open DPS (Deposit Pension Scheme) accounts.",
@@ -78,6 +84,7 @@ export const projects = [
     },
     {
         name: "MULTIBANK",
+        subname: "MULTIBANK",
         client: "bK-MFS Limited",
         technologies: ["Java (Spring Boot)", "Spring Integration", "MySQL", "jQuery"],
         description:
@@ -91,6 +98,7 @@ export const projects = [
     },
     {
         name: "PREVENTO",
+        subname: "PREVENTO",
         client: "Exabyting",
         technologies: ["PHP (Laravel)", "MySQL", "AWS", "jQuery", "Google Analytics", "Firebase"],
         description:
@@ -104,6 +112,7 @@ export const projects = [
     },
     {
         name: "HR ACR",
+        subname: "HR ACR",
         client: "Ministry of ICT",
         technologies: ["PHP (Laravel)", "MySQL", "Docker", "jQuery"],
         description: "Application for Ministry of ICT for generating Annual Confidential Report of employees.",
@@ -111,6 +120,7 @@ export const projects = [
     },
     {
         name: "IMS - Inventory Management System",
+        subname: "IMS - Inventory Management System",
         client: "Electoral Training Institute",
         technologies: ["PHP (Laravel)", "MySQL", "Docker", "jQuery"],
         description:

@@ -1,0 +1,402 @@
+:root {
+    --font-body: 'Ubuntu Mono';
+    --font-heading: 'Ubuntu Mono';
+    --font-subheading: 'Ubuntu Mono';
+}
+.cvPage {
+    min-height: 100vh;
+    background: var(--color-neutral-4);
+    padding: calc(70px + var(--space-6)) var(--space-6) var(--space-9);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.downloadButton {
+    position: fixed;
+    top: calc(70px + var(--space-4));
+    right: var(--space-6);
+    z-index: 100;
+    gap: var(--space-2);
+    box-shadow: var(--shadow-3);
+}
+
+.downloadButton svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* A4 dimensions: 210mm x 297mm */
+.cvContent {
+    width: 210mm;
+    height: 297mm;
+    background: white;
+    padding: 6mm;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    color: #000;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 0 0 3mm 0;
+    border-bottom: 2px solid #000;
+    margin-bottom: 3mm;
+}
+
+.headerLeft {
+    flex: 1;
+}
+
+.contactInfo {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    line-height: 1.4;
+}
+
+.contactInfo p {
+    margin: 0 0 0.5mm 0;
+}
+
+.contactInfo strong {
+    font-weight: 600;
+}
+
+.headerRight {
+    flex: 1;
+    text-align: right;
+}
+
+.name {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0 0 1mm 0;
+    letter-spacing: 0.3px;
+    color: #111;
+}
+
+.title {
+    font-family: var(--font-subheading);
+    font-size: 1.125rem;
+    margin: 0;
+    font-weight: 500;
+    color: #000;
+}
+
+/* Body Layout - Two Columns */
+.body {
+    display: grid;
+    grid-template-columns: 75mm 1fr;
+    gap: 4mm;
+    flex: 1;
+    overflow: hidden;
+}
+
+.sidebar {
+    border-right: 1px solid #000;
+    padding-right: 4mm;
+    display: flex;
+    flex-direction: column;
+    gap: 3mm;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    gap: 3mm;
+}
+
+/* Section Styling */
+.section {
+    margin: 0;
+}
+
+.sectionTitle {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 700;
+    color: #000;
+    margin: 0 0 2mm 0;
+    padding-bottom: 1mm;
+    border-bottom: 1.5px solid #000;
+    text-transform: uppercase;
+    letter-spacing: 0.2px;
+}
+
+.summary {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    line-height: 1.4;
+    color: #000;
+    text-align: justify;
+    margin: 0;
+}
+
+/* Skills */
+.skillsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1mm;
+}
+
+.skillItem {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    margin: 0;
+    line-height: 1.3;
+    color: #000;
+}
+
+.skillItem strong {
+    font-weight: 600;
+}
+
+/* Education */
+.educationItem {
+    margin: 0 0 2mm 0;
+}
+
+.educationItem:last-child {
+    margin-bottom: 0;
+}
+
+.degree {
+    font-family: var(--font-subheading);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #000;
+    margin: 0 0 0.5mm 0;
+    line-height: 1.3;
+}
+
+.institution {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    color: #333;
+    margin: 0 0 0.5mm 0;
+    line-height: 1.2;
+}
+
+.period {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    color: #666;
+    font-style: italic;
+    margin: 0;
+}
+
+/* Awards */
+.awardItem {
+    margin: 0 0 1.5mm 0;
+}
+
+.awardItem:last-child {
+    margin-bottom: 0;
+}
+
+.awardTitle {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #000;
+    margin: 0;
+    line-height: 1.3;
+}
+
+/* Open Source */
+.openSourceItem {
+    margin: 0 0 1.5mm 0;
+}
+
+.openSourceItem:last-child {
+    margin-bottom: 0;
+}
+
+.osProject {
+    font-family: var(--font-subheading);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #000;
+    margin: 0;
+}
+
+/* Work Experience */
+.experienceItem {
+    margin: 0 0 3mm 0;
+}
+
+.experienceItem:last-child {
+    margin-bottom: 0;
+}
+
+.experienceHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 2mm;
+    margin-bottom: 0.5mm;
+}
+
+.jobTitle {
+    font-family: var(--font-subheading);
+    font-size: 1rem;
+    font-weight: 700;
+    color: #000;
+    margin: 0;
+    flex: 1;
+}
+
+.company {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    color: #333;
+    margin: 0 0 1.5mm 0;
+}
+
+.responsibilities {
+    list-style: disc;
+    padding-left: 4mm;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8mm;
+}
+
+.responsibilities li {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    line-height: 1.3;
+    color: #000;
+}
+
+/* Projects */
+.projectItem {
+    margin: 0 0 1.5mm 0;
+}
+
+.projectItem:last-child {
+    margin-bottom: 0;
+}
+
+.projectHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 2mm;
+}
+
+.projectName {
+    font-family: var(--font-subheading);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #000;
+    margin: 0;
+}
+
+.projectTech {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    color: #666;
+    margin: 0;
+    flex-shrink: 0;
+    text-align: right;
+}
+
+/* Print styles */
+@media print {
+    .cvPage {
+        background: white;
+        padding: 0;
+    }
+
+    .downloadButton {
+        display: none !important;
+    }
+
+    .cvContent {
+        box-shadow: none;
+        page-break-after: auto;
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .downloadButton {
+        top: calc(60px + var(--space-3));
+        right: var(--space-4);
+        font-size: 0.875rem;
+        padding: var(--space-2) var(--space-3);
+    }
+
+    .cvPage {
+        padding: calc(70px + var(--space-4)) var(--space-4) var(--space-6);
+    }
+
+    .cvContent {
+        width: 100%;
+        height: auto;
+        padding: 20px 15px;
+    }
+
+    .header {
+        flex-direction: column-reverse;
+        gap: 15px;
+    }
+
+    .headerLeft,
+    .headerRight {
+        width: 100%;
+    }
+
+    .headerRight {
+        text-align: left;
+    }
+
+    .name {
+        font-size: 1.5rem;
+    }
+
+    .title {
+        font-size: 1rem;
+    }
+
+    .contactInfo {
+        font-size: 0.7rem;
+    }
+
+    .body {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .sidebar {
+        border-right: none;
+        border-bottom: 1px solid #000;
+        padding-right: 0;
+        padding-bottom: 15px;
+    }
+
+    .sectionTitle {
+        font-size: 1rem;
+    }
+
+    .experienceHeader {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+
+    .contactCardIcon {
+        width: 32px;
+        height: 32px;
+        position: relative;
+        z-index: 1;
+    }
+}

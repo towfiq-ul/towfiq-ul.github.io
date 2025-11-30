@@ -10,6 +10,7 @@ import {
     Mail,
     MapPin,
     Phone,
+    // Sparkles,
     TrendingUp
 } from "lucide-react";
 import {Badge} from "../components/ui/badge/badge";
@@ -27,9 +28,10 @@ import {projects} from "../data/project-list";
 
 interface HomeProps {
     onNavigateToContact: () => void;
+    onNavigateToCV?: () => void;
 }
 
-export default function Home({onNavigateToContact}: HomeProps) {
+export default function Home({onNavigateToContact, onNavigateToCV}: HomeProps) {
     const [selectedSkill, setSelectedSkill] = useState<{ category: string; skills: string[] } | null>(null);
     const totalExp = calculateTotalExperience(workExperience);
     const totalProjects = projects.length;
@@ -38,7 +40,7 @@ export default function Home({onNavigateToContact}: HomeProps) {
     return (
         <div className={styles.page}>
             <Particles/>
-            <Navbar onNavigateToContact={onNavigateToContact}/>
+            <Navbar onNavigateToContact={onNavigateToContact} onNavigateToCV={onNavigateToCV}/>
 
             {/* Hero Section */}
             <section id="hero" className={styles.hero}>

@@ -5,7 +5,7 @@ export const personalInfo = {
     phone: "+8801823923023",
     whatsapp: "+8801823923023",
     portfolio: "towfiq-ul.github.com",
-    linkedin: "https://www.linkedin.com/in/towfiq106/",
+    linkedin: "https://www.linkedin.com/in/towfiq106",
     stackoverflow: "https://stackoverflow.com/users/6688908/towfiqul-islam",
     github: "https://github.com/towfiq-ul",
 };

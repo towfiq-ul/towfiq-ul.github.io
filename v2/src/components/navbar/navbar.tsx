@@ -1,12 +1,13 @@
-import {useEffect, useState} from "react";
-import {Award, Briefcase, Code, FileText, GraduationCap, Home, Mail, Menu, X} from "lucide-react";
+import {useState, useEffect} from "react";
+import {Menu, X, Home, FileText, Briefcase, Code, Award, GraduationCap, Mail, FileUser} from "lucide-react";
 import styles from "./navbar.module.css";
 
 interface NavbarProps {
     onNavigateToContact?: () => void;
+    onNavigateToCV?: () => void;
 }
 
-export function Navbar({onNavigateToContact}: NavbarProps = {}) {
+export function Navbar({onNavigateToContact, onNavigateToCV}: NavbarProps = {}) {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [activeSection, setActiveSection] = useState("hero");
@@ -79,10 +80,17 @@ export function Navbar({onNavigateToContact}: NavbarProps = {}) {
         }
     };
 
+    const handleCVClick = () => {
+        if (onNavigateToCV) {
+            onNavigateToCV();
+            setIsMobileMenuOpen(false);
+        }
+    };
+
     return (
         <nav className={`${styles.navbar} ${isScrolled ? styles.scrolled : ""}`}>
             <div className={styles.navContainer}>
-                {isScrolled ? (
+                {isScrolled || onNavigateToCV ? (
                     <button className={styles.logo} onClick={() => scrollToSection("hero")}>
                         <span className={styles.logoText}>Towfiqul Islam</span>
                         <span className={styles.logoSubtext}>Senior Software Engineer</span>
@@ -116,6 +124,12 @@ export function Navbar({onNavigateToContact}: NavbarProps = {}) {
                     {/*    <Mail className={styles.navIcon}/>*/}
                     {/*    <span>Contact</span>*/}
                     {/*</button>*/}
+                    {onNavigateToCV && (
+                        <button onClick={handleCVClick} className={styles.navLink}>
+                            <FileUser className={styles.navIcon}/>
+                            <span>CV</span>
+                        </button>
+                    )}
                 </div>
 
                 <button
