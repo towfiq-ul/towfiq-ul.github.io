@@ -24,6 +24,17 @@ interface CVProps {
 export function CV({ onClose }: CVProps) {
   const cvRef = useRef<HTMLDivElement>(null);
 
+  const handleDownloadCVFromStorage = async () => {
+    const response = await fetch('/Towfiqul_Islam.pdf');
+    const blob = await response.blob();
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'Towfiqul_Islam.pdf';
+    link.click();
+    URL.revokeObjectURL(url);
+  };
+
   const handleDownloadCV = async () => {
     if (!cvRef.current) return;
 
@@ -85,7 +96,7 @@ export function CV({ onClose }: CVProps) {
             <span>Back to Portfolio</span>
         </Button>
       
-      <Button className={styles.downloadButton} onClick={handleDownloadCV}>
+      <Button className={styles.downloadButton} onClick={handleDownloadCVFromStorage}>
         <Download />
         Download CV
       </Button>
