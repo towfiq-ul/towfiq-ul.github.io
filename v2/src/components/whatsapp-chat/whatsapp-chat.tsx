@@ -1,5 +1,5 @@
 import { MessageCircle, X } from "lucide-react";
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import styles from "./whatsapp-chat.module.css";
 
 interface WhatsAppChatProps {
@@ -9,6 +9,18 @@ interface WhatsAppChatProps {
 
 export function WhatsAppChat({ phoneNumber, message = "Hello! I'd like to connect with you." }: WhatsAppChatProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+
+    useEffect(() => {
+        const toggleVisibility = () => {
+            if (window.scrollY > 7500) {
+                setIsVisible(true);
+            }
+        };
+
+        window.addEventListener("scroll", toggleVisibility);
+        return () => window.removeEventListener("scroll", toggleVisibility);
+    }, []);
 
   const handleSendMessage = () => {
     const encodedMessage = encodeURIComponent(message);
@@ -55,7 +67,7 @@ export function WhatsAppChat({ phoneNumber, message = "Hello! I'd like to connec
       {/* Floating Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={styles.floatingButton}
+        className={`${styles.floatingButton}   ${isVisible ? styles.visible : ""}`}
         aria-label="Open WhatsApp chat"
       >
         {isOpen ? (

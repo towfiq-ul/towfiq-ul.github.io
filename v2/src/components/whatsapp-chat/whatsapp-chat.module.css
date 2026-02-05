@@ -1,8 +1,8 @@
 /* Floating Button */
 .floatingButton {
   position: fixed;
-  bottom: var(--space-6);
-  right: var(--space-6);
+  top: var(--space-mid);
+  right: var(--space-4);
   width: 64px;
   height: 64px;
   border-radius: var(--radius-round);
@@ -15,6 +15,9 @@
   box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4);
   transition: all 0.3s var(--ease);
   z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
   animation: slideInUp 0.8s var(--ease-out), pulse 2s ease-in-out infinite;
 }
 
@@ -264,6 +267,12 @@
 .whatsappIcon {
   width: 20px;
   height: 20px;
+}
+
+.floatingButton.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
 }
 
 /* Mobile Responsive */

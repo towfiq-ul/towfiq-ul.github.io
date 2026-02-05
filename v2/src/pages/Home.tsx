@@ -414,7 +414,7 @@ export default function Home({onNavigateToContact, onNavigateToCV}: HomeProps) {
             <footer className={styles.footer}>
                 Crafted with passion and precision.
                 <p className={styles.footerText}>
-                    © 2021-{new Date().getFullYear()} {personalInfo.name}. All rights reserved.
+                    © 2018-{new Date().getFullYear()} {personalInfo.name}. All rights reserved.
                 </p>
             </footer>
 
