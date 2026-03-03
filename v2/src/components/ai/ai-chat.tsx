@@ -5,6 +5,7 @@ import ParsedContext from "./parse-context";
 import styles from "./ai-chat.module.css";
 import {CodeXml, MessageSquare, SendHorizontal, X} from "lucide-react";
 import Markdown from "react-markdown";
+import ScrappedContext from "./context-scrapper";
 
 const client = new OpenAI({
     apiKey: import.meta.env.VITE_OPEN_AI_API_KEY,
@@ -23,9 +24,23 @@ export default function FloatingChat() {
     const scrollRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        ParsedContext.then(text => {
-            setContext(`You are an AI assistant for Towfiqul Islam. Use this context to answer: ${text}`)
-        });
+        const loadAllContext = async () => {
+            try {
+                const [parsedText, scrappedText] = await Promise.all([
+                    ParsedContext,
+                    ScrappedContext
+                ]);
+
+                const basePrompt = `You are an AI assistant for Towfiqul Islam.`;
+                const fullContext = `${basePrompt}\n\nDocument Context:\n${parsedText}\n\nWebsite Context:\n${scrappedText}`;
+
+                setContext(fullContext);
+            } catch (error) {
+                console.error("Error initializing AI context:", error);
+            }
+        };
+
+        loadAllContext().then();
 
         if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }, [messages]);
@@ -102,7 +117,7 @@ export default function FloatingChat() {
                                 <div key={i}
                                      className={`${styles.messageWrapper} ${m.role === 'user' ? styles.userAlign : styles.aiAlign}`}>
                                     <div className={styles.messageBubble}>
-                                        <p className={styles.messageText}>
+                                        <div className={styles.messageText}>
                                             {typeof m.content === 'string' ? (
                                                 <Markdown>
                                                     {m.content}
@@ -110,7 +125,7 @@ export default function FloatingChat() {
                                             ) : (
                                                 '...'
                                             )}
-                                        </p>
+                                        </div>
                                     </div>
                                 </div>
                             ))}
