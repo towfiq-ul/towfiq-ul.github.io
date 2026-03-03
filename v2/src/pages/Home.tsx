@@ -10,7 +10,6 @@ import {
     Mail,
     MapPin,
     Phone,
-    // Sparkles,
     TrendingUp
 } from "lucide-react";
 import {Badge} from "../components/ui/badge/badge";
@@ -25,6 +24,7 @@ import {WhatsAppChat} from "../components/whatsapp-chat/whatsapp-chat";
 import {awards, education, openSource, overview, personalInfo, skills, workExperience} from "../data/portfolio-data";
 import {calculateTotalExperience, formatExperience} from "../utils/date-utils";
 import {projects} from "../data/project-list";
+import FloatingChat from "../components/ai/ai-chat";
 
 interface HomeProps {
     onNavigateToContact: () => void;
@@ -425,6 +425,9 @@ export default function Home({onNavigateToContact, onNavigateToCV}: HomeProps) {
                 category={selectedSkill?.category || ""}
                 skills={selectedSkill?.skills || []}
             />
+
+            {/* AI Chat */}
+            <FloatingChat/>
 
             {/* Scroll to Top Button */}
             <ScrollToTop/>

@@ -73,15 +73,6 @@ export function Navbar({onNavigateToContact, onNavigateToCV, currentPage}: Navba
         {id: "cv", label: "CV", icon: FileText},
     ];
 
-    const handleContactClick = () => {
-        if (onNavigateToContact) {
-            onNavigateToContact();
-            setIsMobileMenuOpen(false);
-        } else {
-            scrollToSection("contact");
-        }
-    };
-
     const handleCVClick = () => {
         if (onNavigateToCV) {
             onNavigateToCV();
@@ -109,7 +100,7 @@ export function Navbar({onNavigateToContact, onNavigateToCV, currentPage}: Navba
                         const Icon = item.icon;
                         return (
                             item.id === 'cv' ?
-                                (<button onClick={handleCVClick}
+                                (<button onClick={handleCVClick} key={item.id}
                                          className={`${styles.navLink} ${activeSection === "cv" ? styles.active : ""}`}>
                                     <FileText className={styles.navIcon}/>
                                     <span>CV</span>

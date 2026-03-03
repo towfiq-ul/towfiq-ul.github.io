@@ -14,7 +14,7 @@
   justify-content: center;
   box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4);
   transition: all 0.3s var(--ease);
-  z-index: 999;
+  z-index: 998;
   opacity: 0;
   visibility: hidden;
   transform: translateY(20px);
@@ -95,7 +95,7 @@
   background: white;
   border-radius: var(--radius-4);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-  z-index: 998;
+  z-index: 999;
   overflow: hidden;
   animation: slideInUp 0.4s var(--ease-out);
 }
