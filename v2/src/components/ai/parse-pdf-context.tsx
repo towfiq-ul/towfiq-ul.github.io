@@ -2,7 +2,7 @@ import * as pdfjs from 'pdfjs-dist';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
-const parsePdfToText = async (): Promise<string> => {
+export const ParsePdfContext = async (): Promise<string> => {
     try {
         let filePaths = getFilePaths()
         let fullText = "";
@@ -45,8 +45,3 @@ function getFilePaths(): string[] {
 
     return filePathsWithComma.split(",").map((path: string) => path.trim());
 }
-
-let ParsedContext = parsePdfToText()
-
-
-export default ParsedContext;

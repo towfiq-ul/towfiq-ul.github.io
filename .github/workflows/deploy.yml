@@ -6,13 +6,11 @@ on:
   pull_request:
     branches: [ master ]
 
-# Allow this workflow to create deployments and pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Allow only one concurrent deployment
 concurrency:
   group: "pages"
   cancel-in-progress: true
@@ -49,9 +47,6 @@ jobs:
         working-directory: ./${{ env.APP_VERSION }}
         run: npm run build
         env:
-          # This is the 'env' block.
-          # LEFT SIDE (Key): This is the environment variable name available during 'npm run build'.
-          # RIGHT SIDE (Value): This pulls the value from the GitHub Secret named VITE_RECEIVER_EMAIL.
           VITE_EMAILJS_PUBLIC_KEY: ${{ secrets.VITE_EMAILJS_PUBLIC_KEY }}
           VITE_EMAILJS_SERVICE_ID: ${{ secrets.VITE_EMAILJS_SERVICE_ID }}
           VITE_EMAILJS_TEMPLATE_ID: ${{ secrets.VITE_EMAILJS_TEMPLATE_ID }}
@@ -59,9 +54,11 @@ jobs:
           VITE_OPEN_AI_BASE_URL: ${{ secrets.VITE_OPEN_AI_BASE_URL }}
           VITE_OPEN_AI_MODEL: ${{ secrets.VITE_OPEN_AI_MODEL }}
           VITE_OPEN_AI_API_KEY: ${{ secrets.VITE_OPEN_AI_API_KEY }}
+          VITE_OPEN_AI_TEMPERATURE: ${{ secrets.VITE_OPEN_AI_TEMPERATURE }}
           VITE_CV_FILE_PATHS: ${{ secrets.VITE_CV_FILE_PATHS }}
           VITE_AI_CONTEXT_DATA_URL: ${{ secrets.VITE_AI_CONTEXT_DATA_URL }}
           VITE_SCRAPPER_DOMAIN: ${{ secrets.VITE_SCRAPPER_DOMAIN }}
+          VITE_SCRAPPER_TOKEN: ${{ secrets.VITE_SCRAPPER_TOKEN }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v4

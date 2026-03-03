@@ -1,11 +1,12 @@
 import {useEffect, useRef, useState} from 'react';
 import OpenAI from "openai";
 import type {ChatCompletionMessageParam} from "openai/resources/chat/completions";
-import ParsedContext from "./parse-context";
 import styles from "./ai-chat.module.css";
 import {CodeXml, MessageSquare, SendHorizontal, X} from "lucide-react";
 import Markdown from "react-markdown";
-import ScrappedContext from "./context-scrapper";
+import {RULESET_MD_PATH, WEBSITE_CONTEXT_MD_PATH} from "../../config/constants";
+import {ParsedMdContext} from "./parse-md-context";
+import {ParsePdfContext} from "./parse-pdf-context";
 
 const client = new OpenAI({
     apiKey: import.meta.env.VITE_OPEN_AI_API_KEY,
@@ -26,13 +27,14 @@ export default function FloatingChat() {
     useEffect(() => {
         const loadAllContext = async () => {
             try {
-                const [parsedText, scrappedText] = await Promise.all([
-                    ParsedContext,
-                    ScrappedContext
+                const [rulesetContext, documentContext, websiteContext] = await Promise.all([
+                    ParsedMdContext(RULESET_MD_PATH),
+                    ParsePdfContext,
+                    ParsedMdContext(WEBSITE_CONTEXT_MD_PATH)
                 ]);
 
-                const basePrompt = `You are an AI assistant for Towfiqul Islam.`;
-                const fullContext = `${basePrompt}\n\nDocument Context:\n${parsedText}\n\nWebsite Context:\n${scrappedText}`;
+                const basePrompt = `SYSTEM RULES:\n${rulesetContext}`;
+                const fullContext = `${basePrompt}\n\nDocument Context:\n${documentContext}\n\nWebsite Context:\n${websiteContext}`;
 
                 setContext(fullContext);
             } catch (error) {
@@ -56,7 +58,8 @@ export default function FloatingChat() {
 
         try {
             const completion = await client.chat.completions.create({
-                model: import.meta.env.VITE_OPEN_AI_MODEL || "glm-4.7-flash",
+                model: import.meta.env.VITE_OPEN_AI_MODEL || "glm-4.5-flash",
+                temperature: import.meta.env.VITE_OPEN_AI_TEMPERATURE || 1.0,
                 messages: [
                     {
                         role: "system",
