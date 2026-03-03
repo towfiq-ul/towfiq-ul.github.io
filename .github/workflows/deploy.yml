@@ -56,6 +56,12 @@ jobs:
           VITE_EMAILJS_SERVICE_ID: ${{ secrets.VITE_EMAILJS_SERVICE_ID }}
           VITE_EMAILJS_TEMPLATE_ID: ${{ secrets.VITE_EMAILJS_TEMPLATE_ID }}
           VITE_RECEIVER_EMAIL: ${{ secrets.VITE_RECEIVER_EMAIL }}
+          VITE_OPEN_AI_BASE_URL: ${{ secrets.VITE_OPEN_AI_BASE_URL }}
+          VITE_OPEN_AI_MODEL: ${{ secrets.VITE_OPEN_AI_MODEL }}
+          VITE_OPEN_AI_API_KEY: ${{ secrets.VITE_OPEN_AI_API_KEY }}
+          VITE_CV_FILE_PATHS: ${{ secrets.VITE_CV_FILE_PATHS }}
+          VITE_AI_CONTEXT_DATA_URL: ${{ secrets.VITE_AI_CONTEXT_DATA_URL }}
+          VITE_SCRAPPER_DOMAIN: ${{ secrets.VITE_SCRAPPER_DOMAIN }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
