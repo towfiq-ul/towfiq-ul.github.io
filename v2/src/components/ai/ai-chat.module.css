@@ -352,3 +352,38 @@
         border-top: 1px solid rgba(255, 255, 255, 0.05);
     }
 }
+
+/* Container for the dots */
+.typingIndicator {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 0;
+}
+
+.typingIndicator span {
+    width: 6px;
+    height: 6px;
+    background-color: #94a3b8; /* Slate 400 */
+    border-radius: 50%;
+    display: inline-block;
+    animation: typingBounce 1.4s infinite ease-in-out both;
+}
+
+/* Staggered delay for each dot */
+.typingIndicator span:nth-child(1) { animation-delay: -0.32s; }
+.typingIndicator span:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes typingBounce {
+    0%, 80%, 100% { transform: scale(0); }
+    40% { transform: scale(1); }
+}
+
+/* Specific bubble adjustments for typing */
+.typingBubble {
+    background: white !important;
+    min-width: 50px;
+    display: flex;
+    justify-content: center;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}

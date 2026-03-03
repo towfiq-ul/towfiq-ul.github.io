@@ -4,6 +4,7 @@ import type {ChatCompletionMessageParam} from "openai/resources/chat/completions
 import ParsedContext from "./parse-context";
 import styles from "./ai-chat.module.css";
 import {CodeXml, MessageSquare, SendHorizontal, X} from "lucide-react";
+import Markdown from "react-markdown";
 
 const client = new OpenAI({
     apiKey: import.meta.env.VITE_OPEN_AI_API_KEY,
@@ -15,6 +16,7 @@ export default function FloatingChat() {
     const [context, setContext] = useState("");
     const [isOpen, setIsOpen] = useState(true);
     const [input, setInput] = useState("");
+    const [isTyping, setIsTyping] = useState(false);
     const [messages, setMessages] = useState<ChatCompletionMessageParam[]>([
         {role: "assistant", content: "Hi! I'm Towfiqul's AI Assistant. How can I help you today?"}
     ]);
@@ -29,12 +31,13 @@ export default function FloatingChat() {
     }, [messages]);
 
     const handleSendMessage = async () => {
-        if (!input.trim()) return;
+        if (!input.trim() || isTyping) return;
 
         const userMsg: ChatCompletionMessageParam = {role: "user", content: input};
 
         setMessages(prev => [...prev, userMsg]);
         setInput("");
+        setIsTyping(true);
 
         try {
             const completion = await client.chat.completions.create({
@@ -64,6 +67,8 @@ export default function FloatingChat() {
                 role: "assistant",
                 content: "I'm having trouble connecting. Please try again later."
             }]);
+        } finally {
+            setIsTyping(false);
         }
     };
 
@@ -98,11 +103,30 @@ export default function FloatingChat() {
                                      className={`${styles.messageWrapper} ${m.role === 'user' ? styles.userAlign : styles.aiAlign}`}>
                                     <div className={styles.messageBubble}>
                                         <p className={styles.messageText}>
-                                            {typeof m.content === 'string' ? m.content : '...'}
+                                            {typeof m.content === 'string' ? (
+                                                <Markdown>
+                                                    {m.content}
+                                                </Markdown>
+                                            ) : (
+                                                '...'
+                                            )}
                                         </p>
                                     </div>
                                 </div>
                             ))}
+
+                            {/* Thinking Indicator */}
+                            {isTyping && (
+                                <div className={`${styles.messageWrapper} ${styles.aiAlign}`}>
+                                    <div className={`${styles.messageBubble} ${styles.typingBubble}`}>
+                                        <div className={styles.typingIndicator}>
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
                         </div>
 
                         <div className={styles.chatFooter}>
