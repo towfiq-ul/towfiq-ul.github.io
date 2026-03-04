@@ -27,14 +27,18 @@ export default function FloatingChat() {
     useEffect(() => {
         const loadAllContext = async () => {
             try {
-                const [rulesetContext, documentContext, websiteContext] = await Promise.all([
+                const [rulesetContext, documentPdfContext, websiteContext, documentMdContext] = await Promise.all([
                     ParsedMdContext(RULESET_MD_PATH),
                     ParsePdfContext,
-                    ParsedMdContext(WEBSITE_CONTEXT_MD_PATH)
+                    ParsedMdContext(WEBSITE_CONTEXT_MD_PATH),
+                    ParsedMdContext("/Towfiqul_Islam.md")
                 ]);
 
                 const basePrompt = `SYSTEM RULES:\n${rulesetContext}`;
-                const fullContext = `${basePrompt}\n\nDocument Context:\n${documentContext}\n\nWebsite Context:\n${websiteContext}`;
+                const pdfContext =`Document Context:\n${documentPdfContext}`;
+                const webContext = `Website Context:\n${websiteContext}`;
+                const mdContext = `AI Knowledge:\n${documentMdContext}`;
+                const fullContext = `${basePrompt}\n\n${pdfContext}\n\n${webContext}\n\n${mdContext}`;
 
                 setContext(fullContext);
             } catch (error) {
