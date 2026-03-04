@@ -4,7 +4,6 @@ import type {ChatCompletionMessageParam} from "openai/resources/chat/completions
 import styles from "./ai-chat.module.css";
 import {CodeXml, MessageSquare, SendHorizontal, X} from "lucide-react";
 import Markdown from "react-markdown";
-import {RULESET_MD_PATH, WEBSITE_CONTEXT_MD_PATH} from "../../config/constants";
 import {ParsedMdContext} from "./parse-md-context";
 import {ParsePdfContext} from "./parse-pdf-context";
 
@@ -28,9 +27,9 @@ export default function FloatingChat() {
         const loadAllContext = async () => {
             try {
                 const [rulesetContext, documentPdfContext, websiteContext, documentMdContext] = await Promise.all([
-                    ParsedMdContext(RULESET_MD_PATH),
-                    ParsePdfContext,
-                    ParsedMdContext(WEBSITE_CONTEXT_MD_PATH),
+                    ParsedMdContext("/RULESET.md"),
+                    ParsePdfContext("/Towfiqul_Islam_AI.pdf"),
+                    ParsedMdContext("/WEBSITE_CONTEXT.md"),
                     ParsedMdContext("/Towfiqul_Islam.md")
                 ]);
 
