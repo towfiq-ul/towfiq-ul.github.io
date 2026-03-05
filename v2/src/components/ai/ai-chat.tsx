@@ -123,14 +123,14 @@ export function FloatingChat({isChatOpen = true}: AiChatProps) {
                 let ACTION_TAG = "";
 
                 if (aiResponse.includes(ACTION_TAG_EMAIL_ME)) {
-                    ACTION_TAG = ACTION_TAG_EMAIL_ME
                     setPendingAction(TRIGGER_EMAIL_ME);
                 } else if (aiResponse.includes(ACTION_TAG_WHATSAPP_ME)) {
-                    ACTION_TAG = ACTION_TAG_WHATSAPP_ME
                     setPendingAction(TRIGGER_WHATSAPP_ME);
                 }
 
-                const cleanedResponse = aiResponse.replace(ACTION_TAG, "").trim();
+                const cleanedResponse = aiResponse
+                    .replace(ACTION_TAG_WHATSAPP_ME, "").trim()
+                    .replace(ACTION_TAG_EMAIL_ME, "").trim();
 
                 const aiMsg: ChatCompletionMessageParam = {
                     role: "assistant",
