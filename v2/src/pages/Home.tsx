@@ -26,13 +26,14 @@ import {calculateTotalExperience, formatExperience} from "../utils/date-utils";
 import {projects} from "../data/project-list";
 import {FloatingChat} from "../components/ai/ai-chat";
 import {useNavigation} from "../config/navigation-context";
+import {TRIGGER_AI_CHAT, TRIGGER_EMAIL_ME, TRIGGER_WHATSAPP_ME} from "../config/helper";
 
 export default function Home() {
     const [selectedSkill, setSelectedSkill] = useState<{ category: string; skills: string[] } | null>(null);
     const totalExp = calculateTotalExperience(workExperience);
     const totalProjects = projects.length;
     const totalTechnologies = 20;
-    const {currentPage, setCurrentPage} = useNavigation();
+    const {setCurrentPage} = useNavigation();
     const [isAiChatOpen, setIsAiChatOpen] = useState(true);
     const [isWhatsAppForceOpen, setIsWhatsAppForceOpen] = useState(false);
 
@@ -45,14 +46,21 @@ export default function Home() {
         setIsAiChatOpen(false);
     };
 
+    const triggerContactAiChat = () => {
+        setIsAiChatOpen(true);
+        setIsWhatsAppForceOpen(false);
+    };
+
 
     useEffect(() => {
-        globalThis.addEventListener?.('AI_TRIGGER_EMAIL', triggerContactEmailMe);
-        globalThis.addEventListener?.('AI_TRIGGER_WHATSAPP', triggerContactWhatsAppMe);
+        globalThis.addEventListener?.(TRIGGER_EMAIL_ME, triggerContactEmailMe);
+        globalThis.addEventListener?.(TRIGGER_WHATSAPP_ME, triggerContactWhatsAppMe);
+        globalThis.addEventListener?.(TRIGGER_AI_CHAT, triggerContactAiChat);
 
         return () => {
-            globalThis.removeEventListener?.('AI_TRIGGER_EMAIL', triggerContactEmailMe);
-            globalThis.removeEventListener?.('AI_TRIGGER_WHATSAPP', triggerContactWhatsAppMe);
+            globalThis.removeEventListener?.(TRIGGER_EMAIL_ME, triggerContactEmailMe);
+            globalThis.removeEventListener?.(TRIGGER_WHATSAPP_ME, triggerContactWhatsAppMe);
+            globalThis.removeEventListener?.(TRIGGER_AI_CHAT, triggerContactAiChat);
         };
     }, []);
 
@@ -456,14 +464,14 @@ export default function Home() {
 
             {/* AI Chat */}
             <FloatingChat isChatOpen={isAiChatOpen}
-                          onOpen={() => setIsAiChatOpen(true)}/>
+                          onClose={() => triggerContactWhatsAppMe}/>
 
             {/* Scroll to Top Button */}
             <ScrollToTop/>
 
             {/* WhatsApp Chat */}
             <WhatsAppChat isChatOpen={isWhatsAppForceOpen}
-                          onClose={() => setIsWhatsAppForceOpen(false)}/>
+                          onClose={() => triggerContactAiChat}/>
         </div>
     );
 }

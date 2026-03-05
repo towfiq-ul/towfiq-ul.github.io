@@ -8,7 +8,7 @@ interface WhatsAppChatProps {
     onClose?: () => void;
 }
 
-export function WhatsAppChat({isChatOpen = false, onClose}: WhatsAppChatProps) {
+export function WhatsAppChat({isChatOpen = false, onClose}: Readonly<WhatsAppChatProps>) {
     const [isOpen, setIsOpen] = useState(isChatOpen);
     const [isVisible, setIsVisible] = useState(false);
     const phoneNumber = personalInfo.whatsapp

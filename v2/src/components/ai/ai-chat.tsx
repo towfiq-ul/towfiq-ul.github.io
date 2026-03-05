@@ -6,7 +6,13 @@ import {CodeXml, MessageSquare, SendHorizontal, X} from "lucide-react";
 import Markdown from "react-markdown";
 import {ParsedMdContext} from "./parse-md-context";
 import {ParsePdfContext} from "./parse-pdf-context";
-import {ACTION_TAG_EMAIL_ME, ACTION_TAG_WHATSAPP_ME, TRIGGER_EMAIL_ME, TRIGGER_WHATSAPP_ME} from "../../config/helper";
+import {
+    ACTION_TAG_EMAIL_ME,
+    ACTION_TAG_WHATSAPP_ME,
+    TRIGGER_AI_CHAT,
+    TRIGGER_EMAIL_ME,
+    TRIGGER_WHATSAPP_ME
+} from "../../config/helper";
 
 const client = new OpenAI({
     apiKey: import.meta.env.VITE_OPEN_AI_API_KEY,
@@ -16,10 +22,10 @@ const client = new OpenAI({
 
 interface AiChatProps {
     isChatOpen?: boolean;
-    onOpen?: () => void;
+    onClose?: () => void;
 }
 
-export function FloatingChat({isChatOpen = true, onOpen}: AiChatProps) {
+export function FloatingChat({isChatOpen = true, onClose}: Readonly<AiChatProps>) {
     const [context, setContext] = useState("");
     const [isOpen, setIsOpen] = useState(isChatOpen);
     const [input, setInput] = useState("");
@@ -28,7 +34,7 @@ export function FloatingChat({isChatOpen = true, onOpen}: AiChatProps) {
     const [messages, setMessages] = useState<ChatCompletionMessageParam[]>([
         {role: "assistant", content: "Hi! I'm Towfiqul's AI Assistant. How can I help you today?"}
     ]);
-    const YES_BUTTON_TEXT = "Yes, thanks!."
+    const YES_BUTTON_TEXT = "Yes, thanks!"
     const NO_BUTTON_TEXT = "No, thanks!"
     const scrollRef = useRef<HTMLDivElement>(null);
     const [pendingAction, setPendingAction] = useState<string | null>(null);
@@ -174,7 +180,7 @@ export function FloatingChat({isChatOpen = true, onOpen}: AiChatProps) {
                             className={styles.closeButton}
                             aria-label="Close chat"
                         >
-                            <X/>
+                            <X onClick={ () => globalThis.dispatchEvent?.(new CustomEvent(TRIGGER_WHATSAPP_ME))}/>
                         </button>
                     </div>
 
