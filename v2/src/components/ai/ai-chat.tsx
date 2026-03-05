@@ -85,7 +85,7 @@ export function FloatingChat({isChatOpen = true}: AiChatProps) {
 
         if (confirmed && pendingAction) {
             globalThis.dispatchEvent?.(new CustomEvent(pendingAction));
-            if(pendingAction === TRIGGER_WHATSAPP_ME) {
+            if (pendingAction === TRIGGER_WHATSAPP_ME) {
                 await handleSendMessage("Thank you");
             }
         } else {
@@ -233,7 +233,7 @@ export function FloatingChat({isChatOpen = true}: AiChatProps) {
                                 className={styles.chatInput}
                             />
                             <button
-                                onClick={handleSendMessage}
+                                onClick={() => handleSendMessage()}
                                 className={styles.innerSendButton}
                                 disabled={!input.trim()}
                             >
