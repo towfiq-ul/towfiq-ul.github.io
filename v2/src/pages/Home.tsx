@@ -26,7 +26,6 @@ import {calculateTotalExperience, formatExperience} from "../utils/date-utils";
 import {projects} from "../data/project-list";
 import {FloatingChat} from "../components/ai/ai-chat";
 import {useNavigation} from "../config/navigation-context";
-import {scrollToSection} from "../config/helper";
 
 export default function Home() {
     const [selectedSkill, setSelectedSkill] = useState<{ category: string; skills: string[] } | null>(null);
@@ -34,6 +33,7 @@ export default function Home() {
     const totalProjects = projects.length;
     const totalTechnologies = 20;
     const {currentPage, setCurrentPage} = useNavigation();
+    const [isAiChatOpen, setIsAiChatOpen] = useState(true);
     const [isWhatsAppForceOpen, setIsWhatsAppForceOpen] = useState(false);
 
     const triggerContactEmailMe = () => {
@@ -42,6 +42,7 @@ export default function Home() {
 
     const triggerContactWhatsAppMe = () => {
         setIsWhatsAppForceOpen(true);
+        setIsAiChatOpen(false);
     };
 
 
@@ -454,7 +455,8 @@ export default function Home() {
             />
 
             {/* AI Chat */}
-            <FloatingChat isChatOpen={!isWhatsAppForceOpen}/>
+            <FloatingChat isChatOpen={isAiChatOpen}
+                          onOpen={() => setIsAiChatOpen(true)}/>
 
             {/* Scroll to Top Button */}
             <ScrollToTop/>

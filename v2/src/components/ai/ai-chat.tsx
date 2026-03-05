@@ -16,9 +16,10 @@ const client = new OpenAI({
 
 interface AiChatProps {
     isChatOpen?: boolean;
+    onOpen?: () => void;
 }
 
-export function FloatingChat({isChatOpen = true}: AiChatProps) {
+export function FloatingChat({isChatOpen = true, onOpen}: AiChatProps) {
     const [context, setContext] = useState("");
     const [isOpen, setIsOpen] = useState(isChatOpen);
     const [input, setInput] = useState("");
@@ -27,6 +28,8 @@ export function FloatingChat({isChatOpen = true}: AiChatProps) {
     const [messages, setMessages] = useState<ChatCompletionMessageParam[]>([
         {role: "assistant", content: "Hi! I'm Towfiqul's AI Assistant. How can I help you today?"}
     ]);
+    const YES_BUTTON_TEXT = "Yes, thanks!."
+    const NO_BUTTON_TEXT = "No, thanks!"
     const scrollRef = useRef<HTMLDivElement>(null);
     const [pendingAction, setPendingAction] = useState<string | null>(null);
 
@@ -85,11 +88,9 @@ export function FloatingChat({isChatOpen = true}: AiChatProps) {
 
         if (confirmed && pendingAction) {
             globalThis.dispatchEvent?.(new CustomEvent(pendingAction));
-            if (pendingAction === TRIGGER_WHATSAPP_ME) {
-                await handleSendMessage("Thank you");
-            }
+            await handleSendMessage(YES_BUTTON_TEXT);
         } else {
-            await handleSendMessage("I'd prefer not to proceed now.");
+            await handleSendMessage(NO_BUTTON_TEXT);
         }
     };
 
@@ -200,10 +201,10 @@ export function FloatingChat({isChatOpen = true}: AiChatProps) {
                                 <p></p>
                                 <div className={styles.buttonGroup}>
                                     <button onClick={() => confirmAction(true)} className={styles.btnYes}>
-                                        Yes, please
+                                        {YES_BUTTON_TEXT}
                                     </button>
                                     <button onClick={() => confirmAction(false)} className={styles.btnNo}>
-                                        No, thanks
+                                        {NO_BUTTON_TEXT}
                                     </button>
                                 </div>
                             </div>

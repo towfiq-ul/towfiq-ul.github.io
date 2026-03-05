@@ -444,13 +444,14 @@
 /* confirmation-box.module.css */
 
 .confirmationBox {
-    margin-top: 12px;
-    padding: 16px;
-    background-color: var(--card-background, #f8fafc); /* Falls back to light slate if variable is missing */
-    border: 1px solid var(--border-color, #e2e8f0);
+    margin-top: 2px;
+    padding: 8px;
+    /*background-color: var(--card-background, #f8fafc); !* Falls back to light slate if variable is missing *!*/
+    /*border: 1px solid var(--border-color, #e2e8f0);*/
     border-radius: 12px;
     animation: fadeInSlideUp 0.3s ease-out;
-    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    /*box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);*/
+    background: transparent;
 }
 
 .confirmationBox p {
@@ -466,7 +467,7 @@
 }
 
 .btnYes, .btnNo {
-    padding: 8px 16px;
+    padding: 8px 8px;
     font-size: 0.875rem;
     font-weight: 600;
     border-radius: 8px;

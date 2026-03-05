@@ -5,10 +5,10 @@ import {personalInfo} from "../../data/portfolio-data";
 
 interface WhatsAppChatProps {
     isChatOpen?: boolean;
-    onClose: any;
+    onClose?: () => void;
 }
 
-export function WhatsAppChat({isChatOpen = false, onClose: any}: WhatsAppChatProps) {
+export function WhatsAppChat({isChatOpen = false, onClose}: WhatsAppChatProps) {
     const [isOpen, setIsOpen] = useState(isChatOpen);
     const [isVisible, setIsVisible] = useState(false);
     const phoneNumber = personalInfo.whatsapp
