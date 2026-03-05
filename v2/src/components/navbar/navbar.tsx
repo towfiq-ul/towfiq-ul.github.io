@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import {Award, Briefcase, Code, FileText, GraduationCap, Home, Mail, Menu, X} from "lucide-react";
 import styles from "./navbar.module.css";
+import {scrollToSection} from "../../config/helper";
 
 interface NavbarProps {
     onNavigateToContact?: () => void;
@@ -53,14 +54,6 @@ export function Navbar({onNavigateToContact, onNavigateToCV, currentPage}: Navba
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
-
-    const scrollToSection = (id: string) => {
-        const element = document.getElementById(id);
-        if (element) {
-            element.scrollIntoView({behavior: "smooth"});
-            setIsMobileMenuOpen(false);
-        }
-    };
 
     const navItems = [
         {id: "hero", label: "Home", icon: Home},

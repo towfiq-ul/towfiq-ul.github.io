@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import styles from "./Home.module.css";
 import {
     Award as AwardIcon,
@@ -24,23 +24,50 @@ import {WhatsAppChat} from "../components/whatsapp-chat/whatsapp-chat";
 import {awards, education, openSource, overview, personalInfo, skills, workExperience} from "../data/portfolio-data";
 import {calculateTotalExperience, formatExperience} from "../utils/date-utils";
 import {projects} from "../data/project-list";
-import FloatingChat from "../components/ai/ai-chat";
+import {FloatingChat} from "../components/ai/ai-chat";
+import {useNavigation} from "../config/navigation-context";
+import {scrollToSection} from "../config/helper";
 
-interface HomeProps {
-    onNavigateToContact: () => void;
-    onNavigateToCV?: () => void;
-}
-
-export default function Home({onNavigateToContact, onNavigateToCV}: HomeProps) {
+export default function Home() {
     const [selectedSkill, setSelectedSkill] = useState<{ category: string; skills: string[] } | null>(null);
     const totalExp = calculateTotalExperience(workExperience);
     const totalProjects = projects.length;
     const totalTechnologies = 20;
+    const {currentPage, setCurrentPage} = useNavigation();
+    const [isWhatsAppForceOpen, setIsWhatsAppForceOpen] = useState(false);
+
+    const triggerContactEmailMe = () => {
+        handleNavigateToContact();
+    };
+
+    const triggerContactWhatsAppMe = () => {
+        setIsWhatsAppForceOpen(true);
+    };
+
+
+    useEffect(() => {
+        globalThis.addEventListener?.('AI_TRIGGER_EMAIL', triggerContactEmailMe);
+        globalThis.addEventListener?.('AI_TRIGGER_WHATSAPP', triggerContactWhatsAppMe);
+
+        return () => {
+            globalThis.removeEventListener?.('AI_TRIGGER_EMAIL', triggerContactEmailMe);
+            globalThis.removeEventListener?.('AI_TRIGGER_WHATSAPP', triggerContactWhatsAppMe);
+        };
+    }, []);
+
+    const handleNavigateToContact = () => {
+        setCurrentPage("contact")
+    };
+
+    const handleNavigateToCV = () => {
+        setCurrentPage("cv")
+    };
 
     return (
         <div className={styles.page}>
             <Particles/>
-            <Navbar onNavigateToContact={onNavigateToContact} onNavigateToCV={onNavigateToCV} currentPage={'home'}/>
+            <Navbar onNavigateToContact={handleNavigateToContact} onNavigateToCV={handleNavigateToCV}
+                    currentPage={'home'}/>
 
             {/* Hero Section */}
             <section id="hero" className={styles.hero}>
@@ -380,7 +407,7 @@ export default function Home({onNavigateToContact, onNavigateToCV}: HomeProps) {
                         visions.
                     </p>
                     <div className={styles.contactGrid}>
-                        <button onClick={onNavigateToContact} className={styles.contactCard}>
+                        <button onClick={handleNavigateToContact} className={styles.contactCard}>
                             <Mail className={styles.contactCardIcon}/>
                             <span className={styles.contactCardTitle}>Email Me</span>
                         </button>
@@ -427,16 +454,14 @@ export default function Home({onNavigateToContact, onNavigateToCV}: HomeProps) {
             />
 
             {/* AI Chat */}
-            <FloatingChat/>
+            <FloatingChat isChatOpen={!isWhatsAppForceOpen}/>
 
             {/* Scroll to Top Button */}
             <ScrollToTop/>
 
             {/* WhatsApp Chat */}
-            <WhatsAppChat
-                phoneNumber={personalInfo.whatsapp}
-                message="Hello Towfiqul! I visited your portfolio and would like to connect with you."
-            />
+            <WhatsAppChat isChatOpen={isWhatsAppForceOpen}
+                          onClose={() => setIsWhatsAppForceOpen(false)}/>
         </div>
     );
 }
