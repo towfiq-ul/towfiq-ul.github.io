@@ -24,7 +24,7 @@ export const overview = {
         "Backend Development: Java, Spring Boot, Spring Cloud, Microservices",
         "Cloud & DevOps: AWS, Docker, Kubernetes, Jenkins, CI/CD",
         "Databases: MySQL, Oracle, PostgreSQL, DynamoDB, Redis",
-        "Message Queues: Kafka, RabbitMQ, AWS SNS/SQS",
+        "Message Queues: Kafka, RabbitMQ, AWS SNS-SQS",
         "Architecture: RESTful APIs, Event-Driven Systems, Domain-Driven Design",
         "IoT: MQTT, CoAP, SNMP, WebSocket, Real-time Data Processing",
     ],
