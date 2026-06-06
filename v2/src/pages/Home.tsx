@@ -96,8 +96,9 @@ export default function Home() {
                         <h1 className={styles.name}>{personalInfo.name}</h1>
                         <p className={styles.jobTitle}>{personalInfo.title}</p>
                         <p className={styles.heroDescription}>
-                            Building scalable enterprise solutions with {totalExp.years}+ years of expertise in Java,
-                            Spring Boot, Cloud Technologies, and Full-Stack Development
+                            Designing and shipping high-throughput distributed systems for fintech and enterprise.
+                            Specialized in Java · Spring Boot · Kafka · AWS. Working experience with
+                            payment infrastructure at Bangladesh's #1 mobile financial platform.
                         </p>
 
                         <div className={styles.heroStats}>

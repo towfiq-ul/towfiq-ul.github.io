@@ -4,14 +4,15 @@ export const personalInfo = {
     email: "towfiq.106@gmail.com",
     phone: "+8801823923023",
     whatsapp: "+8801823923023",
-    portfolio: "towfiq-ul.github.com",
+    portfolio: "towfiq-ul.github.io",
     linkedin: "https://www.linkedin.com/in/towfiq106",
     stackoverflow: "https://stackoverflow.com/users/6688908/towfiqul-islam",
     github: "https://github.com/towfiq-ul",
+    yearOfExperience: "7+"
 };
 
 export const overview = {
-    summary: "Accomplished " + personalInfo.title + " with expertise in designing and delivering scalable enterprise solutions. Specialized in Java Spring Boot ecosystem, microservices architecture, and cloud technologies. Proven track record of impactful contribution in high-impact projects for fintech and IoT domains, mentoring engineering teams, and driving technical excellence. Passionate about clean code, system design, and continuous learning.",
+    summary: "Senior Software Engineer with " + personalInfo.yearOfExperience + " years designing and shipping high-throughput distributed systems for fintech and enterprise clients. Core expertise in Java/Spring Boot microservices, event-driven architecture with Kafka, and cloud-native infrastructure on AWS and Kubernetes. Currently building core payment platform components as Augmented Staff at Bangladesh's leading mobile financial service handling millions of daily transactions. Passionate about clean architecture, system reliability, and shipping things that scale.",
     highlights: [
         "Impactful contribution in architecture design for bK-MFS financial platform handling millions of daily transactions",
         "Achieved 40% performance improvement through database optimization and caching strategies",

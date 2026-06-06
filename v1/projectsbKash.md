@@ -7,7 +7,7 @@
 ## bkash Access to Bank MW
 
 ## bKash Agent App MW
-Currently working on bKash Agent App, which is one of the most popular and financial app for bKash Agents. bKash Agent
+Worked on bKash Agent App, which is one of the most popular and financial app for bKash Agents. bKash Agent
 App Middleware is a service that supports the Agent App to be functional.
 Technologies: JAVA (Spring-Boot), DynamoDB, AWS
 
