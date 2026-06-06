@@ -1,23 +1,21 @@
 import {useEffect, useRef, useState} from 'react';
-import OpenAI from "openai";
-import type {ChatCompletionMessageParam} from "openai/resources/chat/completions";
 import styles from "./ai-chat.module.css";
 import {CodeXml, MessageSquare, SendHorizontal, X} from "lucide-react";
 import Markdown from "react-markdown";
 import {ParsedMdContext} from "./parse-md-context";
 import {ParsePdfContext} from "./parse-pdf-context";
+
+type ChatCompletionMessageParam =
+    | { role: "system"; content: string }
+    | { role: "user"; content: string }
+    | { role: "assistant"; content: string };
+
 import {
     ACTION_TAG_EMAIL_ME,
     ACTION_TAG_WHATSAPP_ME,
     TRIGGER_EMAIL_ME,
     TRIGGER_WHATSAPP_ME
 } from "../../config/helper";
-
-const client = new OpenAI({
-    apiKey: import.meta.env.VITE_OPEN_AI_API_KEY,
-    baseURL: import.meta.env.VITE_OPEN_AI_BASE_URL,
-    dangerouslyAllowBrowser: true
-});
 
 interface AiChatProps {
     isChatOpen?: boolean;
@@ -110,24 +108,24 @@ export function FloatingChat({isChatOpen = true, onClose}: Readonly<AiChatProps>
         setIsTyping(true);
 
         try {
-            const completion = await client.chat.completions.create({
-                model: import.meta.env.VITE_OPEN_AI_MODEL || "glm-4.5-flash",
-                temperature: Number(import.meta.env.VITE_OPEN_AI_TEMPERATURE) || 1,
-                messages: [
-                    {
-                        role: "system",
-                        content: context
-                    },
-                    ...messages,
-                    userMsg
-                ],
+            const res = await fetch(import.meta.env.VITE_AI_PROXY_URL, {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    model: import.meta.env.VITE_OPEN_AI_MODEL || "glm-4.5-flash",
+                    temperature: Number(import.meta.env.VITE_OPEN_AI_TEMPERATURE) || 1,
+                    messages: [
+                        {role: "system", content: context},
+                        ...messages,
+                        userMsg
+                    ],
+                }),
             });
+            const completion = await res.json();
 
             const aiResponse = completion.choices[0].message.content;
 
             if (aiResponse) {
-                let ACTION_TAG = "";
-
                 if (aiResponse.includes(ACTION_TAG_EMAIL_ME)) {
                     setPendingAction(TRIGGER_EMAIL_ME);
                 } else if (aiResponse.includes(ACTION_TAG_WHATSAPP_ME)) {
@@ -179,7 +177,7 @@ export function FloatingChat({isChatOpen = true, onClose}: Readonly<AiChatProps>
                             className={styles.closeButton}
                             aria-label="Close chat"
                         >
-                            <X onClick={ () => globalThis.dispatchEvent?.(new CustomEvent(TRIGGER_WHATSAPP_ME))}/>
+                            <X onClick={() => globalThis.dispatchEvent?.(new CustomEvent(TRIGGER_WHATSAPP_ME))}/>
                         </button>
                     </div>
 
@@ -253,7 +251,7 @@ export function FloatingChat({isChatOpen = true, onClose}: Readonly<AiChatProps>
             {/* Modern Floating Toggle Button */}
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className={`${styles.floatingButton} ${!isOpen ? styles.visible : ""}`}
+                className={`${styles.floatingButton} ${isOpen ? "" : styles.visible}`}
                 data-open={isOpen}
                 aria-label="AI Assistant Chat"
             >

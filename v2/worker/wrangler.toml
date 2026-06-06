@@ -1,0 +1,10 @@
+name       = "portfolio-ai-proxy"
+main       = "ai-proxy.js"
+compatibility_date = "2026-06-01"
+
+[vars]
+# Non-sensitive vars go here (none needed)
+
+# Secrets are set via CLI — never in this file:
+# wrangler secret put AI_API_KEY
+# wrangler secret put AI_BASE_URL
