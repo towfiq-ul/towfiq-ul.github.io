@@ -9,7 +9,6 @@ import {ParsePdfContext} from "./parse-pdf-context";
 import {
     ACTION_TAG_EMAIL_ME,
     ACTION_TAG_WHATSAPP_ME,
-    TRIGGER_AI_CHAT,
     TRIGGER_EMAIL_ME,
     TRIGGER_WHATSAPP_ME
 } from "../../config/helper";

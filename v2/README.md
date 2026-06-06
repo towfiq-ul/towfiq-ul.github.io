@@ -224,4 +224,4 @@ npm run build
 
 ## License
 
-MIT © 2018–2025 Towfiqul Islam
+MIT © 2018–2026 Towfiqul Islam
