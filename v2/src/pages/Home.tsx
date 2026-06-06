@@ -9,7 +9,7 @@ import {
     Linkedin,
     Mail,
     MapPin,
-    Phone,
+    Phone, Sparkles,
     TrendingUp
 } from "lucide-react";
 import {Badge} from "../components/ui/badge/badge";
@@ -88,10 +88,10 @@ export default function Home() {
                 <div className={styles.heroContent}>
                     <div className={styles.heroGlass}>
                         <div className={styles.badgeContainer}>
-                            {/*<Badge variant="outline" className={styles.heroBadge}>*/}
-                            {/*  <Sparkles className={styles.badgeIcon} />*/}
-                            {/*  Available for Opportunities*/}
-                            {/*</Badge>*/}
+                            <Badge variant="outline" className={styles.heroBadge}>
+                              <Sparkles className={styles.badgeIcon} />
+                              Available for Opportunities
+                            </Badge>
                         </div>
                         <h1 className={styles.name}>{personalInfo.name}</h1>
                         <p className={styles.jobTitle}>{personalInfo.title}</p>
