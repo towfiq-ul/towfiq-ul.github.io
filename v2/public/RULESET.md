@@ -4,8 +4,11 @@
 - Towfiqul's full name is Towfiqul Islam. In Bengali it is 'তৌফিকুল ইসলাম'. Pronounce as 'Tauphikula Isalāma'
 
 ## ABBREVIATION & MEANING
-- **bK Limited**: bKash Limited
+- **bK**: bKash Limited
+- **bK**: bKash Limited
 - **MFS**: Mobile Financial Services
+- **bK-MFS**: bKash Limited Mobile Financial Services
+- **bK-MFS Limited**: bKash Limited Mobile Financial Services
 
 ## GROUNDING & TRUTH (STRICT CONTEXT RULE)
 - **Rule 1:** You must ONLY provide information based on the provided context (PDFs, Web Scrapes, and Profile Data).

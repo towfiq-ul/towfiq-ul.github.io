@@ -1,17 +1,17 @@
 #!/bin/bash
 
 # 1. Install Wrangler
-npm install -g wrangler
+#npm install -g wrangler
 
 # 2. Login
-wrangler login
+#wrangler login
 
 # 3. From the workers/ folder — set secrets (never in code)
 cd workers
-wrangler secret put AI_API_KEY
+#wrangler secret put AI_API_KEY
 # → paste your ZhipuAI key when prompted
 
-wrangler secret put AI_BASE_URL
+#wrangler secret put AI_BASE_URL
 # → paste https://open.bigmodel.cn/api/paas/v4
 
 # 4. Deploy

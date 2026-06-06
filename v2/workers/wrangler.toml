@@ -8,3 +8,18 @@ compatibility_date = "2026-06-01"
 # Secrets are set via CLI — never in this file:
 # wrangler secret put AI_API_KEY
 # wrangler secret put AI_BASE_URL
+
+[observability]
+enabled = true
+head_sampling_rate = 1
+
+[observability.logs]
+enabled = true
+head_sampling_rate = 1
+persist = true
+invocation_logs = true
+
+[observability.traces]
+enabled = true
+persist = true
+head_sampling_rate = 1
