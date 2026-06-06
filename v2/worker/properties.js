@@ -1,1 +1,0 @@
-const ALLOWED_ORIGIN = "https://towfiq-ul.github.io";
