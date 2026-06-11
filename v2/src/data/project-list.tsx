@@ -1,5 +1,40 @@
 export const projects = [
     {
+        name: "bKash App",
+        subname: "bkash App for bKash Limited. Mobile Financial Service",
+        client: "bkash Limited (via Exabyting)",
+        technologies: [
+            "Java (Spring Boot)",
+            "Spring Boot Web Flux",
+            "Spring Boot Web Client",
+            "DynamoDB",
+            "Redis",
+            "Kafka",
+            "AWS - S3, EC2, SNS, SQS",
+            "gRPC",
+            "REST API",
+            "Localstack",
+            "Docker",
+            "Kubernetes"
+        ],
+        description:
+            "bKash is a leading mobile financial service in Bangladesh that allows users to perform instant money transfers, bill payments, mobile recharges, and merchant transactions securely from their smartphones.",
+        highlights: [
+            "Built and maintained scalable microservices using Java (11–21) and Spring Boot, exposing RESTful APIs and integrating third-party services",
+            "Implemented modern concurrency solutions, including Virtual Threads and reactive programming",
+            "Developed full-stack features using Thymeleaf for dynamic UI rendering",
+            "Integrated and managed AWS services (EC2, S3, SNS, SQS) for cloud-based deployments",
+            "Worked with DynamoDB, optimizing data access and performance",
+            "Designed systems with clean architecture principles and maintainable code practices",
+            "Improved system resilience using Circuit Breaker, TimeLimiter, and fault-tolerant design",
+            "Collaborated in Agile teams, contributing to sprint planning, code reviews, and production support",
+            "Built internal tools and automation utilities to improve developer productivity",
+            "Performed performance tuning, debugging, and optimization for high-traffic applications",
+            "Migrated Spring Boot 2 → 3 services, handling javax → jakarta transition, JAXB upgrades, and AWS SDK v1 → v2 migration",
+            "Rewrote DynamoDB layer using DynamoDBEnhancedClient, implementing GSI queries and custom AttributeConverters",
+        ],
+    },
+    {
         name: "Tesenso MW",
         subname: "An IoT Based Project",
         client: "Tesenso (via SELISE)",

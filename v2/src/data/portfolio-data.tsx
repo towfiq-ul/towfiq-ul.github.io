@@ -123,7 +123,6 @@ export const workExperience = [
         responsibilities: [
             "Developed various Govt and Private Web Application and Services",
             "Planned development cycle and collected requirements for developing software",
-            "Managed three members group and delivered task within deadline",
             "Worked with bK-MFS Limited as Partner Team with their Solution Engineering Team",
             "Learned software design patterns, clean coding, communication and taking ownership",
             "Work in Agile/Scrum development process",
