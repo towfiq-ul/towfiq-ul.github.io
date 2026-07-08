@@ -41,7 +41,7 @@ export function Navbar({onNavigateToContact, onNavigateToCV, currentPage}: Navba
                     if (scrollPosition >= offsetTop && scrollPosition < offsetBottom) {
                         foundSection = sectionId;
                         if (foundSection === 'project') {
-                            foundSection = 'experience';
+                            foundSection = 'project';
                         }
                         break;
                     }
@@ -60,6 +60,7 @@ export function Navbar({onNavigateToContact, onNavigateToCV, currentPage}: Navba
         {id: "overview", label: "Overview", icon: FileText},
         {id: "skills", label: "Skills", icon: Code},
         {id: "experience", label: "Experience", icon: Briefcase},
+        {id: "project", label: "Projects", icon: GraduationCap},
         {id: "education", label: "Education", icon: GraduationCap},
         {id: "awards", label: "Awards", icon: Award},
         {id: "contact", label: "Contact", icon: Mail},
