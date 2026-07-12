@@ -5,10 +5,10 @@ TAG_NUMBER_FILE = .tag_number
 BRANCH_NAME ?= master
 
 # Prevent make from treating the targets as files
-.PHONY: all increment_version commit_changes create_tag push_changes push_tags clean help
+.PHONY: all increment_version commit_changes create_tag push push_tags deploy run clean help
 
 # Default target
-all: increment_version commit_changes create_tag push_changes push_tags
+all: increment_version commit_changes create_tag push push_tags
 
 # Increment version number
 increment_version:
@@ -49,7 +49,7 @@ endif
 
 
 # Push the changes to the origin branch
-push_changes:
+push:
 	@git pull origin $(BRANCH_NAME)
 	@git status
 	@git push -u origin $(BRANCH_NAME)
@@ -59,6 +59,16 @@ push_changes:
 push_tags:
 	@git push --tags
 	@echo "All tags pushed to remote."
+
+# Deploy the AI proxy Worker to Cloudflare (frontend/build deploy to GitHub
+# Pages happens automatically via .github/workflows/deploy.yml on push)
+deploy:
+	@cd v2/workers && npx wrangler deploy
+	@echo "AI proxy Worker deployed to Cloudflare."
+
+# Run the local dev environment (frontend + local AI proxy Worker)
+run:
+	@./run.sh
 
 # Clean up
 clean:
@@ -74,12 +84,14 @@ help:
 	@echo "  make update_version <tag_number>"
 	@echo "Targets:"
 	@echo "  all             	Updates version, commits changes, creates a tag, and pushes changes."
-	@echo "  increment_version  Increments the version in by 1 patch level."
+	@echo "  increment_version	Increments the version in by 1 patch level."
 	@#echo "  update_version  Updates the version in pom.xml."
 	@echo "  commit_changes  	Commits the changes with a message."
 	@echo "  create_tag      	Creates a git tag."
-	@echo "  push_changes    	Pushes changes to the origin branch."
+	@echo "  push            	Pushes changes to the origin branch."
 	@echo "  push_tags       	Pushes all tags to the remote repository."
+	@echo "  deploy          	Deploys the AI proxy Worker to Cloudflare."
+	@echo "  run         		Runs the local dev environment (frontend + local AI proxy Worker)."
 	@echo "  clean           	Resets changes to HEAD."
 
 

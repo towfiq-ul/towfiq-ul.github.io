@@ -1,3 +1,5 @@
 .idea
 build
 test
+.wrangler
+*.txt

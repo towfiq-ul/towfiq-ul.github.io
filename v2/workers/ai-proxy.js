@@ -1,15 +1,30 @@
-const ALLOWED_ORIGIN = "https://towfiq-ul.github.io";
+const ALLOWED_ORIGINS = new Set([
+    "https://towfiq-ul.github.io",
+    // Local dev frontend (vite.config.ts server.port). Origin is already
+    // client-supplied and spoofable by non-browser callers (see below), so
+    // allowing localhost doesn't weaken anything a curl script couldn't
+    // already do by spoofing the production origin directly.
+    "http://localhost:3000",
+]);
 
-const CORS = {
-    "Access-Control-Allow-Origin":  ALLOWED_ORIGIN,
-    "Access-Control-Allow-Methods": "POST, OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type",
-};
+function corsHeaders(origin) {
+    return {
+        "Access-Control-Allow-Origin": ALLOWED_ORIGINS.has(origin) ? origin : "",
+        "Access-Control-Allow-Methods": "POST, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type",
+        "Vary": "Origin",
+    };
+}
 
-const MAX_BODY_BYTES = 32_000;
+const MAX_BODY_BYTES = 80_000;
 const MAX_MESSAGES = 60;
+// The system message carries the grounding context (RULESET.md + PDF +
+// WEBSITE_CONTEXT.md + knowledge doc), measured ~20-25k chars in production —
+// it's fixed app content, not a user-controlled conversation turn, so it gets
+// a much higher ceiling than the per-turn cap below.
+const MAX_SYSTEM_CHARS = 40_000;
 const MAX_MESSAGE_CHARS = 4_000;
-const MAX_TOTAL_CHARS = 24_000;
+const MAX_TOTAL_CHARS = 60_000;
 const MAX_TEMPERATURE = 2;
 const MAX_TOKENS_CAP = 1024;
 const ALLOWED_ROLES = new Set(["system", "user", "assistant"]);
@@ -17,48 +32,49 @@ const UPSTREAM_TIMEOUT_MS = 30_000;
 
 export default {
     async fetch(request, env) {
+        const origin = request.headers.get("Origin") ?? "";
+        const cors = corsHeaders(origin);
 
         // Preflight — return immediately, no other logic
         if (request.method === "OPTIONS") {
-            return new Response(null, { status: 204, headers: CORS });
+            return new Response(null, { status: 204, headers: cors });
         }
 
         // Only POST allowed
         if (request.method !== "POST") {
-            return json({ error: "Method Not Allowed" }, 405);
+            return json({ error: "Method Not Allowed" }, 405, cors);
         }
 
-        // Only your portfolio domain. Origin is client-supplied and trivially
-        // spoofed by non-browser callers, so it's not real auth — the rate
-        // limiter below is what actually bounds abuse of the upstream key.
-        const origin = request.headers.get("Origin") ?? "";
-        if (origin !== ALLOWED_ORIGIN) {
-            return json({ error: "Forbidden" }, 403);
+        // Origin is client-supplied and trivially spoofed by non-browser
+        // callers, so it's not real auth — the rate limiter below is what
+        // actually bounds abuse of the upstream key.
+        if (!ALLOWED_ORIGINS.has(origin)) {
+            return json({ error: "Forbidden" }, 403, cors);
         }
 
         // Guard: secrets must exist
         if (!env.AI_API_KEY || !env.AI_BASE_URL) {
-            return json({ error: "Worker secrets not configured" }, 500);
+            return json({ error: "Worker secrets not configured" }, 500, cors);
         }
 
         if (env.RATE_LIMITER) {
             const clientIp = request.headers.get("CF-Connecting-IP") ?? "unknown";
             const { success } = await env.RATE_LIMITER.limit({ key: clientIp });
             if (!success) {
-                return json({ error: "Too Many Requests" }, 429);
+                return json({ error: "Too Many Requests" }, 429, cors);
             }
         }
 
         const contentLength = Number(request.headers.get("Content-Length") ?? "0");
         if (contentLength > MAX_BODY_BYTES) {
-            return json({ error: "Payload Too Large" }, 413);
+            return json({ error: "Payload Too Large" }, 413, cors);
         }
 
         let payload;
         try {
             payload = sanitizeChatRequest(await request.json());
         } catch (err) {
-            return json({ error: "Bad Request", detail: String(err.message ?? err) }, 400);
+            return json({ error: "Bad Request", detail: String(err.message ?? err) }, 400, cors);
         }
 
         try {
@@ -73,10 +89,10 @@ export default {
             });
 
             const data = await upstream.json();
-            return json(data, upstream.status);
+            return json(data, upstream.status, cors);
 
         } catch (err) {
-            return json({ error: "Proxy error", detail: String(err) }, 502);
+            return json({ error: "Proxy error", detail: String(err) }, 502, cors);
         }
     }
 };
@@ -97,7 +113,8 @@ function sanitizeChatRequest(body) {
         if (!m || typeof m !== "object") throw new Error("invalid message");
         if (!ALLOWED_ROLES.has(m.role)) throw new Error(`invalid role: ${m.role}`);
         if (typeof m.content !== "string") throw new Error("message content must be a string");
-        if (m.content.length > MAX_MESSAGE_CHARS) throw new Error("message too long");
+        const limit = m.role === "system" ? MAX_SYSTEM_CHARS : MAX_MESSAGE_CHARS;
+        if (m.content.length > limit) throw new Error(`message too long (max ${limit} chars for role "${m.role}")`);
         totalChars += m.content.length;
         return { role: m.role, content: m.content };
     });
@@ -123,9 +140,9 @@ function sanitizeChatRequest(body) {
     };
 }
 
-function json(body, status = 200) {
+function json(body, status = 200, cors = {}) {
     return new Response(JSON.stringify(body), {
         status,
-        headers: { ...CORS, "Content-Type": "application/json" },
+        headers: { ...cors, "Content-Type": "application/json" },
     });
 }
