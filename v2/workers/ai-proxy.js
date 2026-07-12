@@ -115,10 +115,10 @@ function sanitizeChatRequest(body) {
         temperature: safeTemperature,
         max_tokens: safeMaxTokens,
         messages: safeMessages,
-        // Current upstream model (Poolside Laguna M.1 via OpenRouter) reasons
-        // by default, which alone accounts for ~4s of extra latency per reply
-        // (measured: 6.1s with reasoning vs 2.3s without on an empty prompt).
-        // Providers that don't recognize this field ignore it.
+        // Current upstream model (nvidia/nemotron-3-ultra-550b-a55b via
+        // OpenRouter) reasons by default at "high" effort, which alone took
+        // it from 0.6s to 41.5s on a trivial prompt in testing. Providers
+        // that don't recognize this field ignore it.
         reasoning: { enabled: false },
     };
 }
