@@ -9,6 +9,14 @@ compatibility_date = "2026-06-01"
 # wrangler secret put AI_API_KEY
 # wrangler secret put AI_BASE_URL
 
+# Caps requests per client IP so a spoofed Origin header can't be used to
+# burn the AI_API_KEY. The worker checks `if (env.RATE_LIMITER)` and skips
+# limiting if this binding isn't present, so it fails open rather than broken.
+[[ratelimits]]
+name = "RATE_LIMITER"
+namespace_id = "1001"
+simple = { limit = 20, period = 60 }
+
 [observability]
 enabled = true
 head_sampling_rate = 1

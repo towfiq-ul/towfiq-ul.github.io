@@ -38,6 +38,13 @@ export function FloatingChat({isChatOpen = true, onClose}: Readonly<AiChatProps>
 
     useEffect(() => {
         setIsOpen(isChatOpen);
+    }, [isChatOpen]);
+
+    // Runs once on mount. Previously this reloaded + re-parsed the PDF/markdown
+    // context (a network round trip plus a full pdf.js text extraction) on every
+    // single chat message because `messages` was in the dependency array — that
+    // was the main source of multi-second/minute lag per turn.
+    useEffect(() => {
         const handleOnline = () => setIsConnected(true);
         const handleOffline = () => setIsConnected(false);
         globalThis.addEventListener?.('online', handleOnline);
@@ -66,13 +73,16 @@ export function FloatingChat({isChatOpen = true, onClose}: Readonly<AiChatProps>
 
         loadAllContext().then();
 
-        if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
         return () => {
             globalThis.removeEventListener?.('online', handleOnline);
             globalThis.removeEventListener?.('offline', handleOffline);
             clearInterval(interval);
         };
-    }, [messages, isChatOpen]);
+    }, []);
+
+    useEffect(() => {
+        if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }, [messages]);
 
     const checkRealInternet = async () => {
         try {
