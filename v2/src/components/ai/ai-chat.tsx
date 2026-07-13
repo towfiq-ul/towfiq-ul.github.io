@@ -118,6 +118,14 @@ export function FloatingChat({isChatOpen = true, onClose}: Readonly<AiChatProps>
         setIsTyping(true);
 
         try {
+            // The first entry in `messages` is the hardcoded UI greeting
+            // ({role: "assistant", ...}) shown before any real turn happens.
+            // It's display-only and was never a real model turn, so it's
+            // dropped here — otherwise every request starts system->assistant,
+            // which some providers reject with "roles must alternate
+            // user/assistant/..." since the first non-system turn isn't "user".
+            const conversationHistory = messages.slice(1);
+
             const res = await fetch(import.meta.env.VITE_AI_PROXY_URL, {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
@@ -126,7 +134,7 @@ export function FloatingChat({isChatOpen = true, onClose}: Readonly<AiChatProps>
                     temperature: Number(import.meta.env.VITE_OPEN_AI_TEMPERATURE) || 1,
                     messages: [
                         {role: "system", content: context},
-                        ...messages,
+                        ...conversationHistory,
                         userMsg
                     ],
                 }),
