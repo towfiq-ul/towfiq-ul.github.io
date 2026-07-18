@@ -1,6 +1,6 @@
 import {useEffect, useRef, useState} from 'react';
 import styles from "./ai-chat.module.css";
-import {CodeXml, MessageSquare, SendHorizontal, X} from "lucide-react";
+import {CodeXml, Maximize2, MessageSquare, Minimize2, SendHorizontal, X} from "lucide-react";
 import Markdown from "react-markdown";
 import {ParsedMdContext} from "./parse-md-context";
 import {ParsePdfContext} from "./parse-pdf-context";
@@ -25,6 +25,7 @@ interface AiChatProps {
 export function FloatingChat({isChatOpen = true, onClose}: Readonly<AiChatProps>) {
     const [context, setContext] = useState("");
     const [isOpen, setIsOpen] = useState(isChatOpen);
+    const [isFullScreen, setIsFullScreen] = useState(false);
     const [input, setInput] = useState("");
     const [isTyping, setIsTyping] = useState(false);
     const [isConnected, setIsConnected] = useState<boolean>(globalThis.navigator?.onLine ?? true);
@@ -174,10 +175,10 @@ export function FloatingChat({isChatOpen = true, onClose}: Readonly<AiChatProps>
     };
 
     return (
-        <div className={styles.chatContainer}>
+        <div className={`${styles.chatContainer} ${isFullScreen && isOpen ? styles.chatContainerElevated : ""}`}>
             {/* Chat Popup */}
             {isOpen && (
-                <div className={styles.chatPopup}>
+                <div className={`${styles.chatPopup} ${isFullScreen ? styles.fullScreen : ""}`}>
                     <div className={styles.chatHeader}>
                         <div className={styles.chatHeaderContent}>
                             <div className={styles.avatar}>
@@ -190,13 +191,25 @@ export function FloatingChat({isChatOpen = true, onClose}: Readonly<AiChatProps>
                                 </h3>
                             </div>
                         </div>
-                        <button
-                            onClick={() => setIsOpen(false)}
-                            className={styles.closeButton}
-                            aria-label="Close chat"
-                        >
-                            <X onClick={() => globalThis.dispatchEvent?.(new CustomEvent(TRIGGER_WHATSAPP_ME))}/>
-                        </button>
+                        <div className={styles.headerActions}>
+                            <button
+                                onClick={() => setIsFullScreen(!isFullScreen)}
+                                className={styles.closeButton}
+                                aria-label={isFullScreen ? "Exit full screen" : "Full screen"}
+                            >
+                                {isFullScreen ? <Minimize2 size={16}/> : <Maximize2 size={16}/>}
+                            </button>
+                            <button
+                                onClick={() => {
+                                    setIsOpen(false);
+                                    setIsFullScreen(false);
+                                }}
+                                className={styles.closeButton}
+                                aria-label="Close chat"
+                            >
+                                <X onClick={() => globalThis.dispatchEvent?.(new CustomEvent(TRIGGER_WHATSAPP_ME))}/>
+                            </button>
+                        </div>
                     </div>
 
                     <div ref={scrollRef} className={styles.chatBody}>

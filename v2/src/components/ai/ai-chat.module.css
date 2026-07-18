@@ -230,6 +230,35 @@
     background: #ef4444;
 }
 
+/* In full screen the popup must sit above the navbar (z-index 1000);
+   the z-index must go on the container because it creates the stacking
+   context that caps everything inside it. */
+.chatContainerElevated {
+    z-index: 1001;
+}
+
+.headerActions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Full-screen variant: popup fills the viewport, body stretches to fit */
+.chatPopup.fullScreen {
+    top: 16px;
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    width: auto;
+    max-width: none;
+    height: auto;
+}
+
+.chatPopup.fullScreen .chatBody {
+    height: auto;
+    flex: 1;
+}
+
 .closeButton {
     background: rgba(255, 255, 255, 0.1);
     border: none;
