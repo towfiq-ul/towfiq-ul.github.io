@@ -327,7 +327,8 @@ export default function Home() {
                             {project.link && (
                                 <a href={project.link} target="_blank" rel="noopener noreferrer"
                                    className={styles.awardLink}>
-                                    View on GitHub <ExternalLink size={14}/>
+                                    {project.link.includes("github.com") ? "View on GitHub" : "Visit Website"}
+                                    {" "}<ExternalLink size={14}/>
                                 </a>
                             )}
                         </div>

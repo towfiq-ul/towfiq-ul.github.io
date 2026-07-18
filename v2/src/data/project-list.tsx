@@ -101,6 +101,20 @@ export const projects: Project[] = [
         link: "https://github.com/m-tech-org/laravel-gitstamp",
     },
     {
+        name: "Aerotia International",
+        subname: "CMS-driven corporate website for an aviation & marine solutions distributor",
+        client: "Aerotia International — Freelance (Morph Technologies)",
+        technologies: ["PHP (Laravel 12)", "React 18", "TypeScript", "Vite", "MySQL"],
+        description:
+            "CMS-driven public website for Aerotia International, an authorized distributor of aviation and marine solutions. Laravel 12 (PHP 8.2) JSON API with a Blade-based admin/CMS for managing content, and a React 18 + TypeScript frontend — delivered end-to-end as a freelance engagement under Morph Technologies (m-tech-org).",
+        highlights: [
+            "Live, public client delivery",
+            "Laravel 12 REST API + admin CMS managing all site content",
+            "React 18 + TypeScript + Vite frontend, independently deployed",
+        ],
+        link: "https://aerotia.com",
+    },
+    {
         name: "FDPS",
         subname: "Financial Document Processing System",
         client: "IMTF (via SELISE)",
