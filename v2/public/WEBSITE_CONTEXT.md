@@ -2,7 +2,7 @@ Title: Towfiqul Islam — Senior Software Engineer
 
 URL Source: https://towfiq-ul.github.io/
 
-Published Time: Sat, 18 Jul 2026 19:12:26 GMT
+Published Time: Sat, 18 Jul 2026 19:26:31 GMT
 
 Markdown Content:
 Available for Opportunities
@@ -324,6 +324,8 @@ DynamoDB
 
 +8
 
+[View on Google Play](https://play.google.com/store/apps/details?id=com.bKash.customerapp&hl=en)
+
 ### Tesenso MW
 
 Tesenso (via SELISE)
@@ -343,6 +345,8 @@ Cassandra
 TimescaleDB
 
 +8
+
+[Visit Website](https://tesenso.ch/)
 
 ### AI Query System from S3 Data
 
@@ -421,6 +425,8 @@ Java (Apache Camel)
 Kafka
 
 Active MQ
+
+View All 14 Projects
 
 ## Writing
 
@@ -502,6 +508,16 @@ Author & Maintainer
 
 [View on GitHub](https://github.com/m-tech-org/laravel-gitstamp)
 
+### jmbus
+
+Maintained
+
+Java library for the M-Bus (Meter-Bus) protocol — a JNA wrapper around the C libmbus library, bundling a compiled libmbus with Maven/Gradle builds and Maven Central publishing prepared. Grew out of the MBUS decoder work on the Tesenso IoT platform.
+
+Author & Maintainer
+
+[View on GitHub](https://github.com/towfiq-ul/jmbus)
+
 ### ThingsBoard
 
 Merged
@@ -521,6 +537,60 @@ Curated list of tech companies in Bangladesh for job seekers and professionals
 Pull Request #44
 
 [View on GitHub](https://github.com/MBSTUPC/tech-companies-in-bangladesh/pull/44)
+
+## Certifications
+
+Verified credentials from HackerRank and Coursera
+
+### Java (Intermediate)
+
+HackerRank
+
+[Verify Certificate](https://www.hackerrank.com/certificates/2dbd243f96fc)
+
+### C++ (Advanced)
+
+HackerRank
+
+[Verify Certificate](https://www.hackerrank.com/certificates/58f2ef361f01)
+
+### Python (Basic)
+
+HackerRank
+
+[Verify Certificate](https://www.hackerrank.com/certificates/3ea76f9af5fb)
+
+### R Programming
+
+Johns Hopkins University (Coursera)
+
+June 2018
+
+[Verify Certificate](https://www.coursera.org/account/accomplishments/verify/CSJF89LAMLTD)
+
+### Neural Networks and Deep Learning
+
+DeepLearning.AI (Coursera)
+
+June 2018
+
+[Verify Certificate](https://www.coursera.org/account/accomplishments/verify/EDLCKETBUTPD)
+
+### The Data Scientist's Toolbox
+
+Johns Hopkins University (Coursera)
+
+May 2018
+
+[Verify Certificate](https://www.coursera.org/account/accomplishments/verify/D9ZUP2WY23XX)
+
+### Introduction to Cyber Attacks
+
+New York University (Coursera)
+
+May 2018
+
+[Verify Certificate](https://www.coursera.org/account/accomplishments/verify/7LFQBMTBUUV8)
 
 ## Let's Connect
 
