@@ -231,6 +231,14 @@ export const openSource = [
         status: "Maintained",
     },
     {
+        project: "jmbus",
+        description:
+            "Java library for the M-Bus (Meter-Bus) protocol — a JNA wrapper around the C libmbus library, bundling a compiled libmbus with Maven/Gradle builds and Maven Central publishing prepared. Grew out of the MBUS decoder work on the Tesenso IoT platform.",
+        contribution: "Author & Maintainer",
+        link: "https://github.com/towfiq-ul/jmbus",
+        status: "Maintained",
+    },
+    {
         project: "ThingsBoard",
         description: "Open-source IoT platform for data collection, processing, visualization, and device management",
         contribution: "Pull Request #6614",
@@ -243,6 +251,51 @@ export const openSource = [
         contribution: "Pull Request #44",
         link: "https://github.com/MBSTUPC/tech-companies-in-bangladesh/pull/44",
         status: "Merged",
+    },
+];
+
+export const certifications = [
+    {
+        title: "Java (Intermediate)",
+        issuer: "HackerRank",
+        date: null,
+        link: "https://www.hackerrank.com/certificates/2dbd243f96fc",
+    },
+    {
+        title: "C++ (Advanced)",
+        issuer: "HackerRank",
+        date: null,
+        link: "https://www.hackerrank.com/certificates/58f2ef361f01",
+    },
+    {
+        title: "Python (Basic)",
+        issuer: "HackerRank",
+        date: null,
+        link: "https://www.hackerrank.com/certificates/3ea76f9af5fb",
+    },
+    {
+        title: "R Programming",
+        issuer: "Johns Hopkins University (Coursera)",
+        date: "June 2018",
+        link: "https://www.coursera.org/account/accomplishments/verify/CSJF89LAMLTD",
+    },
+    {
+        title: "Neural Networks and Deep Learning",
+        issuer: "DeepLearning.AI (Coursera)",
+        date: "June 2018",
+        link: "https://www.coursera.org/account/accomplishments/verify/EDLCKETBUTPD",
+    },
+    {
+        title: "The Data Scientist's Toolbox",
+        issuer: "Johns Hopkins University (Coursera)",
+        date: "May 2018",
+        link: "https://www.coursera.org/account/accomplishments/verify/D9ZUP2WY23XX",
+    },
+    {
+        title: "Introduction to Cyber Attacks",
+        issuer: "New York University (Coursera)",
+        date: "May 2018",
+        link: "https://www.coursera.org/account/accomplishments/verify/7LFQBMTBUUV8",
     },
 ];
 

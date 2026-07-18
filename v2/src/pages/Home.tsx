@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import styles from "./Home.module.css";
 import {
     Award as AwardIcon,
+    BadgeCheck,
     BookOpen,
     Briefcase,
     Calendar,
@@ -23,7 +24,17 @@ import {ExperienceChart} from "../components/experience-chart/experience-chart";
 import {ScrollToTop} from "../components/scroll-to-top/scroll-to-top";
 import {Particles} from "../components/particles/particles";
 import {WhatsAppChat} from "../components/whatsapp-chat/whatsapp-chat";
-import {awards, education, openSource, overview, personalInfo, skills, workExperience, writing} from "../data/portfolio-data";
+import {
+    awards,
+    certifications,
+    education,
+    openSource,
+    overview,
+    personalInfo,
+    skills,
+    workExperience,
+    writing
+} from "../data/portfolio-data";
 import {calculateTotalExperience, formatExperience} from "../utils/date-utils";
 import {projects} from "../data/project-list";
 import {FloatingChat} from "../components/ai/ai-chat";
@@ -459,6 +470,46 @@ export default function Home() {
                                         <a href={contribution.link} target="_blank" rel="noopener noreferrer"
                                            className={styles.awardLink}>
                                             View on GitHub <ExternalLink size={14}/>
+                                        </a>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </>
+                )}
+
+                {certifications.length > 0 && (
+                    <>
+                        <SectionHeader title="Certifications"
+                                       subtitle="Verified credentials from HackerRank and Coursera"/>
+                        <div className={styles.awardsList}>
+                            {certifications.map((cert, index) => (
+                                <div key={index} className={styles.awardItem}
+                                     style={{animationDelay: `${index * 0.1}s`}}>
+                                    <div className={styles.awardIcon}>
+                                        <BadgeCheck/>
+                                    </div>
+                                    <div className={styles.awardContent}>
+                                        <div style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: '8px',
+                                            marginBottom: '4px'
+                                        }}>
+                                            <h3 className={styles.awardTitle}>{cert.title}</h3>
+                                            <Badge variant="outline" style={{fontSize: '11px'}}>
+                                                {cert.issuer}
+                                            </Badge>
+                                        </div>
+                                        {cert.date && (
+                                            <p className={styles.awardDescription}
+                                               style={{fontSize: '13px', opacity: 0.8, marginBottom: '8px'}}>
+                                                {cert.date}
+                                            </p>
+                                        )}
+                                        <a href={cert.link} target="_blank" rel="noopener noreferrer"
+                                           className={styles.awardLink}>
+                                            Verify Certificate <ExternalLink size={14}/>
                                         </a>
                                     </div>
                                 </div>
