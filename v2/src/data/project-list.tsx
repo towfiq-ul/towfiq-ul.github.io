@@ -6,6 +6,7 @@ type Project = {
     description: string;
     highlights: string[];
     link?: string;
+    featured?: boolean;
 };
 
 export const projects: Project[] = [
@@ -44,6 +45,7 @@ export const projects: Project[] = [
             "Rewrote DynamoDB layer using DynamoDBEnhancedClient, implementing GSI queries and custom AttributeConverters",
         ],
         link: "https://play.google.com/store/apps/details?id=com.bKash.customerapp&hl=en",
+        featured: true,
     },
     {
         name: "Tesenso MW",
@@ -73,6 +75,7 @@ export const projects: Project[] = [
             "Optimized time-series data handling",
         ],
         link: "https://tesenso.ch",
+        featured: true,
     },
     {
         name: "AI Query System from S3 Data",
@@ -87,6 +90,7 @@ export const projects: Project[] = [
             "Written up as a Medium engineering deep-dive",
         ],
         link: "https://github.com/towfiq-ul/ai-query-system-from-s3-data",
+        featured: true,
     },
     {
         name: "laravel-gitstamp",
@@ -101,6 +105,7 @@ export const projects: Project[] = [
             "MIT-licensed and installable via Composer",
         ],
         link: "https://github.com/m-tech-org/laravel-gitstamp",
+        featured: true,
     },
     {
         name: "Aerotia International",
@@ -115,6 +120,7 @@ export const projects: Project[] = [
             "React 18 + TypeScript + Vite frontend, independently deployed",
         ],
         link: "https://aerotia.com",
+        featured: true,
     },
     {
         name: "Aerotia Accounting",
@@ -128,6 +134,7 @@ export const projects: Project[] = [
             "Dockerized local dev (MySQL, Mailpit, Adminer)",
             "Dogfoods the self-authored laravel-gitstamp package",
         ],
+        featured: true,
     },
     {
         name: "HRMS — User & Role Management",

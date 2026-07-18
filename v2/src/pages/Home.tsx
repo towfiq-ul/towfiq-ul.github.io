@@ -44,6 +44,7 @@ import {TRIGGER_AI_CHAT, TRIGGER_EMAIL_ME, TRIGGER_WHATSAPP_ME} from "../config/
 export default function Home() {
     const [selectedSkill, setSelectedSkill] = useState<{ category: string; skills: string[] } | null>(null);
     const [showAllProjects, setShowAllProjects] = useState(false);
+    const featuredProjects = projects.filter((project) => project.featured);
     const totalExp = calculateTotalExperience(workExperience);
     const totalProjects = projects.length;
     const totalTechnologies = 20;
@@ -308,7 +309,7 @@ export default function Home() {
                     subtitle="Key projects showcasing expertise in enterprise software development"
                 />
                 <div className={styles.projectsGrid}>
-                    {(showAllProjects ? projects : projects.slice(0, 6)).map((project, index) => (
+                    {(showAllProjects ? projects : featuredProjects).map((project, index) => (
                         <div key={index} className={styles.projectCard} style={{animationDelay: `${index * 0.1}s`}}>
                             <div className={styles.projectHeader}>
                                 <h3 className={styles.projectName}>{project.name}</h3>
@@ -351,7 +352,7 @@ export default function Home() {
                         </div>
                     ))}
                 </div>
-                {projects.length > 6 && (
+                {projects.length > featuredProjects.length && (
                     <div className={styles.showAllProjects}>
                         <Button variant="outline" onClick={() => setShowAllProjects(!showAllProjects)}>
                             {showAllProjects
