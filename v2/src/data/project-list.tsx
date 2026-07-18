@@ -117,15 +117,6 @@ export const projects: Project[] = [
         link: "https://aerotia.com",
     },
     {
-        name: "FDPS",
-        subname: "Financial Document Processing System",
-        client: "IMTF (via SELISE)",
-        technologies: ["Java (Apache Camel)", "Kafka", "Active MQ"],
-        description:
-            "A financial document processing system providing a proxy route system for a renowned financial organization, making their workflow more efficient.",
-        highlights: ["Automated document processing", "Proxy routing system", "High-volume transaction handling"],
-    },
-    {
         name: "Aerotia Accounting",
         subname: "Ledger/accounting admin portal for Aerotia International",
         client: "Aerotia International — Freelance (Morph Technologies)",
@@ -150,6 +141,15 @@ export const projects: Project[] = [
             "Drop-in module architecture with service providers",
             "Layered repository/service design",
         ],
+    },
+    {
+        name: "FDPS",
+        subname: "Financial Document Processing System",
+        client: "IMTF (via SELISE)",
+        technologies: ["Java (Apache Camel)", "Kafka", "Active MQ"],
+        description:
+            "A financial document processing system providing a proxy route system for a renowned financial organization, making their workflow more efficient.",
+        highlights: ["Automated document processing", "Proxy routing system", "High-volume transaction handling"],
     },
     {
         name: "Urstamm",
