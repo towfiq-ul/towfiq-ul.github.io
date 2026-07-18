@@ -589,13 +589,6 @@ export default function Home() {
                 <p className={styles.footerText}>
                     © 2018-{new Date().getFullYear()} {personalInfo.name}. All rights reserved.
                 </p>
-                <p className={styles.footerText}>
-                    Open source at{" "}
-                    <a href="https://github.com/m-tech-org" target="_blank" rel="noopener noreferrer"
-                       className={styles.awardLink} style={{display: 'inline-flex'}}>
-                        Morph Technologies (m-tech-org)
-                    </a>
-                </p>
             </footer>
 
             {/* Skill Modal */}
