@@ -126,6 +126,32 @@ export const projects: Project[] = [
         highlights: ["Automated document processing", "Proxy routing system", "High-volume transaction handling"],
     },
     {
+        name: "Aerotia Accounting",
+        subname: "Ledger/accounting admin portal for Aerotia International",
+        client: "Aerotia International — Freelance (Morph Technologies)",
+        technologies: ["PHP (Laravel 9)", "MySQL", "Blade", "Vite", "Docker"],
+        description:
+            "Laravel 9 ledger/accounting tool for Aerotia International tracking organizations, projects, and project costs, with a server-rendered Blade admin panel — CRUD for organizations, projects, cost types, and costs, plus a dashboard and admin-user management.",
+        highlights: [
+            "Full admin panel with dashboard and cost tracking",
+            "Dockerized local dev (MySQL, Mailpit, Adminer)",
+            "Dogfoods the self-authored laravel-gitstamp package",
+        ],
+    },
+    {
+        name: "HRMS — User & Role Management",
+        subname: "Modular Laravel RBAC modules",
+        client: "Morph Technologies (m-tech-org)",
+        technologies: ["PHP (Laravel)", "MySQL", "REST API"],
+        description:
+            "Modular Laravel implementation of user management and role management with full RBAC — self-contained drop-in modules with their own controllers, repositories, services, policies, form requests, migrations, and seeders, wired via service providers.",
+        highlights: [
+            "Full RBAC: roles, permissions, and policies",
+            "Drop-in module architecture with service providers",
+            "Layered repository/service design",
+        ],
+    },
+    {
         name: "Urstamm",
         subname: "Swiss Date Wood with Digital Proof of Origin",
         client: "Switzerland-based Digital Solution Company (via SELISE)",
