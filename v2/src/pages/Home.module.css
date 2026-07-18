@@ -508,6 +508,8 @@
     background: linear-gradient(135deg, var(--color-accent-6), var(--color-accent-9));
     opacity: 0;
     transition: opacity 0.4s var(--ease);
+    /* decorative glow must not swallow clicks on the +N more badge */
+    pointer-events: none;
 }
 
 .skillCategory:hover::before {
@@ -782,6 +784,16 @@
     display: flex;
     justify-content: center;
     margin-top: var(--space-8);
+}
+
+.expandableBadge {
+    cursor: pointer;
+    user-select: none;
+}
+
+.expandableBadge:hover {
+    border-color: var(--color-accent-7);
+    color: var(--color-accent-11);
 }
 
 .projectCard {

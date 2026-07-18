@@ -44,6 +44,8 @@ import {TRIGGER_AI_CHAT, TRIGGER_EMAIL_ME, TRIGGER_WHATSAPP_ME} from "../config/
 export default function Home() {
     const [selectedSkill, setSelectedSkill] = useState<{ category: string; skills: string[] } | null>(null);
     const [showAllProjects, setShowAllProjects] = useState(false);
+    const [expandedSkillCategory, setExpandedSkillCategory] = useState<string | null>(null);
+    const [expandedProjectTech, setExpandedProjectTech] = useState<string | null>(null);
     const featuredProjects = projects.filter((project) => project.featured);
     const totalExp = calculateTotalExperience(workExperience);
     const totalProjects = projects.length;
@@ -218,19 +220,31 @@ export default function Home() {
                             key={category}
                             className={styles.skillCategory}
                             onClick={() => setSelectedSkill({category, skills: skillList})}
+                            onMouseLeave={() => setExpandedSkillCategory(
+                                (prev) => (prev === category ? null : prev)
+                            )}
                             style={{animationDelay: `${index * 0.1}s`}}
                         >
                             <div className={styles.skillCategoryInner}>
                                 <h3 className={styles.categoryTitle}>{category}</h3>
                                 <div className={styles.skillCount}>{skillList.length} skills</div>
                                 <div className={styles.skillPreview}>
-                                    {skillList.slice(0, 3).map((skill) => (
+                                    {(expandedSkillCategory === category
+                                        ? skillList
+                                        : skillList.slice(0, 3)).map((skill) => (
                                         <Badge key={skill} variant="secondary" className={styles.skillBadge}>
                                             {skill.length > 20 ? skill.substring(0, 20) + "..." : skill}
                                         </Badge>
                                     ))}
-                                    {skillList.length > 3 && (
-                                        <Badge variant="outline" className={styles.moreBadge}>
+                                    {skillList.length > 3 && expandedSkillCategory !== category && (
+                                        <Badge
+                                            variant="outline"
+                                            className={`${styles.moreBadge} ${styles.expandableBadge}`}
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                setExpandedSkillCategory(category);
+                                            }}
+                                        >
                                             +{skillList.length - 3} more
                                         </Badge>
                                     )}
@@ -310,7 +324,11 @@ export default function Home() {
                 />
                 <div className={styles.projectsGrid}>
                     {(showAllProjects ? projects : featuredProjects).map((project, index) => (
-                        <div key={index} className={styles.projectCard} style={{animationDelay: `${index * 0.1}s`}}>
+                        <div key={project.name} className={styles.projectCard}
+                             onMouseLeave={() => setExpandedProjectTech(
+                                 (prev) => (prev === project.name ? null : prev)
+                             )}
+                             style={{animationDelay: `${index * 0.1}s`}}>
                             <div className={styles.projectHeader}>
                                 <h3 className={styles.projectName}>{project.name}</h3>
                                 <TrendingUp className={styles.projectIcon}/>
@@ -327,13 +345,19 @@ export default function Home() {
                                 </ul>
                             )}
                             <div className={styles.techStack}>
-                                {project.technologies.slice(0, 4).map((tech) => (
+                                {(expandedProjectTech === project.name
+                                    ? project.technologies
+                                    : project.technologies.slice(0, 4)).map((tech) => (
                                     <Badge key={tech} variant="default" className={styles.techBadge}>
                                         {tech}
                                     </Badge>
                                 ))}
-                                {project.technologies.length > 4 && (
-                                    <Badge variant="outline" className={styles.techBadge}>
+                                {project.technologies.length > 4 && expandedProjectTech !== project.name && (
+                                    <Badge
+                                        variant="outline"
+                                        className={`${styles.techBadge} ${styles.expandableBadge}`}
+                                        onClick={() => setExpandedProjectTech(project.name)}
+                                    >
                                         +{project.technologies.length - 4}
                                     </Badge>
                                 )}
