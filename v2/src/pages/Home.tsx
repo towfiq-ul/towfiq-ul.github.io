@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import styles from "./Home.module.css";
 import {
     Award as AwardIcon,
+    BookOpen,
     Briefcase,
     Calendar,
     ExternalLink,
@@ -21,7 +22,7 @@ import {ExperienceChart} from "../components/experience-chart/experience-chart";
 import {ScrollToTop} from "../components/scroll-to-top/scroll-to-top";
 import {Particles} from "../components/particles/particles";
 import {WhatsAppChat} from "../components/whatsapp-chat/whatsapp-chat";
-import {awards, education, openSource, overview, personalInfo, skills, workExperience} from "../data/portfolio-data";
+import {awards, education, openSource, overview, personalInfo, skills, workExperience, writing} from "../data/portfolio-data";
 import {calculateTotalExperience, formatExperience} from "../utils/date-utils";
 import {projects} from "../data/project-list";
 import {FloatingChat} from "../components/ai/ai-chat";
@@ -323,6 +324,49 @@ export default function Home() {
                                     </Badge>
                                 )}
                             </div>
+                            {project.link && (
+                                <a href={project.link} target="_blank" rel="noopener noreferrer"
+                                   className={styles.awardLink}>
+                                    View on GitHub <ExternalLink size={14}/>
+                                </a>
+                            )}
+                        </div>
+                    ))}
+                </div>
+            </section>
+
+            {/* Writing Section */}
+            <section id="writing" className={styles.section}>
+                <SectionHeader
+                    title="Writing"
+                    subtitle="Engineering deep-dives on real systems — debugging, hardening, and lessons learned"
+                />
+                <div className={styles.awardsList}>
+                    {writing.map((article, index) => (
+                        <div key={index} className={styles.awardItem} style={{animationDelay: `${index * 0.1}s`}}>
+                            <div className={styles.awardIcon}>
+                                <BookOpen/>
+                            </div>
+                            <div className={styles.awardContent}>
+                                <div style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '8px',
+                                    marginBottom: '4px'
+                                }}>
+                                    <h3 className={styles.awardTitle}>{article.title}</h3>
+                                    <Badge variant="outline" style={{fontSize: '11px'}}>
+                                        {article.platform}
+                                    </Badge>
+                                </div>
+                                <p className={styles.awardDescription} style={{marginBottom: '8px'}}>
+                                    {article.description}
+                                </p>
+                                <a href={article.link} target="_blank" rel="noopener noreferrer"
+                                   className={styles.awardLink}>
+                                    Read Article <ExternalLink size={14}/>
+                                </a>
+                            </div>
                         </div>
                     ))}
                 </div>
@@ -452,6 +496,13 @@ export default function Home() {
                 Crafted with passion and precision.
                 <p className={styles.footerText}>
                     © 2018-{new Date().getFullYear()} {personalInfo.name}. All rights reserved.
+                </p>
+                <p className={styles.footerText}>
+                    Open source at{" "}
+                    <a href="https://github.com/m-tech-org" target="_blank" rel="noopener noreferrer"
+                       className={styles.awardLink} style={{display: 'inline-flex'}}>
+                        Morph Technologies (m-tech-org)
+                    </a>
                 </p>
             </footer>
 

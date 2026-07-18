@@ -8,7 +8,7 @@
 [![Vite](https://img.shields.io/badge/Vite-6-646CFF?style=flat-square&logo=vite)](https://vite.dev)
 [![License](https://img.shields.io/badge/License-MIT-94A3B8?style=flat-square)](#license)
 
-Personal portfolio built with React 19, TypeScript, and Vite. Showcases 5+ years of experience designing
+Personal portfolio built with React 19, TypeScript, and Vite. Showcases 7+ years of experience designing
 and shipping high-throughput distributed systems for fintech and enterprise — currently building core payment
 infrastructure at **bKash**, Bangladesh's #1 mobile financial platform.
 

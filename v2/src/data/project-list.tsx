@@ -1,4 +1,14 @@
-export const projects = [
+type Project = {
+    name: string;
+    subname: string;
+    client: string;
+    technologies: string[];
+    description: string;
+    highlights: string[];
+    link?: string;
+};
+
+export const projects: Project[] = [
     {
         name: "bKash App",
         subname: "bkash App for bKash Limited. Mobile Financial Service",
@@ -61,6 +71,34 @@ export const projects = [
             "Custom rule nodes for enhanced functionality",
             "Optimized time-series data handling",
         ],
+    },
+    {
+        name: "AI Query System from S3 Data",
+        subname: "RAG-based natural language search over S3 documents",
+        client: "Personal Project — Open Source",
+        technologies: ["Python", "RAG", "OpenSearch (Vector Search)", "Embeddings", "AWS S3", "LLM Integration"],
+        description:
+            "A RAG pipeline that answers natural-language queries over documents stored in S3 — chunking, embeddings, vector search, and LLM-grounded answers. Public repository, documented end-to-end in an accompanying Medium deep-dive.",
+        highlights: [
+            "Public, verifiable repository on GitHub",
+            "Full RAG pipeline: chunking → embeddings → vector search → grounded answers",
+            "Written up as a Medium engineering deep-dive",
+        ],
+        link: "https://github.com/towfiq-ul/ai-query-system-from-s3-data",
+    },
+    {
+        name: "laravel-gitstamp",
+        subname: "Deploy-time git version stamping for Laravel",
+        client: "Morph Technologies (m-tech-org) — Open Source",
+        technologies: ["PHP (Laravel)", "Composer", "GitHub Actions CI"],
+        description:
+            "Authored and maintained Laravel package that generates a deploy-time version stamp (date + short git SHA) with helpers to display it in your app. MIT-licensed, CI-tested across Laravel 10–12 with runtime support back to Laravel 9.",
+        highlights: [
+            "Author and maintainer, published under the m-tech-org organization",
+            "CI matrix across Laravel 10, 11, and 12",
+            "MIT-licensed and installable via Composer",
+        ],
+        link: "https://github.com/m-tech-org/laravel-gitstamp",
     },
     {
         name: "FDPS",

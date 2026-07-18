@@ -33,6 +33,14 @@ export const overview = {
 
 export const skills = {
     "Programming Languages": ["Java (Spring Boot)", "PHP (Laravel)", "C/C++ with STL", "Python", "JavaScript", "Bash"],
+    "AI & LLM Engineering": [
+        "LLM Integration",
+        "RAG Pipelines",
+        "OpenSearch / Vector Search",
+        "Embeddings",
+        "Prompt Engineering & Grounding",
+        "Cloudflare Workers (AI Edge Proxy)",
+    ],
     "Frameworks & Libraries": [
         "Spring Boot",
         "Laravel (LAMP Stack)",
@@ -106,11 +114,11 @@ export const workExperience = [
         description:
             "SELISE (Secure Link Service) headquartered in Zürich, Switzerland. A software company that works on big-scale private projects providing standard high-level software solutions worldwide.",
         responsibilities: [
-            "Responsible for defining & developing software for tasks associated",
-            "Develop enhancements to existing products",
-            "Collaborate in a team environment to share best practices",
-            "Implement process improvements",
-            "Ensure software quality",
+            "Extended ThingsBoard (open-source IoT platform, merged contributor) into a multi-tenant IoT middleware for a Swiss enterprise customer",
+            "Modeled and optimized time-series telemetry across PostgreSQL, TimescaleDB, and Cassandra at a scale of millions of data points",
+            "Orchestrated the Swisscom integration for device connectivity and data ingestion",
+            "Designed custom rule nodes and implemented an MBUS decoder for protocol-level device support",
+            "Led direct client-facing discussions with the Swiss enterprise customer to refine requirements and demo deliverables",
         ],
     },
     {
@@ -215,6 +223,14 @@ export const awards = [
 
 export const openSource = [
     {
+        project: "laravel-gitstamp",
+        description:
+            "Laravel package that generates a deploy-time version stamp (date + short git SHA) with helpers to display it in your app. MIT-licensed, CI-tested across Laravel 10–12 (runtime support back to Laravel 9). Published under Morph Technologies (m-tech-org).",
+        contribution: "Author & Maintainer",
+        link: "https://github.com/m-tech-org/laravel-gitstamp",
+        status: "Maintained",
+    },
+    {
         project: "ThingsBoard",
         description: "Open-source IoT platform for data collection, processing, visualization, and device management",
         contribution: "Pull Request #6614",
@@ -227,5 +243,22 @@ export const openSource = [
         contribution: "Pull Request #44",
         link: "https://github.com/MBSTUPC/tech-companies-in-bangladesh/pull/44",
         status: "Merged",
+    },
+];
+
+export const writing = [
+    {
+        title: "From a Leaked API Key in the Browser to a Hardened Edge Proxy",
+        description:
+            "How this site's floating AI assistant went from an API key sitting in plaintext in the shipped JS bundle to a Cloudflare Worker that validates, clamps, rate-limits, times out, and benchmarks its own model choice.",
+        platform: "Medium",
+        link: "https://medium.com/@towfiq106/from-a-leaked-api-key-in-the-browser-to-a-hardened-edge-proxy-building-the-ai-assistant-on-my-3684973ecd3d",
+    },
+    {
+        title: "A Natural Language Search Engine Over S3 Documents",
+        description:
+            "Building a RAG pipeline that answers natural-language queries over documents stored in S3 — chunking, embeddings, vector search, and everything learned along the way.",
+        platform: "Medium",
+        link: "https://medium.com/@towfiq106/a-natural-language-search-engine-over-s3-documents-d6321704290d",
     },
 ];

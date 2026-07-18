@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {Award, Briefcase, Code, FileText, GraduationCap, Home, Mail, Menu, Projector, X} from "lucide-react";
+import {Award, BookOpen, Briefcase, Code, FileText, GraduationCap, Home, Mail, Menu, Projector, X} from "lucide-react";
 import styles from "./navbar.module.css";
 import {scrollToSection} from "../../config/helper";
 
@@ -19,7 +19,7 @@ export function Navbar({onNavigateToContact, onNavigateToCV, currentPage}: Navba
             setIsScrolled(window.scrollY > 50);
 
             // Determine active section based on scroll position
-            const sections = ["hero", "overview", "skills", "experience", 'project', "education", "awards", "contact", "cv"];
+            const sections = ["hero", "overview", "skills", "experience", 'project', "writing", "education", "awards", "contact", "cv"];
             const scrollPosition = window.scrollY + window.innerHeight / 2;
             const documentHeight = document.documentElement.scrollHeight;
             const windowHeight = window.innerHeight;
@@ -61,6 +61,7 @@ export function Navbar({onNavigateToContact, onNavigateToCV, currentPage}: Navba
         {id: "skills", label: "Skills", icon: Code},
         {id: "experience", label: "Experience", icon: Briefcase},
         {id: "project", label: "Projects", icon: Projector},
+        {id: "writing", label: "Writing", icon: BookOpen},
         {id: "education", label: "Education", icon: GraduationCap},
         {id: "awards", label: "Awards", icon: Award},
         {id: "contact", label: "Contact", icon: Mail},
