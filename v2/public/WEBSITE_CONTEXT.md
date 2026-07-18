@@ -2,34 +2,15 @@ Title: Towfiqul Islam — Senior Software Engineer
 
 URL Source: https://towfiq-ul.github.io/
 
-Published Time: Sat, 18 Jul 2026 19:26:31 GMT
+Generated: Sat, 18 Jul 2026 20:09:06 GMT (locally from src/data, full content)
 
 Markdown Content:
-Available for Opportunities
 
 # Towfiqul Islam
 
 Senior Software Engineer
 
-Designing and shipping high-throughput distributed systems for fintech and enterprise. Specialized in Java · Spring Boot · Kafka · AWS. Working experience with payment infrastructure at Bangladesh's #1 mobile financial platform.
-
-7+
-
-Years Experience
-
-14+
-
-Projects Delivered
-
-20+
-
-Technologies
-
-[](https://www.linkedin.com/in/towfiq106)[](https://github.com/towfiq-ul)[](https://stackoverflow.com/users/6688908/towfiqul-islam)
-
 ## Professional Overview
-
-Summary of experience, achievements, and core competencies
 
 ### Summary
 
@@ -45,175 +26,68 @@ Senior Software Engineer with 7+ years designing and shipping high-throughput di
 
 ### Core Expertise
 
-Backend Development: Java, Spring Boot, Spring Cloud, Microservices
-
-Cloud & DevOps: AWS, Docker, Kubernetes, Jenkins, CI/CD
-
-Databases: MySQL, Oracle, PostgreSQL, DynamoDB, Redis
-
-Message Queues: Kafka, RabbitMQ, AWS SNS-SQS
-
-Architecture: RESTful APIs, Event-Driven Systems, Domain-Driven Design
-
-IoT: MQTT, CoAP, SNMP, WebSocket, Real-time Data Processing
+*   Backend Development: Java, Spring Boot, Spring Cloud, Microservices
+*   Cloud & DevOps: AWS, Docker, Kubernetes, Jenkins, CI/CD
+*   Databases: MySQL, Oracle, PostgreSQL, DynamoDB, Redis
+*   Message Queues: Kafka, RabbitMQ, AWS SNS-SQS
+*   Architecture: RESTful APIs, Event-Driven Systems, Domain-Driven Design
+*   IoT: MQTT, CoAP, SNMP, WebSocket, Real-time Data Processing
 
 ## Technical Skills
 
 ### Programming Languages
 
-6 skills
-
-Java (Spring Boot)
-
-PHP (Laravel)
-
-C/C++ with STL
-
-+3 more
+`Java (Spring Boot)` · `PHP (Laravel)` · `C/C++ with STL` · `Python` · `JavaScript` · `Bash`
 
 ### AI & LLM Engineering
 
-6 skills
-
-LLM Integration
-
-RAG Pipelines
-
-OpenSearch / Vector ...
-
-+3 more
+`LLM Integration` · `RAG Pipelines` · `OpenSearch / Vector Search` · `Embeddings` · `Prompt Engineering & Grounding` · `Cloudflare Workers (AI Edge Proxy)`
 
 ### Frameworks & Libraries
 
-11 skills
-
-Spring Boot
-
-Laravel (LAMP Stack)
-
-React
-
-+8 more
+`Spring Boot` · `Laravel (LAMP Stack)` · `React` · `Spring MVC` · `Spring Security` · `Spring Integration` · `Spring SFTP` · `Apache Camel` · `Feign Client` · `Rest Template` · `jQuery`
 
 ### Testing
 
-4 skills
-
-JUnit
-
-TestNG
-
-Postman
-
-+1 more
+`JUnit` · `TestNG` · `Postman` · `Rest Assured`
 
 ### Build Tools
 
-3 skills
-
-Maven
-
-Gradle
-
-Composer
+`Maven` · `Gradle` · `Composer`
 
 ### Databases
 
-9 skills
-
-MySQL
-
-Oracle
-
-DynamoDB
-
-+6 more
+`MySQL` · `Oracle` · `DynamoDB` · `PostgreSQL` · `Cassandra` · `Spring Data` · `Spring JDBC Template` · `JPA` · `Hibernate`
 
 ### Servers & Deployment
 
-8 skills
-
-Apache
-
-Tomcat
-
-GlassFish
-
-+5 more
+`Apache` · `Tomcat` · `GlassFish` · `Docker` · `Jenkins` · `Kubernetes` · `AWS CLI` · `Ansible`
 
 ### Cloud & DevOps
 
-4 skills
-
-AWS
-
-Azure DevOps
-
-Firebase
-
-+1 more
+`AWS` · `Azure DevOps` · `Firebase` · `Git Actions`
 
 ### Security & Authentication
 
-3 skills
-
-OAuth2
-
-JWT
-
-KeyCloak
+`OAuth2` · `JWT` · `KeyCloak`
 
 ### Methodologies & Tools
 
-5 skills
-
-Agile (Scrum)
-
-JIRA
-
-GIT
-
-+2 more
+`Agile (Scrum)` · `JIRA` · `GIT` · `Linux` · `Windows`
 
 ### Message Queues
 
-5 skills
-
-Kafka
-
-RabbitMQ
-
-Active MQ
-
-+2 more
+`Kafka` · `RabbitMQ` · `Active MQ` · `AWS SNS` · `AWS SQS`
 
 ### Other Technologies
 
-7 skills
-
-Redis
-
-GraphQL
-
-Thymeleaf
-
-+4 more
-
-### Experience by Technology (Years)
-
-### Work Type Distribution
-
-### Location Distribution
+`Redis` · `GraphQL` · `Thymeleaf` · `Web3J` · `IoT Protocols (MQTT, CoAP, SNMP)` · `WebSocket` · `Google Analytics`
 
 ## Work Experience
 
-7 Years 11 Months of Professional Software Development
+### Senior Software Engineer — Exabyting
 
-### Senior Software Engineer
-
-Exabyting Dhaka, Bangladesh May 2024 - Current
-
-Full-time, Hybrid
+Dhaka, Bangladesh · Full-time, Hybrid · May 2024 - Current
 
 Exabyting, a software consultancy company works both on big scale government & private projects. Currently working at bK-MFS as Augmented Resource which is a Unicorn MFS Company in Bangladesh.
 
@@ -228,13 +102,9 @@ Exabyting, a software consultancy company works both on big scale government & p
 *   Monitor production systems using Grafana and Kibana, proactively identifying and resolving issues
 *   Drive adoption of clean code principles, SOLID design patterns, and Domain-Driven Design across the team
 
-see more
+### Software Engineer — SELISE
 
-### Software Engineer
-
-SELISE Zürich, Switzerland November 2021 - April 2024
-
-Full-time, Remote
+Zürich, Switzerland · Full-time, Remote · November 2021 - April 2024
 
 SELISE (Secure Link Service) headquartered in Zürich, Switzerland. A software company that works on big-scale private projects providing standard high-level software solutions worldwide.
 
@@ -244,13 +114,9 @@ SELISE (Secure Link Service) headquartered in Zürich, Switzerland. A software c
 *   Designed custom rule nodes and implemented an MBUS decoder for protocol-level device support
 *   Led direct client-facing discussions with the Swiss enterprise customer to refine requirements and demo deliverables
 
-see more
+### Software Engineer — Exabyting
 
-### Software Engineer
-
-Exabyting Dhaka, Bangladesh December 2019 - November 2021
-
-Full-time, Remote
+Dhaka, Bangladesh · Full-time, Remote · December 2019 - November 2021
 
 Exabyting, a software consultancy company works both on big scale government & private projects.
 
@@ -263,13 +129,9 @@ Exabyting, a software consultancy company works both on big scale government & p
 *   Prepare release note and conduct deployment
 *   Demo presentation on demand
 
-see more
+### Java Software Engineer — TechServe4U
 
-### Java Software Engineer
-
-TechServe4U Michigan, USA May 2021 - October 2021
-
-Part-time, Remote
+Michigan, USA · Part-time, Remote · May 2021 - October 2021
 
 TechServe4U, is situated at Michigan US which works for preparing people for tech job i.e. DevOps, QA, etc.
 
@@ -278,21 +140,15 @@ TechServe4U, is situated at Michigan US which works for preparing people for tec
 *   Prepared positive and negative test cases depending on requirements
 *   Supported others on Java Programming
 
-see more
+### Software Engineer — Inflack Limited
 
-### Software Engineer
-
-Inflack Limited Dhaka, Bangladesh September 2019 - November 2019
-
-Full-time
+Dhaka, Bangladesh · Full-time · September 2019 - November 2019
 
 Inflack Limited, is an experienced and passionate group of developers, designers, and project managers.
 
-### CS Teacher & Competitive Programming Coach
+### CS Teacher & Competitive Programming Coach — Presidency International School
 
-Presidency International School Chittagong, Bangladesh October 2018 - August 2019
-
-Full-time
+Chittagong, Bangladesh · Full-time · October 2018 - August 2019
 
 A British Curriculum English Medium School affiliated with Cambridge University, UK
 
@@ -300,57 +156,56 @@ A British Curriculum English Medium School affiliated with Cambridge University,
 *   Taught C++ and Python Languages on the context of Programming Contest along with Basic Algorithms and Data Structures
 *   Arranged various offline and online contest for the students
 
-## Featured Projects
+## Projects
 
-Key projects showcasing expertise in enterprise software development
+### bKash App (Featured)
 
-### bKash App
+bkash App for bKash Limited. Mobile Financial Service
 
-bkash Limited (via Exabyting)
+Client: bkash Limited (via Exabyting)
 
 bKash is a leading mobile financial service in Bangladesh that allows users to perform instant money transfers, bill payments, mobile recharges, and merchant transactions securely from their smartphones.
 
 *   Built and maintained scalable microservices using Java (11–21) and Spring Boot, exposing RESTful APIs and integrating third-party services
 *   Implemented modern concurrency solutions, including Virtual Threads and reactive programming
 *   Developed full-stack features using Thymeleaf for dynamic UI rendering
+*   Integrated and managed AWS services (EC2, S3, SNS, SQS) for cloud-based deployments
+*   Worked with DynamoDB, optimizing data access and performance
+*   Designed systems with clean architecture principles and maintainable code practices
+*   Improved system resilience using Circuit Breaker, TimeLimiter, and fault-tolerant design
+*   Collaborated in Agile teams, contributing to sprint planning, code reviews, and production support
+*   Built internal tools and automation utilities to improve developer productivity
+*   Performed performance tuning, debugging, and optimization for high-traffic applications
+*   Migrated Spring Boot 2 → 3 services, handling javax → jakarta transition, JAXB upgrades, and AWS SDK v1 → v2 migration
+*   Rewrote DynamoDB layer using DynamoDBEnhancedClient, implementing GSI queries and custom AttributeConverters
 
-Java (Spring Boot)
+Technologies: Java (Spring Boot), Spring Boot Web Flux, Spring Boot Web Client, DynamoDB, Redis, Kafka, AWS - S3, EC2, SNS, SQS, gRPC, REST API, Localstack, Docker, Kubernetes
 
-Spring Boot Web Flux
+Link: https://play.google.com/store/apps/details?id=com.bKash.customerapp&hl=en
 
-Spring Boot Web Client
+### Tesenso MW (Featured)
 
-DynamoDB
+An IoT Based Project
 
-+8
-
-[View on Google Play](https://play.google.com/store/apps/details?id=com.bKash.customerapp&hl=en)
-
-### Tesenso MW
-
-Tesenso (via SELISE)
+Client: Tesenso (via SELISE)
 
 An IoT project developed for a company that produces electrical vehicles and spaceships. Multi-tenant and multi-role-based platform handling millions of data points. Extended ThingsBoard with custom features, implemented MBUS decoder, designed custom rule nodes, and orchestrated Swisscom integration.
 
 *   Handles millions of IoT data points
 *   Multi-tenant architecture
 *   Real-time WebSocket updates
+*   Custom rule nodes for enhanced functionality
+*   Optimized time-series data handling
 
-Java (Spring Boot)
+Technologies: Java (Spring Boot), PostgreSQL, Cassandra, TimescaleDB, Kafka, RabbitMQ, Redis, Angular, WebSocket, MQTT, CoAP, SNMP
 
-PostgreSQL
+Link: https://tesenso.ch
 
-Cassandra
+### AI Query System from S3 Data (Featured)
 
-TimescaleDB
+RAG-based natural language search over S3 documents
 
-+8
-
-[Visit Website](https://tesenso.ch/)
-
-### AI Query System from S3 Data
-
-Personal Project — Open Source
+Client: Personal Project — Open Source
 
 A RAG pipeline that answers natural-language queries over documents stored in S3 — chunking, embeddings, vector search, and LLM-grounded answers. Public repository, documented end-to-end in an accompanying Medium deep-dive.
 
@@ -358,21 +213,15 @@ A RAG pipeline that answers natural-language queries over documents stored in S3
 *   Full RAG pipeline: chunking → embeddings → vector search → grounded answers
 *   Written up as a Medium engineering deep-dive
 
-Python
+Technologies: Python, RAG, OpenSearch (Vector Search), Embeddings, AWS S3, LLM Integration
 
-RAG
+Link: https://github.com/towfiq-ul/ai-query-system-from-s3-data
 
-OpenSearch (Vector Search)
+### laravel-gitstamp (Featured)
 
-Embeddings
+Deploy-time git version stamping for Laravel
 
-+2
-
-[View on GitHub](https://github.com/towfiq-ul/ai-query-system-from-s3-data)
-
-### laravel-gitstamp
-
-Morph Technologies (m-tech-org) — Open Source
+Client: Morph Technologies (m-tech-org) — Open Source
 
 Authored and maintained Laravel package that generates a deploy-time version stamp (date + short git SHA) with helpers to display it in your app. MIT-licensed, CI-tested across Laravel 10–12 with runtime support back to Laravel 9.
 
@@ -380,17 +229,15 @@ Authored and maintained Laravel package that generates a deploy-time version sta
 *   CI matrix across Laravel 10, 11, and 12
 *   MIT-licensed and installable via Composer
 
-PHP (Laravel)
+Technologies: PHP (Laravel), Composer, GitHub Actions CI
 
-Composer
+Link: https://github.com/m-tech-org/laravel-gitstamp
 
-GitHub Actions CI
+### Aerotia International (Featured)
 
-[View on GitHub](https://github.com/m-tech-org/laravel-gitstamp)
+CMS-driven corporate website for an aviation & marine solutions distributor
 
-### Aerotia International
-
-Aerotia International — Freelance (Morph Technologies)
+Client: Aerotia International — Freelance (Morph Technologies)
 
 CMS-driven public website for Aerotia International, an authorized distributor of aviation and marine solutions. Laravel 12 (PHP 8.2) JSON API with a Blade-based admin/CMS for managing content, and a React 18 + TypeScript frontend — delivered end-to-end as a freelance engagement under Morph Technologies (m-tech-org).
 
@@ -398,21 +245,43 @@ CMS-driven public website for Aerotia International, an authorized distributor o
 *   Laravel 12 REST API + admin CMS managing all site content
 *   React 18 + TypeScript + Vite frontend, independently deployed
 
-PHP (Laravel 12)
+Technologies: PHP (Laravel 12), React 18, TypeScript, Vite, MySQL
 
-React 18
+Link: https://aerotia.com
 
-TypeScript
+### Aerotia Accounting (Featured)
 
-Vite
+Ledger/accounting admin portal for Aerotia International
 
-+1
+Client: Aerotia International — Freelance (Morph Technologies)
 
-[Visit Website](https://aerotia.com/)
+Laravel 9 ledger/accounting tool for Aerotia International tracking organizations, projects, and project costs, with a server-rendered Blade admin panel — CRUD for organizations, projects, cost types, and costs, plus a dashboard and admin-user management.
+
+*   Full admin panel with dashboard and cost tracking
+*   Dockerized local dev (MySQL, Mailpit, Adminer)
+*   Dogfoods the self-authored laravel-gitstamp package
+
+Technologies: PHP (Laravel 9), MySQL, Blade, Vite, Docker
+
+### HRMS — User & Role Management
+
+Modular Laravel RBAC modules
+
+Client: Morph Technologies (m-tech-org)
+
+Modular Laravel implementation of user management and role management with full RBAC — self-contained drop-in modules with their own controllers, repositories, services, policies, form requests, migrations, and seeders, wired via service providers.
+
+*   Full RBAC: roles, permissions, and policies
+*   Drop-in module architecture with service providers
+*   Layered repository/service design
+
+Technologies: PHP (Laravel), MySQL, REST API
 
 ### FDPS
 
-IMTF (via SELISE)
+Financial Document Processing System
+
+Client: IMTF (via SELISE)
 
 A financial document processing system providing a proxy route system for a renowned financial organization, making their workflow more efficient.
 
@@ -420,75 +289,166 @@ A financial document processing system providing a proxy route system for a reno
 *   Proxy routing system
 *   High-volume transaction handling
 
-Java (Apache Camel)
+Technologies: Java (Apache Camel), Kafka, Active MQ
 
-Kafka
+### Urstamm
 
-Active MQ
+Swiss Date Wood with Digital Proof of Origin
 
-View All 14 Projects
+Client: Switzerland-based Digital Solution Company (via SELISE)
+
+A project focusing on sustainable wood sourcing with blockchain integration for secure data storage. Achieved 20% performance enhancement and developed comprehensive batch process pipeline for legacy data migration.
+
+*   Blockchain integration for data integrity
+*   20% performance improvement
+*   Supply chain visualization
+*   Fault-tolerant transaction system
+*   0.5GB legacy data migration to blockchain
+
+Technologies: Java 11, Spring Boot, Web3J, PostgreSQL, Spring Batch, Blockchain
+
+### Agent App MW
+
+bK-MFS Agent App Middleware
+
+Client: bK-MFS Limited
+
+Middleware service supporting bK-MFS Agent App, one of the most popular financial apps for bK-MFS Agents. Implemented Pay Bill service integration.
+
+*   Core product of bK-MFS Limited
+*   High-availability architecture
+*   AWS cloud infrastructure
+
+Technologies: Java (Spring Boot), DynamoDB, AWS, Firebase
+
+### AMS
+
+Airtime Management System (AMS)
+
+Client: bK-MFS Limited
+
+Internal web application for automated airtime management. Features automated CSV/XLS/PDF generation, financial calculations, and email notifications.
+
+*   Automated SFTP operations
+*   Maker-checker approval flow
+*   Async email notifications
+*   Logback integration
+
+Technologies: Java (Spring Boot), Oracle, JavaScript
+
+### Saving-DPS
+
+Saving-DPS
+
+Client: bK-MFS Limited
+
+Internal service for bK-MFS App allowing customers to open DPS (Deposit Pension Scheme) accounts.
+
+*   Customer-facing feature
+*   Integrated with bK-MFS App
+*   Secure financial transactions
+
+Technologies: Java (Spring Boot), MySQL, AWS, JavaScript
+
+### MULTIBANK
+
+MULTIBANK
+
+Client: bK-MFS Limited
+
+Internal web application for automated bank transactions. Features SFTP inbound/outbound, configurable email notifications, and maker-checker approval flow.
+
+*   Automated SFTP operations
+*   Multi-bank integration
+*   Async email system
+*   Financial report generation
+
+Technologies: Java (Spring Boot), Spring Integration, MySQL, jQuery
+
+### PREVENTO
+
+PREVENTO
+
+Client: Exabyting
+
+Healthcare app creating personalized health care plans based on user information (gender, age, height, weight, diagnosed illnesses, risk factors). Includes doctor messaging feature.
+
+*   Personalized healthcare plans
+*   Doctor-patient messaging
+*   Monthly task assignments
+*   Medical partner integration
+
+Technologies: PHP (Laravel), MySQL, AWS, jQuery, Google Analytics, Firebase
+
+### HR ACR
+
+HR ACR
+
+Client: Ministry of ICT
+
+Application for Ministry of ICT for generating Annual Confidential Report of employees.
+
+*   Government project
+*   Automated report generation
+*   Employee performance tracking
+
+Technologies: PHP (Laravel), MySQL, Docker, jQuery
+
+### IMS - Inventory Management System
+
+IMS - Inventory Management System
+
+Client: Electoral Training Institute
+
+Inventory management system for managing different types of products, stock, purchases, and tracking distributed items.
+
+*   Complete inventory tracking
+*   Purchase management
+*   Distribution tracking
+
+Technologies: PHP (Laravel), MySQL, Docker, jQuery
 
 ## Writing
 
-Engineering deep-dives on real systems — debugging, hardening, and lessons learned
-
 ### From a Leaked API Key in the Browser to a Hardened Edge Proxy
 
-Medium
+Medium — https://medium.com/@towfiq106/from-a-leaked-api-key-in-the-browser-to-a-hardened-edge-proxy-building-the-ai-assistant-on-my-3684973ecd3d
 
 How this site's floating AI assistant went from an API key sitting in plaintext in the shipped JS bundle to a Cloudflare Worker that validates, clamps, rate-limits, times out, and benchmarks its own model choice.
 
-[Read Article](https://medium.com/@towfiq106/from-a-leaked-api-key-in-the-browser-to-a-hardened-edge-proxy-building-the-ai-assistant-on-my-3684973ecd3d)
-
 ### A Natural Language Search Engine Over S3 Documents
 
-Medium
+Medium — https://medium.com/@towfiq106/a-natural-language-search-engine-over-s3-documents-d6321704290d
 
 Building a RAG pipeline that answers natural-language queries over documents stored in S3 — chunking, embeddings, vector search, and everything learned along the way.
 
-[Read Article](https://medium.com/@towfiq106/a-natural-language-search-engine-over-s3-documents-d6321704290d)
-
 ## Education
 
-### B.Sc. in Computer Science & Engineering
+*   B.Sc. in Computer Science & Engineering — International Islamic University Chittagong (IIUC) (2014 - 2019)
 
-International Islamic University Chittagong (IIUC)
+*   Higher Secondary Certificate (HSC) — Government City College, Chittagong (2011 - 2013)
 
-2014 - 2019
-
-### Higher Secondary Certificate (HSC)
-
-Government City College, Chittagong
-
-2011 - 2013
-
-### Secondary School Certificate (SSC)
-
-Government Muslim High School, Chittagong
-
-2005 - 2010
+*   Secondary School Certificate (SSC) — Government Muslim High School, Chittagong (2005 - 2010)
 
 ## Awards & Achievements
-
-Recognition in competitive programming and coaching
 
 ### Team Award as Coach - IIUC IUPC 2017
 
 Team CJC_TEAM_1971 Ranked 2nd Position
 
-[View Details](https://goo.gl/DJnuAy)
+Link: https://goo.gl/DJnuAy
 
 ### Team Award as Coach - EDU Programming Contest 2018
 
 Team CJC_TEAM_1971 Ranked 5th Position
 
-[View Details](https://goo.gl/JTPNuu)
+Link: https://goo.gl/JTPNuu
 
 ### CSE Week Programming Contest 2016
 
 5th Position
 
-[View Details](https://algo.codemarshal.org/contests/cseweek-2016/standings)
+Link: https://algo.codemarshal.org/contests/cseweek-2016/standings
 
 ### Competitive Programming
 
@@ -496,117 +456,59 @@ Participated in divisional onsite contests: IIUC IUPC 2015, 2016, USTC IUPC 2016
 
 ## Open Source Contributions
 
-Contributing to the developer community
-
-### laravel-gitstamp
-
-Maintained
+### laravel-gitstamp (Maintained)
 
 Laravel package that generates a deploy-time version stamp (date + short git SHA) with helpers to display it in your app. MIT-licensed, CI-tested across Laravel 10–12 (runtime support back to Laravel 9). Published under Morph Technologies (m-tech-org).
 
-Author & Maintainer
+Contribution: Author & Maintainer
 
-[View on GitHub](https://github.com/m-tech-org/laravel-gitstamp)
+Link: https://github.com/m-tech-org/laravel-gitstamp
 
-### jmbus
-
-Maintained
+### jmbus (Maintained)
 
 Java library for the M-Bus (Meter-Bus) protocol — a JNA wrapper around the C libmbus library, bundling a compiled libmbus with Maven/Gradle builds and Maven Central publishing prepared. Grew out of the MBUS decoder work on the Tesenso IoT platform.
 
-Author & Maintainer
+Contribution: Author & Maintainer
 
-[View on GitHub](https://github.com/towfiq-ul/jmbus)
+Link: https://github.com/towfiq-ul/jmbus
 
-### ThingsBoard
-
-Merged
+### ThingsBoard (Merged)
 
 Open-source IoT platform for data collection, processing, visualization, and device management
 
-Pull Request #6614
+Contribution: Pull Request #6614
 
-[View on GitHub](https://github.com/thingsboard/thingsboard/pull/6614)
+Link: https://github.com/thingsboard/thingsboard/pull/6614
 
-### Tech Companies in Bangladesh
-
-Merged
+### Tech Companies in Bangladesh (Merged)
 
 Curated list of tech companies in Bangladesh for job seekers and professionals
 
-Pull Request #44
+Contribution: Pull Request #44
 
-[View on GitHub](https://github.com/MBSTUPC/tech-companies-in-bangladesh/pull/44)
+Link: https://github.com/MBSTUPC/tech-companies-in-bangladesh/pull/44
 
 ## Certifications
 
-Verified credentials from HackerRank and Coursera
+*   Java (Intermediate) — HackerRank — verify: https://www.hackerrank.com/certificates/2dbd243f96fc
 
-### Java (Intermediate)
+*   C++ (Advanced) — HackerRank — verify: https://www.hackerrank.com/certificates/58f2ef361f01
 
-HackerRank
+*   Python (Basic) — HackerRank — verify: https://www.hackerrank.com/certificates/3ea76f9af5fb
 
-[Verify Certificate](https://www.hackerrank.com/certificates/2dbd243f96fc)
+*   R Programming — Johns Hopkins University (Coursera) (June 2018) — verify: https://www.coursera.org/account/accomplishments/verify/CSJF89LAMLTD
 
-### C++ (Advanced)
+*   Neural Networks and Deep Learning — DeepLearning.AI (Coursera) (June 2018) — verify: https://www.coursera.org/account/accomplishments/verify/EDLCKETBUTPD
 
-HackerRank
+*   The Data Scientist's Toolbox — Johns Hopkins University (Coursera) (May 2018) — verify: https://www.coursera.org/account/accomplishments/verify/D9ZUP2WY23XX
 
-[Verify Certificate](https://www.hackerrank.com/certificates/58f2ef361f01)
+*   Introduction to Cyber Attacks — New York University (Coursera) (May 2018) — verify: https://www.coursera.org/account/accomplishments/verify/7LFQBMTBUUV8
 
-### Python (Basic)
+## Contact
 
-HackerRank
-
-[Verify Certificate](https://www.hackerrank.com/certificates/3ea76f9af5fb)
-
-### R Programming
-
-Johns Hopkins University (Coursera)
-
-June 2018
-
-[Verify Certificate](https://www.coursera.org/account/accomplishments/verify/CSJF89LAMLTD)
-
-### Neural Networks and Deep Learning
-
-DeepLearning.AI (Coursera)
-
-June 2018
-
-[Verify Certificate](https://www.coursera.org/account/accomplishments/verify/EDLCKETBUTPD)
-
-### The Data Scientist's Toolbox
-
-Johns Hopkins University (Coursera)
-
-May 2018
-
-[Verify Certificate](https://www.coursera.org/account/accomplishments/verify/D9ZUP2WY23XX)
-
-### Introduction to Cyber Attacks
-
-New York University (Coursera)
-
-May 2018
-
-[Verify Certificate](https://www.coursera.org/account/accomplishments/verify/7LFQBMTBUUV8)
-
-## Let's Connect
-
-I'm always open to discussing new projects, creative ideas, or opportunities to be part of your visions.
-
-Email Me[LinkedIn](https://www.linkedin.com/in/towfiq106)[GitHub](https://github.com/towfiq-ul)[Call Me](tel:+8801823923023)[Stack Overflow](https://stackoverflow.com/users/6688908/towfiqul-islam)
-
-Crafted with passion and precision.
-© 2018-2026 Towfiqul Islam. All rights reserved.
-
-Open source at [Morph Technologies (m-tech-org)](https://github.com/m-tech-org)
-
-### Towfiqul's AI Assistant
-
-Hi! I'm Towfiqul's AI Assistant. How can I help you today?
-
-1
-
-0
+*   Email: towfiq.106@gmail.com
+*   Phone/WhatsApp: +8801823923023
+*   LinkedIn: https://www.linkedin.com/in/towfiq106
+*   GitHub: https://github.com/towfiq-ul
+*   Stack Overflow: https://stackoverflow.com/users/6688908/towfiqul-islam
+*   Open source organization: Morph Technologies — https://github.com/m-tech-org

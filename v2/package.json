@@ -6,7 +6,8 @@
   "scripts": {
     "start": "vite",
     "build": "tsc && vite build",
-    "sync": "npx tsx --env-file=.env scripts/scrape-website-context.js"
+    "sync": "npx tsx --env-file=.env scripts/scrape-website-context.js",
+    "sync:local": "npx tsx scripts/generate-website-context.js"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
