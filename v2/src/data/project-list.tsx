@@ -43,6 +43,7 @@ export const projects: Project[] = [
             "Migrated Spring Boot 2 → 3 services, handling javax → jakarta transition, JAXB upgrades, and AWS SDK v1 → v2 migration",
             "Rewrote DynamoDB layer using DynamoDBEnhancedClient, implementing GSI queries and custom AttributeConverters",
         ],
+        link: "https://play.google.com/store/apps/details?id=com.bKash.customerapp&hl=en",
     },
     {
         name: "Tesenso MW",
@@ -71,6 +72,7 @@ export const projects: Project[] = [
             "Custom rule nodes for enhanced functionality",
             "Optimized time-series data handling",
         ],
+        link: "https://tesenso.ch",
     },
     {
         name: "AI Query System from S3 Data",

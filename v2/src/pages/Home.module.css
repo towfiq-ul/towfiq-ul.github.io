@@ -778,6 +778,12 @@
     gap: var(--space-6);
 }
 
+.showAllProjects {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--space-8);
+}
+
 .projectCard {
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(20px);
@@ -811,6 +817,8 @@
     background: radial-gradient(circle, var(--color-accent-6) 0%, transparent 70%);
     opacity: 0;
     transition: opacity 0.5s var(--ease);
+    /* decorative glow must not swallow clicks on card links */
+    pointer-events: none;
 }
 
 .projectCard:hover::before {

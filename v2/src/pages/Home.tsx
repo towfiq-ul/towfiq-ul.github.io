@@ -14,6 +14,7 @@ import {
     TrendingUp
 } from "lucide-react";
 import {Badge} from "../components/ui/badge/badge";
+import {Button} from "../components/ui/button/button";
 import {SectionHeader} from "../components/section-header";
 import {Navbar} from "../components/navbar/navbar";
 import {SkillModal} from "../components/skill-modal/skill-modal";
@@ -31,6 +32,7 @@ import {TRIGGER_AI_CHAT, TRIGGER_EMAIL_ME, TRIGGER_WHATSAPP_ME} from "../config/
 
 export default function Home() {
     const [selectedSkill, setSelectedSkill] = useState<{ category: string; skills: string[] } | null>(null);
+    const [showAllProjects, setShowAllProjects] = useState(false);
     const totalExp = calculateTotalExperience(workExperience);
     const totalProjects = projects.length;
     const totalTechnologies = 20;
@@ -295,7 +297,7 @@ export default function Home() {
                     subtitle="Key projects showcasing expertise in enterprise software development"
                 />
                 <div className={styles.projectsGrid}>
-                    {projects.slice(0, 6).map((project, index) => (
+                    {(showAllProjects ? projects : projects.slice(0, 6)).map((project, index) => (
                         <div key={index} className={styles.projectCard} style={{animationDelay: `${index * 0.1}s`}}>
                             <div className={styles.projectHeader}>
                                 <h3 className={styles.projectName}>{project.name}</h3>
@@ -327,13 +329,26 @@ export default function Home() {
                             {project.link && (
                                 <a href={project.link} target="_blank" rel="noopener noreferrer"
                                    className={styles.awardLink}>
-                                    {project.link.includes("github.com") ? "View on GitHub" : "Visit Website"}
+                                    {project.link.includes("github.com")
+                                        ? "View on GitHub"
+                                        : project.link.includes("play.google.com")
+                                            ? "View on Google Play"
+                                            : "Visit Website"}
                                     {" "}<ExternalLink size={14}/>
                                 </a>
                             )}
                         </div>
                     ))}
                 </div>
+                {projects.length > 6 && (
+                    <div className={styles.showAllProjects}>
+                        <Button variant="outline" onClick={() => setShowAllProjects(!showAllProjects)}>
+                            {showAllProjects
+                                ? "Show Featured Only"
+                                : `View All ${projects.length} Projects`}
+                        </Button>
+                    </div>
+                )}
             </section>
 
             {/* Writing Section */}
