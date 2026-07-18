@@ -2,7 +2,7 @@ Title: Towfiqul Islam — Senior Software Engineer
 
 URL Source: https://towfiq-ul.github.io/
 
-Generated: Sat, 18 Jul 2026 20:11:56 GMT (locally from src/data, full content)
+Generated: Sat, 18 Jul 2026 20:23:55 GMT (locally from src/data, full content)
 
 Markdown Content:
 
@@ -321,6 +321,8 @@ Middleware service supporting bK-MFS Agent App, one of the most popular financia
 
 Technologies: Java (Spring Boot), DynamoDB, AWS, Firebase
 
+Link: https://play.google.com/store/apps/details?id=com.bkash.businessapp&hl=en
+
 ### AMS
 
 Airtime Management System (AMS)
@@ -379,6 +381,8 @@ Healthcare app creating personalized health care plans based on user information
 *   Medical partner integration
 
 Technologies: PHP (Laravel), MySQL, AWS, jQuery, Google Analytics, Firebase
+
+Link: https://play.google.com/store/apps/details?id=com.nihs.prevento
 
 ### HR ACR
 

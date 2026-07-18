@@ -181,6 +181,7 @@ export const projects: Project[] = [
         description:
             "Middleware service supporting bK-MFS Agent App, one of the most popular financial apps for bK-MFS Agents. Implemented Pay Bill service integration.",
         highlights: ["Core product of bK-MFS Limited", "High-availability architecture", "AWS cloud infrastructure"],
+        link: "https://play.google.com/store/apps/details?id=com.bkash.businessapp&hl=en",
     },
     {
         name: "AMS",
@@ -231,6 +232,7 @@ export const projects: Project[] = [
             "Monthly task assignments",
             "Medical partner integration",
         ],
+        link: "https://play.google.com/store/apps/details?id=com.nihs.prevento",
     },
     {
         name: "HR ACR",
