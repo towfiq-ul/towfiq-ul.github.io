@@ -1,16 +1,44 @@
-# Makefile
+# Makefile — app workflows + release tagging for towfiq-ul.github.io
 
 # Variables
 TAG_NUMBER_FILE = .tag_number
 BRANCH_NAME ?= master
+APP_DIR = v2
 
 # Prevent make from treating the targets as files
-.PHONY: all increment_version commit_changes create_tag push push_tags deploy run clean help
+.PHONY: all install run build sync deploy increment_version commit_changes create_tag push push_tags clean help
 
-# Default target
-all: increment_version commit_changes create_tag push push_tags
+# Default target: validate the build, then version, commit, tag, and push
+all: build increment_version commit_changes create_tag push push_tags
 
-# Increment version number
+# --- App workflows ---
+
+# Install frontend dependencies
+install:
+	@cd $(APP_DIR) && npm install
+
+# Run the local dev environment (frontend + local AI proxy Worker)
+run:
+	@./run.sh
+
+# Typecheck + production build (outputs to ./build; prebuild hook
+# regenerates public/WEBSITE_CONTEXT.md from src/data automatically)
+build:
+	@cd $(APP_DIR) && npm run build
+
+# Regenerate the AI chat context from src/data without building
+sync:
+	@cd $(APP_DIR) && npm run sync:local
+
+# Deploy the AI proxy Worker to Cloudflare (frontend deploys to GitHub
+# Pages automatically via .github/workflows/deploy.yml on push)
+deploy:
+	@cd $(APP_DIR)/workers && npx wrangler deploy
+	@echo "AI proxy Worker deployed to Cloudflare."
+
+# --- Release tagging ---
+
+# Increment version number (patch bump from the latest git tag)
 increment_version:
 	@latest_tag=$$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0"); \
 	if [ "$$latest_tag" = "v0.0.0" ]; then \
@@ -28,12 +56,18 @@ increment_version:
 	echo "New tag: $$TAG_NUMBER"; \
 	echo "$$TAG_NUMBER" > $(TAG_NUMBER_FILE);
 
-
-# Commit the changes with the given message
+# Commit all working-tree changes with the version message.
+# WARNING: stages everything (git add -A) — review `git status` first so
+# scratch files (feedback.md, notes) don't ride along.
 commit_changes:
-	@$(call check_tag_number) \
-    rm $(TAG_NUMBER_FILE); \
-	echo "$$TAG_NUMBER" > $(TAG_NUMBER_FILE);
+	@$(call check_tag_number); \
+	git add -A; \
+	git status --short; \
+	if git diff --cached --quiet; then \
+		echo "Nothing to commit."; \
+	else \
+		git commit -m "updated to $$TAG_NUMBER"; \
+	fi
 
 # Create a git tag with the given tag number
 create_tag:
@@ -47,8 +81,8 @@ else
 	rm -f $(TAG_NUMBER_FILE)
 endif
 
-
-# Push the changes to the origin branch
+# Push the changes to the origin branch (this deploys: GitHub Pages ships
+# from every push to master)
 push:
 	@git pull origin $(BRANCH_NAME)
 	@git status
@@ -60,40 +94,31 @@ push_tags:
 	@git push --tags
 	@echo "All tags pushed to remote."
 
-# Deploy the AI proxy Worker to Cloudflare (frontend/build deploy to GitHub
-# Pages happens automatically via .github/workflows/deploy.yml on push)
-deploy:
-	@cd v2/workers && npx wrangler deploy
-	@echo "AI proxy Worker deployed to Cloudflare."
-
-# Run the local dev environment (frontend + local AI proxy Worker)
-run:
-	@./run.sh
-
 # Clean up
 clean:
 	@echo "Cleaning up..."
 	@git reset --soft HEAD
 	@echo "Cleanup done."
-	@rm $(TAG_NUMBER_FILE)
-
+	@rm -f $(TAG_NUMBER_FILE)
 
 # Help message
 help:
-	@echo "Usage:"
-	@echo "  make update_version <tag_number>"
-	@echo "Targets:"
-	@echo "  all             	Updates version, commits changes, creates a tag, and pushes changes."
-	@echo "  increment_version	Increments the version in by 1 patch level."
-	@#echo "  update_version  Updates the version in pom.xml."
-	@echo "  commit_changes  	Commits the changes with a message."
-	@echo "  create_tag      	Creates a git tag."
-	@echo "  push            	Pushes changes to the origin branch."
-	@echo "  push_tags       	Pushes all tags to the remote repository."
-	@echo "  deploy          	Deploys the AI proxy Worker to Cloudflare."
-	@echo "  run         		Runs the local dev environment (frontend + local AI proxy Worker)."
-	@echo "  clean           	Resets changes to HEAD."
-
+	@echo "Usage: make <target>"
+	@echo ""
+	@echo "App workflows:"
+	@echo "  install          	Install frontend dependencies (v2)."
+	@echo "  run              	Run the local dev environment (frontend + local AI proxy Worker)."
+	@echo "  build            	Typecheck + production build to ./build (auto-regenerates AI context)."
+	@echo "  sync             	Regenerate public/WEBSITE_CONTEXT.md from src/data."
+	@echo "  deploy           	Deploy the AI proxy Worker to Cloudflare."
+	@echo ""
+	@echo "Release (make all = build + version + commit + tag + push):"
+	@echo "  increment_version	Increments the version by 1 patch level."
+	@echo "  commit_changes   	Commits ALL working-tree changes as 'updated to vX.Y.Z'."
+	@echo "  create_tag       	Creates a git tag (or 'make create_tag tag=vX.Y.Z')."
+	@echo "  push             	Pushes changes to the origin branch (deploys to production)."
+	@echo "  push_tags        	Pushes all tags to the remote repository."
+	@echo "  clean            	Soft-resets to HEAD and removes the tag file."
 
 define check_tag_number
 if [ -f $(TAG_NUMBER_FILE) ]; then \
