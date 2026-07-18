@@ -2,7 +2,7 @@ Title: Towfiqul Islam — Senior Software Engineer
 
 URL Source: https://towfiq-ul.github.io/
 
-Generated: Sat, 18 Jul 2026 20:09:06 GMT (locally from src/data, full content)
+Generated: Sat, 18 Jul 2026 20:11:56 GMT (locally from src/data, full content)
 
 Markdown Content:
 
