@@ -3,3 +3,15 @@ build
 test
 .wrangler
 *.txt
+
+# App (formerly v2/.gitignore)
+/.dazl/
+
+.DS_Store
+/node_modules/
+/.react-router/
+.env
+.dev.vars
+
+.netlify
+.vite

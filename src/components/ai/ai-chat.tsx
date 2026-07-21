@@ -1,14 +1,11 @@
-import {useEffect, useRef, useState} from 'react';
+import {useCallback, useEffect, useRef, useState, useSyncExternalStore} from 'react';
 import styles from "./ai-chat.module.css";
 import {CodeXml, Maximize2, MessageSquare, Minimize2, SendHorizontal, X} from "lucide-react";
 import Markdown from "react-markdown";
+import {ChatWidgetCore} from "chatling";
+import type {ChatMessage} from "chatling";
 import {ParsedMdContext} from "./parse-md-context";
 import {ParsePdfContext} from "./parse-pdf-context";
-
-type ChatCompletionMessageParam =
-    | { role: "system"; content: string }
-    | { role: "user"; content: string }
-    | { role: "assistant"; content: string };
 
 import {
     ACTION_TAG_EMAIL_ME,
@@ -22,20 +19,109 @@ interface AiChatProps {
     onClose?: () => void;
 }
 
+const GREETING: ChatMessage = {
+    role: "assistant",
+    content: "Hi! I'm Towfiqul's AI Assistant. How can I help you today?"
+};
+
+const CONNECTION_ERROR_MESSAGE = "I'm having trouble connecting. Please try again later.";
+
 export function FloatingChat({isChatOpen = true, onClose}: Readonly<AiChatProps>) {
-    const [context, setContext] = useState("");
     const [isOpen, setIsOpen] = useState(isChatOpen);
     const [isFullScreen, setIsFullScreen] = useState(false);
     const [input, setInput] = useState("");
-    const [isTyping, setIsTyping] = useState(false);
     const [isConnected, setIsConnected] = useState<boolean>(globalThis.navigator?.onLine ?? true);
-    const [messages, setMessages] = useState<ChatCompletionMessageParam[]>([
-        {role: "assistant", content: "Hi! I'm Towfiqul's AI Assistant. How can I help you today?"}
-    ]);
     const YES_BUTTON_TEXT = "Yes, thanks!"
     const NO_BUTTON_TEXT = "No, thanks!"
     const scrollRef = useRef<HTMLDivElement>(null);
     const [pendingAction, setPendingAction] = useState<string | null>(null);
+
+    // Grounding context (RULESET + CV + website context + knowledge doc) loads
+    // asynchronously after mount; kept in a ref rather than state so the
+    // transport closure below (created once, at ChatWidgetCore construction
+    // time) always reads the latest value without needing to be recreated.
+    const contextRef = useRef("");
+
+    // ChatWidgetCore (from the `chatling` package) owns message history, the
+    // in-flight/loading flag, and send orchestration — everything else here
+    // (open/closed state, full-screen, the confirm-action prompt, the whole
+    // JSX/CSS) stays exactly as it was so the widget's look, position, and
+    // behavior are unchanged. The custom transport below replicates the
+    // previous fetch contract (system prompt assembled client-side, model +
+    // temperature per request) so the existing Cloudflare Worker needs no
+    // changes.
+    const coreRef = useRef<ChatWidgetCore | null>(null);
+    if (coreRef.current === null) {
+        // Reset any previously persisted history so every page load starts
+        // fresh with the greeting, matching prior (non-persisted) behavior.
+        try {
+            globalThis.localStorage?.removeItem("chatling:messages");
+        } catch {
+            // ignore
+        }
+
+        coreRef.current = new ChatWidgetCore(
+            {
+                initialMessages: [GREETING],
+                draggable: false,
+                workerUrl: import.meta.env.VITE_AI_PROXY_URL,
+            },
+            {
+                transport: async (messages, {workerUrl}) => {
+                    // The first stored message is the hardcoded UI greeting,
+                    // display-only and never a real model turn, so it's
+                    // dropped here — otherwise every request starts
+                    // system->assistant, which some providers reject.
+                    const conversationHistory = messages[0]?.role === "assistant"
+                        ? messages.slice(1)
+                        : messages;
+
+                    try {
+                        const res = await fetch(workerUrl, {
+                            method: "POST",
+                            headers: {"Content-Type": "application/json"},
+                            body: JSON.stringify({
+                                model: import.meta.env.VITE_OPEN_AI_MODEL,
+                                temperature: Number(import.meta.env.VITE_OPEN_AI_TEMPERATURE) || 1,
+                                messages: [
+                                    {role: "system", content: contextRef.current},
+                                    ...conversationHistory,
+                                ],
+                            }),
+                        });
+                        const completion = await res.json();
+                        const aiResponse: string = completion.choices[0].message.content;
+
+                        if (aiResponse.includes(ACTION_TAG_EMAIL_ME)) {
+                            setPendingAction(TRIGGER_EMAIL_ME);
+                        } else if (aiResponse.includes(ACTION_TAG_WHATSAPP_ME)) {
+                            setPendingAction(TRIGGER_WHATSAPP_ME);
+                        }
+
+                        setIsConnected(true);
+
+                        return aiResponse
+                            .replace(ACTION_TAG_WHATSAPP_ME, "").trim()
+                            .replace(ACTION_TAG_EMAIL_ME, "").trim();
+                    } catch (error) {
+                        console.error("AI Error:", error);
+                        setIsConnected(false);
+                        return CONNECTION_ERROR_MESSAGE;
+                    }
+                },
+            }
+        );
+    }
+
+    const subscribe = useCallback((onStoreChange: () => void) => {
+        const core = coreRef.current;
+        if (!core) return () => undefined;
+        return core.subscribe(onStoreChange);
+    }, []);
+    const getSnapshot = useCallback(() => coreRef.current!.getState(), []);
+    const chatState = useSyncExternalStore(subscribe, getSnapshot);
+    const messages = chatState.messages;
+    const isTyping = chatState.isLoading;
 
     useEffect(() => {
         setIsOpen(isChatOpen);
@@ -46,6 +132,8 @@ export function FloatingChat({isChatOpen = true, onClose}: Readonly<AiChatProps>
     // single chat message because `messages` was in the dependency array — that
     // was the main source of multi-second/minute lag per turn.
     useEffect(() => {
+        coreRef.current?.start();
+
         const handleOnline = () => setIsConnected(true);
         const handleOffline = () => setIsConnected(false);
         globalThis.addEventListener?.('online', handleOnline);
@@ -66,7 +154,7 @@ export function FloatingChat({isChatOpen = true, onClose}: Readonly<AiChatProps>
                 const mdContext = `AI Knowledge:\n${documentMdContext}`;
                 const fullContext = `${basePrompt}\n\n${pdfContext}\n\n${webContext}\n\n${mdContext}`;
 
-                setContext(fullContext);
+                contextRef.current = fullContext;
             } catch (error) {
                 console.error("Error initializing AI context:", error);
             }
@@ -78,6 +166,7 @@ export function FloatingChat({isChatOpen = true, onClose}: Readonly<AiChatProps>
             globalThis.removeEventListener?.('online', handleOnline);
             globalThis.removeEventListener?.('offline', handleOffline);
             clearInterval(interval);
+            coreRef.current?.destroy();
         };
     }, []);
 
@@ -112,66 +201,8 @@ export function FloatingChat({isChatOpen = true, onClose}: Readonly<AiChatProps>
         const textToSend = overrideInput || input;
         if (!textToSend.trim() || isTyping) return;
 
-        const userMsg: ChatCompletionMessageParam = {role: "user", content: textToSend};
-
-        setMessages(prev => [...prev, userMsg]);
         setInput("");
-        setIsTyping(true);
-
-        try {
-            // The first entry in `messages` is the hardcoded UI greeting
-            // ({role: "assistant", ...}) shown before any real turn happens.
-            // It's display-only and was never a real model turn, so it's
-            // dropped here — otherwise every request starts system->assistant,
-            // which some providers reject with "roles must alternate
-            // user/assistant/..." since the first non-system turn isn't "user".
-            const conversationHistory = messages.slice(1);
-
-            const res = await fetch(import.meta.env.VITE_AI_PROXY_URL, {
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({
-                    model: import.meta.env.VITE_OPEN_AI_MODEL,
-                    temperature: Number(import.meta.env.VITE_OPEN_AI_TEMPERATURE) || 1,
-                    messages: [
-                        {role: "system", content: context},
-                        ...conversationHistory,
-                        userMsg
-                    ],
-                }),
-            });
-            const completion = await res.json();
-
-            const aiResponse = completion.choices[0].message.content;
-
-            if (aiResponse) {
-                if (aiResponse.includes(ACTION_TAG_EMAIL_ME)) {
-                    setPendingAction(TRIGGER_EMAIL_ME);
-                } else if (aiResponse.includes(ACTION_TAG_WHATSAPP_ME)) {
-                    setPendingAction(TRIGGER_WHATSAPP_ME);
-                }
-
-                const cleanedResponse = aiResponse
-                    .replace(ACTION_TAG_WHATSAPP_ME, "").trim()
-                    .replace(ACTION_TAG_EMAIL_ME, "").trim();
-
-                const aiMsg: ChatCompletionMessageParam = {
-                    role: "assistant",
-                    content: cleanedResponse
-                };
-                setMessages(prev => [...prev, aiMsg]);
-            }
-            setIsConnected(true);
-        } catch (error) {
-            setIsConnected(false);
-            console.error("AI Error:", error);
-            setMessages(prev => [...prev, {
-                role: "assistant",
-                content: "I'm having trouble connecting. Please try again later."
-            }]);
-        } finally {
-            setIsTyping(false);
-        }
+        await coreRef.current!.sendMessage(textToSend);
     };
 
     return (

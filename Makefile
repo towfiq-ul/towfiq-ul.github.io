@@ -1,45 +1,66 @@
 # Makefile — app workflows + release tagging for towfiq-ul.github.io
+#
+# Run `make` or `make help` to list targets.
 
 # Variables
 TAG_NUMBER_FILE = .tag_number
 BRANCH_NAME ?= master
-APP_DIR = v2
+WORKER_DIR = workers
+
+# `make` with no target shows help instead of running the release pipeline —
+# safer default than accidentally tagging/pushing to production.
+.DEFAULT_GOAL := help
 
 # Prevent make from treating the targets as files
-.PHONY: all install run build sync deploy increment_version commit_changes create_tag push push_tags clean help
+.PHONY: all install run run-prod build typecheck preview sync sync-remote \
+        worker-dev worker-tail deploy increment_version commit_changes \
+        create_tag push push_tags clean help
 
-# Default target: validate the build, then version, commit, tag, and push
-all: build increment_version commit_changes create_tag push push_tags
+##@ Release
 
-# --- App workflows ---
+all: build increment_version commit_changes create_tag push push_tags ## Full release: build, version bump, commit, tag, push
 
-# Install frontend dependencies
-install:
-	@cd $(APP_DIR) && npm install
+##@ App workflows
 
-# Run the local dev environment (frontend + local AI proxy Worker)
-run:
+install: ## Install frontend dependencies
+	@npm install
+
+run: ## Run the local dev environment (frontend + local AI proxy Worker)
 	@./run.sh
 
-# Typecheck + production build (outputs to ./build; prebuild hook
-# regenerates public/WEBSITE_CONTEXT.md from src/data automatically)
-build:
-	@cd $(APP_DIR) && npm run build
+run-prod: ## Run only the frontend, pointed at the deployed production Worker
+	@./run.sh prod
 
-# Regenerate the AI chat context from src/data without building
-sync:
-	@cd $(APP_DIR) && npm run sync:local
+build: ## Typecheck + production build to ./build (auto-regenerates AI context)
+	@npm run build
 
-# Deploy the AI proxy Worker to Cloudflare (frontend deploys to GitHub
-# Pages automatically via .github/workflows/deploy.yml on push)
-deploy:
-	@cd $(APP_DIR)/workers && npx wrangler deploy
+typecheck: ## Fast typecheck only (tsc --noEmit), no bundling
+	@npx tsc --noEmit
+
+preview: build ## Build, then serve ./build locally via vite preview
+	@npx vite preview
+
+sync: ## Regenerate public/WEBSITE_CONTEXT.md from src/data
+	@npm run sync:local
+
+sync-remote: ## Legacy: scrape the live deployed site into WEBSITE_CONTEXT.md
+	@npm run sync
+
+##@ Cloudflare Worker (AI proxy)
+
+worker-dev: ## Run the Worker alone via wrangler dev (needs workers/.dev.vars)
+	@cd $(WORKER_DIR) && npx wrangler dev
+
+worker-tail: ## Tail live logs from the deployed Worker
+	@cd $(WORKER_DIR) && npx wrangler tail
+
+deploy: ## Deploy the AI proxy Worker to Cloudflare
+	@cd $(WORKER_DIR) && npx wrangler deploy
 	@echo "AI proxy Worker deployed to Cloudflare."
 
-# --- Release tagging ---
+##@ Release steps (used by `make all`)
 
-# Increment version number (patch bump from the latest git tag)
-increment_version:
+increment_version: ## Bump the patch version from the latest git tag
 	@latest_tag=$$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0"); \
 	if [ "$$latest_tag" = "v0.0.0" ]; then \
 		echo "Tags not found! Using default version v0.0.0"; \
@@ -56,10 +77,9 @@ increment_version:
 	echo "New tag: $$TAG_NUMBER"; \
 	echo "$$TAG_NUMBER" > $(TAG_NUMBER_FILE);
 
-# Commit all working-tree changes with the version message.
 # WARNING: stages everything (git add -A) — review `git status` first so
 # scratch files (feedback.md, notes) don't ride along.
-commit_changes:
+commit_changes: ## Commit ALL working-tree changes as 'updated to vX.Y.Z'
 	@$(call check_tag_number); \
 	git add -A; \
 	git status --short; \
@@ -69,8 +89,7 @@ commit_changes:
 		git commit -m "updated to $$TAG_NUMBER"; \
 	fi
 
-# Create a git tag with the given tag number
-create_tag:
+create_tag: ## Create a git tag (or 'make create_tag tag=vX.Y.Z')
 ifdef tag
 	@git tag "$(tag)"
 	@echo "Tag $(tag) created successfully."
@@ -81,44 +100,35 @@ else
 	rm -f $(TAG_NUMBER_FILE)
 endif
 
-# Push the changes to the origin branch (this deploys: GitHub Pages ships
-# from every push to master)
-push:
+push: ## Push commits to origin (deploys: GitHub Pages ships on push to master)
 	@git pull origin $(BRANCH_NAME)
 	@git status
 	@git push -u origin $(BRANCH_NAME)
 	@echo "Changes pushed to branch $(BRANCH_NAME)."
 
-# Push all tags to the remote repository
-push_tags:
+push_tags: ## Push all tags to the remote repository
 	@git push --tags
 	@echo "All tags pushed to remote."
 
-# Clean up
-clean:
-	@echo "Cleaning up..."
-	@git reset --soft HEAD
-	@echo "Cleanup done."
-	@rm -f $(TAG_NUMBER_FILE)
+##@ Housekeeping
 
-# Help message
-help:
-	@echo "Usage: make <target>"
+clean: ## Remove build artifacts (./build, Vite cache, tag file)
+	@echo "Removing build artifacts..."
+	@rm -rf build
+	@rm -rf node_modules/.vite
+	@rm -f $(TAG_NUMBER_FILE)
+	@echo "Cleanup done."
+
+help: ## Show this help
+	@awk 'BEGIN { \
+		FS = ":.*##"; \
+		printf "\n\033[1mtowfiq-ul.github.io\033[0m — Makefile targets\n"; \
+		printf "\nUsage:\n  make \033[36m<target>\033[0m\n"; \
+	} \
+	/^[a-zA-Z0-9_-]+:.*##/ { printf "  \033[36m%-18s\033[0m %s\n", $$1, $$2 } \
+	/^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } \
+	' $(MAKEFILE_LIST)
 	@echo ""
-	@echo "App workflows:"
-	@echo "  install          	Install frontend dependencies (v2)."
-	@echo "  run              	Run the local dev environment (frontend + local AI proxy Worker)."
-	@echo "  build            	Typecheck + production build to ./build (auto-regenerates AI context)."
-	@echo "  sync             	Regenerate public/WEBSITE_CONTEXT.md from src/data."
-	@echo "  deploy           	Deploy the AI proxy Worker to Cloudflare."
-	@echo ""
-	@echo "Release (make all = build + version + commit + tag + push):"
-	@echo "  increment_version	Increments the version by 1 patch level."
-	@echo "  commit_changes   	Commits ALL working-tree changes as 'updated to vX.Y.Z'."
-	@echo "  create_tag       	Creates a git tag (or 'make create_tag tag=vX.Y.Z')."
-	@echo "  push             	Pushes changes to the origin branch (deploys to production)."
-	@echo "  push_tags        	Pushes all tags to the remote repository."
-	@echo "  clean            	Soft-resets to HEAD and removes the tag file."
 
 define check_tag_number
 if [ -f $(TAG_NUMBER_FILE) ]; then \
@@ -135,6 +145,6 @@ else \
 fi
 endef
 
-# Handle arguments for the update_version target
+# Handle arguments for targets like `create_tag tag=vX.Y.Z`
 %:
 	@:

@@ -25,7 +25,6 @@ jobs:
 
     env:
       DEPLOY_USER: 'towfiq-ul'
-      APP_VERSION: 'v2'
 
     steps:
       - uses: actions/checkout@v4
@@ -36,15 +35,12 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Install packages
-        working-directory: ./${{ env.APP_VERSION }}
         run: npm install
 
       - name: Install dependencies
-        working-directory: ./${{ env.APP_VERSION }}
         run: npm ci
 
       - name: Build project
-        working-directory: ./${{ env.APP_VERSION }}
         run: npm run build
         env:
           VITE_EMAILJS_PUBLIC_KEY: ${{ secrets.VITE_EMAILJS_PUBLIC_KEY }}

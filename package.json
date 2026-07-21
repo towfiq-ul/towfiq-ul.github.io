@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
+    "chatling": "^0.3.0",
     "classnames": "^2.5.1",
     "cmdk": "^1.1.1",
     "embla-carousel-react": "^8.6.0",
