@@ -3,6 +3,7 @@ build
 test
 .wrangler
 *.txt
+CLAUDE.md
 
 # App (formerly v2/.gitignore)
 /.dazl/
