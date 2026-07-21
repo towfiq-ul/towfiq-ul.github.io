@@ -8,10 +8,10 @@ benchmarks its own model choice.*
 
 ## What the assistant actually does
 
-My portfolio ([towfiq-ul.github.io](https://towfiq-ul.github.io)) has a floating chat widget (`FloatingChat` in
-`v2/src/components/ai/ai-chat.tsx`) that answers questions about my background — recruiters and fellow developers ask it
-things like "what did he do at bKash" or "can I get his email," and it answers *only* from a grounded context, not from
-whatever the base model happens to know about the world.
+My portfolio ([towfiq-ul.github.io](https://towfiq-ul.github.io)) has a floating chat widget that answers questions
+about my background — recruiters and fellow developers ask it things like "what did he do at bKash" or "can I get his
+email," and it answers *only* from a grounded context, not from whatever the base model happens to know about the
+world.
 
 The behavioral contract lives in `public/RULESET.md`, not in the component code — it defines the persona ("Towfiqul's AI
 Assistant," strictly professional, never abusive, de-escalates rudeness), a hard grounding rule ("If a question isn't
@@ -374,6 +374,39 @@ from the per-turn message cap, because the grounding context (RULESET + PDF + we
 20–25k characters in production**, measured directly rather than guessed. It's fixed app content, not user input, so it
 earns a much higher budget than any individual conversation turn.
 
+## Version 5: extracting the widget into a published package (chatling)
+
+Commit `bf1801d` ("Swap AI chat to chatling, modernize Makefile, and flatten v2 into repo root") pulled the
+general-purpose parts of this widget — message history, send/loading orchestration, drag-to-reposition math, and a
+greeting-popup mechanism — out of this repo entirely and into a standalone, open-source npm package:
+**[chatling](https://www.npmjs.com/package/chatling)** ([source on GitHub](https://github.com/towfiq-ul/chatling)).
+
+chatling ships two integration paths: a zero-build `<chatling-widget>` Custom Element for plain HTML, or a
+framework-agnostic `mount()` function — plus, underneath either one, an exported `ChatWidgetCore` class that owns just
+the state machine (messages, loading flag, greeting scheduling) without opinions about how it's rendered. This
+portfolio uses the latter: it imports `ChatWidgetCore` directly and pairs it with the *existing* hand-built React
+UI/CSS described above, rather than adopting chatling's own default Shadow-DOM rendering. That distinction mattered for
+three concrete reasons:
+
+- **The fixed bottom-right bubble position, fullscreen toggle, and the `[ACTION:EMAIL_ME]` / `[ACTION:WHATSAPP_ME]`
+  confirm-button flow all had to stay pixel-identical** — chatling's own widget renders in a Shadow DOM with a
+  different (draggable, right-edge-centered) default position and no concept of a contact-action confirmation prompt.
+- **The Worker contract couldn't change.** chatling's *built-in* transport posts only `{ messages }` — no system
+  prompt, model, or temperature — on the theory that a consumer's Worker holds all of that server-side. This site's
+  existing Worker (described above) instead expects the client to assemble and send the system prompt every turn.
+  `ChatWidgetCore`'s constructor accepts a pluggable `transport` function for exactly this situation, so the swap kept
+  posting the same `{ model, temperature, messages: [system, ...history, user] }` shape the Worker already validates —
+  zero changes to `ai-proxy.js`.
+- **No unrequested behavior changes.** chatling persists chat history across reloads by default; this site clears that
+  storage key on mount so a refresh still resets to the greeting, matching the pre-chatling behavior exactly.
+
+One thing *was* adopted wholesale: chatling's own greeting-popup mechanism (`showGreeting` state, a default 1.2-second
+delay, and a 30-minute re-show cooldown) now drives the "Hello! How can I help you today?" nudge bubble next to the
+chat icon — the chat itself starts closed on load, where it previously defaulted to open.
+
+The net effect is dogfooding in the literal sense: the same package now published for anyone else to install is what
+answers questions about this CV, right now, on this page.
+
 ## Why a Cloudflare Worker specifically, not "some backend"
 
 - **No server to run.** The Worker deploys from the same repo via `wrangler`, alongside a static GitHub Pages site with
@@ -505,7 +538,8 @@ infrastructure.
 
 *Repo: [towfiq-ul.github.io](https://github.com/towfiq-ul/towfiq-ul.github.io) — key commits: `f4e9914` (initial
 integration), `f976994` (Cloudflare proxy introduced), `919e674` (latency fix + Worker hardening), `f36707e` (model
-benchmarking), `b5ed542` (local dev workflow), `3d6e18f` (Cloudflare Web Analytics).*
+benchmarking), `b5ed542` (local dev workflow), `3d6e18f` (Cloudflare Web Analytics), `bf1801d` (extracted into the
+[chatling](https://github.com/towfiq-ul/chatling) npm package).*
 
 ---
 Medium Post: [From a Leaked API Key in the Browser to a Hardened Edge Proxy: Building the AI Assistant on My Portfolio](https://medium.com/@towfiq106/from-a-leaked-api-key-in-the-browser-to-a-hardened-edge-proxy-building-the-ai-assistant-on-my-3684973ecd3d?sharedUserId=towfiq106)

@@ -19,7 +19,7 @@ infrastructure at **bKash**, Bangladesh's #1 mobile financial platform.
 
 **[towfiq-ul.github.io](https://towfiq-ul.github.io)**
 
-Sections: Hero · Overview · Skills · Work Experience · Projects · Education · Awards · Open Source · Contact
+Sections: Hero · Overview · Skills · Work Experience · Projects · Writing · Education · Awards · Open Source · Contact
 
 ---
 
@@ -32,6 +32,7 @@ Sections: Hero · Overview · Skills · Work Experience · Projects · Education
 | `build/` | Generated output (Vite build), served by GitHub Pages from `master`. Gitignored — never hand-edited, rebuilt on every push. |
 | `scripts/` | Build-time helper scripts (e.g. regenerating `public/WEBSITE_CONTEXT.md`). |
 | `prompts/` | Scaffolding-tool prompt docs — several are stale (see `CLAUDE.md`). |
+| `article/` | A published Medium engineering write-up on the AI chat's architecture, kept in-repo for reference (not part of the build). |
 
 ---
 
@@ -157,7 +158,8 @@ worker-tail, deploy, release, etc.).
 │   │   ├── portfolio-data.tsx  # ← edit this to update most content
 │   │   └── project-list.tsx
 │   ├── hooks/
-│   │   └── use-color-scheme.ts
+│   │   ├── use-color-scheme.tsx
+│   │   └── use-toast.tsx
 │   ├── pages/
 │   │   ├── Home.tsx
 │   │   ├── CV.tsx
@@ -167,6 +169,8 @@ worker-tail, deploy, release, etc.).
 │   │   ├── global.css
 │   │   ├── reset.css
 │   │   └── theme.css
+│   ├── utils/
+│   │   └── date-utils.tsx       # experience/duration formatting helpers
 │   ├── App.tsx
 │   └── main.tsx
 ├── workers/
@@ -238,7 +242,9 @@ make deploy
 - Dark / light mode
 - Interactive skill modal
 - Experience and stats charts (Recharts)
-- Floating AI chat assistant, grounded in resume/CV/site content, backed by a hardened Cloudflare Worker proxy
+- Floating AI chat assistant, grounded in resume/CV/site content, backed by a hardened Cloudflare Worker proxy —
+  starts closed with a chatling-powered greeting nudge, matching chatling's default timing/cooldown
+- Writing section linking out to published Medium engineering deep-dives
 - WhatsApp quick-contact widget
 - EmailJS contact form
 - CV download (jsPDF)

@@ -95,7 +95,7 @@ export const projects: Project[] = [
     {
         name: "laravel-gitstamp",
         subname: "Deploy-time git version stamping for Laravel",
-        client: "Morph Technologies (m-tech-org) — Open Source",
+        client: "Open Source and Co-Authored with Morph Technologies",
         technologies: ["PHP (Laravel)", "Composer", "GitHub Actions CI"],
         description:
             "Authored and maintained Laravel package that generates a deploy-time version stamp (date + short git SHA) with helpers to display it in your app. MIT-licensed, CI-tested across Laravel 10–12 with runtime support back to Laravel 9.",
@@ -108,9 +108,79 @@ export const projects: Project[] = [
         featured: true,
     },
     {
+        name: "chatling",
+        subname: "Floating AI chat widget npm package — now powering this site's own AI assistant",
+        client: "Personal Project — Open Source",
+        technologies: ["TypeScript", "Web Components", "Cloudflare Workers", "npm"],
+        description:
+            "A framework-agnostic floating AI chat assistant widget — draggable, persists across navigation/reloads, grounded only in content you provide. Ships as a <script>-tag Custom Element or a mount() function for any JS framework, paired with a Cloudflare Worker template that keeps the LLM API key off the browser.",
+        highlights: [
+            "Published npm package: framework-agnostic Custom Element + mount() API",
+            "Cloudflare Worker template with origin allowlisting and per-IP rate limiting",
+            "Dogfooded on this very site — its engine now drives the AI assistant here",
+        ],
+        link: "https://github.com/towfiq-ul/chatling",
+        featured: true,
+    },
+    {
+        name: "Google Drive Backup Utility",
+        subname: "Cross-platform backup daemon with client-side encryption",
+        client: "Co-Authored with Morph Technologies",
+        technologies: ["Python", "Google Drive API", "AES-256-GCM", "Docker"],
+        description:
+            "A one-binary backup daemon for files and databases (MySQL/MariaDB/PostgreSQL) with multiple storage destinations (Google Drive, Dropbox, OneDrive, email, scp), client-side AES-256-GCM encryption before upload, failure notifications (Telegram/Discord/Slack/email), and an optional desktop UI. Freemium — a Gumroad license key unlocks Pro features at runtime.",
+        highlights: [
+            "Client-side AES-256-GCM encryption — the remote only ever stores ciphertext",
+            "Multiple storage destinations with retry-with-backoff on failed uploads",
+            "One-command restore: list, download, and decrypt any backup",
+        ],
+        link: "https://gumroad.com/products/google-drive-backup-utility",
+        featured: true,
+    },
+    {
+        name: "claude-auto-resume",
+        subname: "Claude Code slash command that resumes sessions after usage limits",
+        client: "Personal Project — Open Source",
+        technologies: ["Bash", "Python", "Claude Code Hooks"],
+        description:
+            "A pair of Claude Code tools: /auto-resume, which waits until a given time and feeds an instruction back into a paused session, and claude-session-guardian, a Stop hook that detects the usage-limit banner itself and triggers auto-resume automatically — plus leaves a progress note, no manual step needed.",
+        highlights: [
+            "Stop-hook based automatic detection of the usage-limit banner",
+            "Resumes headlessly in offline mode when terminal injection isn't possible",
+        ],
+        link: "https://github.com/towfiq-ul/claude-auto-resume-command",
+    },
+    {
+        name: "claude-export-session",
+        subname: "Claude Code slash command for clean session transcript exports",
+        client: "Personal Project — Open Source",
+        technologies: ["Python", "Bash", "Claude Code Hooks"],
+        description:
+            "A /export-session command for Claude Code that saves the full session transcript to a consistently named file — unlike the built-in /export, it keeps tool output that /export collapses and never prompts for a filename.",
+        highlights: [
+            "Locates and parses the session's JSONL transcript directly",
+            "Preserves tool output the built-in /export collapses",
+        ],
+        link: "https://github.com/towfiq-ul/claude-export-session-command",
+    },
+    {
+        name: "environment-setup",
+        subname: "One-line installers and dev-environment scripts for a fresh Linux machine",
+        client: "Personal Project — Open Source",
+        technologies: ["Shell (Bash)"],
+        description:
+            "A collection of 50+ standalone shell scripts that bootstrap a fresh Linux dev machine — language/JDK version switching, database tooling (MySQL, Postgres, pgAdmin, DBeaver), Docker/K3D, cloud CLIs, IDEs, and Android platform tools — each runnable independently with a single `./script.sh`.",
+        highlights: [
+            "50+ independent, single-purpose install scripts",
+            "Covers JDK/PHP toolchain switching, DBs, Docker/K3D, IDEs, and Android tooling",
+            "No framework or config required — just run the script you need",
+        ],
+        link: "https://github.com/towfiq-ul/environment-setup",
+    },
+    {
         name: "Aerotia International",
         subname: "CMS-driven corporate website for an aviation & marine solutions distributor",
-        client: "Aerotia International — Freelance (Morph Technologies)",
+        client: "Aerotia International — Co-Authored with Morph Technologies",
         technologies: ["PHP (Laravel 12)", "React 18", "TypeScript", "Vite", "MySQL"],
         description:
             "CMS-driven public website for Aerotia International, an authorized distributor of aviation and marine solutions. Laravel 12 (PHP 8.2) JSON API with a Blade-based admin/CMS for managing content, and a React 18 + TypeScript frontend — delivered end-to-end as a freelance engagement under Morph Technologies (m-tech-org).",
@@ -125,7 +195,7 @@ export const projects: Project[] = [
     {
         name: "Aerotia Accounting",
         subname: "Ledger/accounting admin portal for Aerotia International",
-        client: "Aerotia International — Freelance (Morph Technologies)",
+        client: "Aerotia International — Co-Authored with Morph Technologies",
         technologies: ["PHP (Laravel 9)", "MySQL", "Blade", "Vite", "Docker"],
         description:
             "Laravel 9 ledger/accounting tool for Aerotia International tracking organizations, projects, and project costs, with a server-rendered Blade admin panel — CRUD for organizations, projects, cost types, and costs, plus a dashboard and admin-user management.",
@@ -217,6 +287,32 @@ export const projects: Project[] = [
             "Multi-bank integration",
             "Async email system",
             "Financial report generation",
+        ],
+    },
+    {
+        name: "bK-FinRec",
+        subname: "Financial reconciliation system (BanglaQR recon)",
+        client: "Bangladesh's #1 Unicorn MFS",
+        technologies: ["Java 21 (Spring Boot)", "Oracle", "Redis", "Thymeleaf", "LDAP"],
+        description:
+            "Financial reconciliation system built for Bangladesh's #1 Unicorn MFS, covering BanglaQR reconciliation — a server-rendered Thymeleaf application backed by Oracle and Redis-based sessions, with corporate LDAP authentication and audit logging shipped to a SIEM endpoint.",
+        highlights: [
+            "Corporate LDAP authentication with DB-backed roles/permissions",
+            "Custom AOP-based access-control annotations for view/add/edit/delete",
+            "Audit-event logging shipped to a SIEM endpoint",
+        ],
+    },
+    {
+        name: "PIN Reset MW",
+        subname: "Customer PIN reset middleware between Huawei CPS and a Mobile Financial Service",
+        client: "Bangladesh's #1 Unicorn MFS",
+        technologies: ["Java 21 (Spring Boot)", "SOAP", "REST", "JAXB", "DynamoDB", "Redis"],
+        description:
+            "Customer PIN Reset middleware built for Bangladesh's #1 Unicorn MFS — a Spring Boot SOAP+REST service sitting between Huawei CPS (the mobile-money core platform) and the PIN-reset flow, with WSDL/XSD-generated JAXB bindings for the CPS integration layer.",
+        highlights: [
+            "SOAP↔REST bridge to the Huawei CPS mobile-money core platform",
+            "JAXB codegen from WSDL/XSD for the CPS integration types",
+            "DynamoDB + Redis-backed local infrastructure",
         ],
     },
     {

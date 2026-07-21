@@ -2,7 +2,7 @@ Title: Towfiqul Islam — Senior Software Engineer
 
 URL Source: https://towfiq-ul.github.io/
 
-Generated: Tue, 21 Jul 2026 19:11:50 GMT (locally from src/data, full content)
+Generated: Tue, 21 Jul 2026 21:46:40 GMT (locally from src/data, full content)
 
 Markdown Content:
 
@@ -14,14 +14,14 @@ Senior Software Engineer
 
 ### Summary
 
-Senior Software Engineer with 7+ years designing and shipping high-throughput distributed systems for fintech and enterprise clients. Core expertise in Java/Spring Boot microservices, event-driven architecture with Kafka, and cloud-native infrastructure on AWS and Kubernetes. Currently building core payment platform components as Augmented Staff at Bangladesh's leading mobile financial service handling millions of daily transactions. Passionate about clean architecture, system reliability, and shipping things that scale.
+Senior Software Engineer with 7+ years designing and shipping high-throughput distributed systems for fintech and enterprise clients. Core expertise in Java/Spring Boot microservices, event-driven architecture with Kafka, and cloud-native infrastructure on AWS and Kubernetes. Currently building core payment platform components as Augmented Staff at Bangladesh's #1 Unicorn MFS, handling millions of daily transactions. Beyond client work, actively builds and publishes open-source developer tools — one of them now powers this portfolio's own AI assistant. Passionate about clean architecture, system reliability, and shipping things that scale.
 
 ### Key Highlights
 
 *   Impactful contribution in architecture design for bK-MFS financial platform handling millions of daily transactions
 *   Achieved 40% performance improvement through database optimization and caching strategies
 *   Mentored junior engineers on best practices and technical decision-making
-*   Contributed to open-source IoT platform ThingsBoard with merged pull requests
+*   Published and maintain multiple open-source tools (an npm chat-widget package, Claude Code command extensions, a Linux dev-environment toolkit) alongside a merged contribution to ThingsBoard
 *   Established CI/CD pipelines and coding standards improving team productivity by 30%
 
 ### Core Expertise
@@ -32,12 +32,13 @@ Senior Software Engineer with 7+ years designing and shipping high-throughput di
 *   Message Queues: Kafka, RabbitMQ, AWS SNS-SQS
 *   Architecture: RESTful APIs, Event-Driven Systems, Domain-Driven Design
 *   IoT: MQTT, CoAP, SNMP, WebSocket, Real-time Data Processing
+*   Open Source & Tooling: npm packages, Cloudflare Workers, CLI/automation scripting
 
 ## Technical Skills
 
 ### Programming Languages
 
-`Java (Spring Boot)` · `PHP (Laravel)` · `C/C++ with STL` · `Python` · `JavaScript` · `Bash`
+`Java (Spring Boot)` · `PHP (Laravel)` · `C/C++ with STL` · `Python` · `JavaScript` · `TypeScript` · `Bash`
 
 ### AI & LLM Engineering
 
@@ -221,7 +222,7 @@ Link: https://github.com/towfiq-ul/ai-query-system-from-s3-data
 
 Deploy-time git version stamping for Laravel
 
-Client: Morph Technologies (m-tech-org) — Open Source
+Client: Open Source and Co-Authored with Morph Technologies
 
 Authored and maintained Laravel package that generates a deploy-time version stamp (date + short git SHA) with helpers to display it in your app. MIT-licensed, CI-tested across Laravel 10–12 with runtime support back to Laravel 9.
 
@@ -233,11 +234,89 @@ Technologies: PHP (Laravel), Composer, GitHub Actions CI
 
 Link: https://github.com/m-tech-org/laravel-gitstamp
 
+### chatling (Featured)
+
+Floating AI chat widget npm package — now powering this site's own AI assistant
+
+Client: Personal Project — Open Source
+
+A framework-agnostic floating AI chat assistant widget — draggable, persists across navigation/reloads, grounded only in content you provide. Ships as a <script>-tag Custom Element or a mount() function for any JS framework, paired with a Cloudflare Worker template that keeps the LLM API key off the browser.
+
+*   Published npm package: framework-agnostic Custom Element + mount() API
+*   Cloudflare Worker template with origin allowlisting and per-IP rate limiting
+*   Dogfooded on this very site — its engine now drives the AI assistant here
+
+Technologies: TypeScript, Web Components, Cloudflare Workers, npm
+
+Link: https://github.com/towfiq-ul/chatling
+
+### Google Drive Backup Utility (Featured)
+
+Cross-platform backup daemon with client-side encryption
+
+Client: Co-Authored with Morph Technologies
+
+A one-binary backup daemon for files and databases (MySQL/MariaDB/PostgreSQL) with multiple storage destinations (Google Drive, Dropbox, OneDrive, email, scp), client-side AES-256-GCM encryption before upload, failure notifications (Telegram/Discord/Slack/email), and an optional desktop UI. Freemium — a Gumroad license key unlocks Pro features at runtime.
+
+*   Client-side AES-256-GCM encryption — the remote only ever stores ciphertext
+*   Multiple storage destinations with retry-with-backoff on failed uploads
+*   One-command restore: list, download, and decrypt any backup
+
+Technologies: Python, Google Drive API, AES-256-GCM, Docker
+
+Link: https://gumroad.com/products/google-drive-backup-utility
+
+### claude-auto-resume
+
+Claude Code slash command that resumes sessions after usage limits
+
+Client: Personal Project — Open Source
+
+A pair of Claude Code tools: /auto-resume, which waits until a given time and feeds an instruction back into a paused session, and claude-session-guardian, a Stop hook that detects the usage-limit banner itself and triggers auto-resume automatically — plus leaves a progress note, no manual step needed.
+
+*   Stop-hook based automatic detection of the usage-limit banner
+*   Resumes headlessly in offline mode when terminal injection isn't possible
+
+Technologies: Bash, Python, Claude Code Hooks
+
+Link: https://github.com/towfiq-ul/claude-auto-resume-command
+
+### claude-export-session
+
+Claude Code slash command for clean session transcript exports
+
+Client: Personal Project — Open Source
+
+A /export-session command for Claude Code that saves the full session transcript to a consistently named file — unlike the built-in /export, it keeps tool output that /export collapses and never prompts for a filename.
+
+*   Locates and parses the session's JSONL transcript directly
+*   Preserves tool output the built-in /export collapses
+
+Technologies: Python, Bash, Claude Code Hooks
+
+Link: https://github.com/towfiq-ul/claude-export-session-command
+
+### environment-setup
+
+One-line installers and dev-environment scripts for a fresh Linux machine
+
+Client: Personal Project — Open Source
+
+A collection of 50+ standalone shell scripts that bootstrap a fresh Linux dev machine — language/JDK version switching, database tooling (MySQL, Postgres, pgAdmin, DBeaver), Docker/K3D, cloud CLIs, IDEs, and Android platform tools — each runnable independently with a single `./script.sh`.
+
+*   50+ independent, single-purpose install scripts
+*   Covers JDK/PHP toolchain switching, DBs, Docker/K3D, IDEs, and Android tooling
+*   No framework or config required — just run the script you need
+
+Technologies: Shell (Bash)
+
+Link: https://github.com/towfiq-ul/environment-setup
+
 ### Aerotia International (Featured)
 
 CMS-driven corporate website for an aviation & marine solutions distributor
 
-Client: Aerotia International — Freelance (Morph Technologies)
+Client: Aerotia International — Co-Authored with Morph Technologies
 
 CMS-driven public website for Aerotia International, an authorized distributor of aviation and marine solutions. Laravel 12 (PHP 8.2) JSON API with a Blade-based admin/CMS for managing content, and a React 18 + TypeScript frontend — delivered end-to-end as a freelance engagement under Morph Technologies (m-tech-org).
 
@@ -253,7 +332,7 @@ Link: https://aerotia.com
 
 Ledger/accounting admin portal for Aerotia International
 
-Client: Aerotia International — Freelance (Morph Technologies)
+Client: Aerotia International — Co-Authored with Morph Technologies
 
 Laravel 9 ledger/accounting tool for Aerotia International tracking organizations, projects, and project costs, with a server-rendered Blade admin panel — CRUD for organizations, projects, cost types, and costs, plus a dashboard and admin-user management.
 
@@ -367,6 +446,34 @@ Internal web application for automated bank transactions. Features SFTP inbound/
 
 Technologies: Java (Spring Boot), Spring Integration, MySQL, jQuery
 
+### bK-FinRec
+
+Financial reconciliation system (BanglaQR recon)
+
+Client: Bangladesh's #1 Unicorn MFS
+
+Financial reconciliation system built for Bangladesh's #1 Unicorn MFS, covering BanglaQR reconciliation — a server-rendered Thymeleaf application backed by Oracle and Redis-based sessions, with corporate LDAP authentication and audit logging shipped to a SIEM endpoint.
+
+*   Corporate LDAP authentication with DB-backed roles/permissions
+*   Custom AOP-based access-control annotations for view/add/edit/delete
+*   Audit-event logging shipped to a SIEM endpoint
+
+Technologies: Java 21 (Spring Boot), Oracle, Redis, Thymeleaf, LDAP
+
+### PIN Reset MW
+
+Customer PIN reset middleware between Huawei CPS and a Mobile Financial Service
+
+Client: Bangladesh's #1 Unicorn MFS
+
+Customer PIN Reset middleware built for Bangladesh's #1 Unicorn MFS — a Spring Boot SOAP+REST service sitting between Huawei CPS (the mobile-money core platform) and the PIN-reset flow, with WSDL/XSD-generated JAXB bindings for the CPS integration layer.
+
+*   SOAP↔REST bridge to the Huawei CPS mobile-money core platform
+*   JAXB codegen from WSDL/XSD for the CPS integration types
+*   DynamoDB + Redis-backed local infrastructure
+
+Technologies: Java 21 (Spring Boot), SOAP, REST, JAXB, DynamoDB, Redis
+
 ### PREVENTO
 
 PREVENTO
@@ -475,6 +582,38 @@ Java library for the M-Bus (Meter-Bus) protocol — a JNA wrapper around the C l
 Contribution: Author & Maintainer
 
 Link: https://github.com/towfiq-ul/jmbus
+
+### chatling (Maintained)
+
+Framework-agnostic floating AI chat widget — a <script>-tag Custom Element or mount() function for any JS framework, paired with a Cloudflare Worker template that keeps the LLM API key off the browser. Published to npm; its engine now powers this portfolio's own AI assistant.
+
+Contribution: Author & Maintainer
+
+Link: https://github.com/towfiq-ul/chatling
+
+### claude-auto-resume-command (Maintained)
+
+Claude Code /auto-resume slash command plus a Stop-hook-based session guardian that detects usage-limit banners and resumes paused sessions automatically.
+
+Contribution: Author & Maintainer
+
+Link: https://github.com/towfiq-ul/claude-auto-resume-command
+
+### claude-export-session-command (Maintained)
+
+Claude Code /export-session slash command that saves a session's full transcript to a consistently named file, preserving tool output the built-in /export collapses.
+
+Contribution: Author & Maintainer
+
+Link: https://github.com/towfiq-ul/claude-export-session-command
+
+### environment-setup (Maintained)
+
+50+ standalone shell scripts that bootstrap a fresh Linux dev machine — JDK/PHP toolchain switching, database tooling, Docker/K3D, cloud CLIs, IDEs, and Android platform tools.
+
+Contribution: Author & Maintainer
+
+Link: https://github.com/towfiq-ul/environment-setup
 
 ### ThingsBoard (Merged)
 

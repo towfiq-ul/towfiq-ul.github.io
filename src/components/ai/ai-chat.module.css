@@ -110,6 +110,63 @@
     transform: translateY(0);
 }
 
+.greetingBubble {
+    position: fixed;
+    bottom: calc(23rem + 64px + 12px);
+    right: 1.0rem;
+    max-width: min(240px, calc(100vw - 2rem));
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.95);
+    color: #111827;
+    padding: 10px 14px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    z-index: 998;
+    animation: greetingFadeIn 0.25s ease;
+}
+
+@media (prefers-color-scheme: dark) {
+    .greetingBubble {
+        background: rgba(31, 41, 55, 0.95);
+        color: #f9fafb;
+    }
+}
+
+@keyframes greetingFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.greetingText {
+    flex: 1;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.greetingClose {
+    background: none;
+    border: none;
+    color: inherit;
+    opacity: 0.6;
+    cursor: pointer;
+    padding: 2px;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.greetingClose:hover {
+    opacity: 1;
+}
+
 /* Logic: Pulse only when the chat is closed */
 .floatingButton:not([data-open="true"]) {
     animation: slideInUp 0.8s ease-out forwards, pulseAI 3s ease-in-out infinite;

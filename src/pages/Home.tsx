@@ -6,6 +6,7 @@ import {
     BookOpen,
     Briefcase,
     Calendar,
+    Clock,
     ExternalLink,
     Github,
     Linkedin,
@@ -35,11 +36,11 @@ import {
     workExperience,
     writing
 } from "../data/portfolio-data";
-import {calculateTotalExperience, formatExperience} from "../utils/date-utils";
+import {calculateTotalExperience, formatExperience, formatJobDurationYears} from "../utils/date-utils";
 import {projects} from "../data/project-list";
 import {FloatingChat} from "../components/ai/ai-chat";
 import {useNavigation} from "../config/navigation-context";
-import {TRIGGER_AI_CHAT, TRIGGER_EMAIL_ME, TRIGGER_WHATSAPP_ME} from "../config/helper";
+import {TRIGGER_AI_CHAT, TRIGGER_EMAIL_ME, TRIGGER_WHATSAPP_ME, scrollToSection} from "../config/helper";
 
 export default function Home() {
     const [selectedSkill, setSelectedSkill] = useState<{ category: string; skills: string[] } | null>(null);
@@ -51,7 +52,7 @@ export default function Home() {
     const totalProjects = projects.length;
     const totalTechnologies = 20;
     const {setCurrentPage} = useNavigation();
-    const [isAiChatOpen, setIsAiChatOpen] = useState(true);
+    const [isAiChatOpen, setIsAiChatOpen] = useState(false);
     const [isWhatsAppForceOpen, setIsWhatsAppForceOpen] = useState(false);
 
     const triggerContactEmailMe = () => {
@@ -123,13 +124,26 @@ export default function Home() {
                                 <div className={styles.statNumber}>{totalExp.years}+</div>
                                 <div className={styles.statLabel}>Years Experience</div>
                             </div>
-                            <div className={styles.statItem}>
+                            <div className={`${styles.statItem} ${styles.statItemClickable}`}
+                                 onClick={() => scrollToSection("project")}
+                                 role="button" tabIndex={0}
+                                 onKeyDown={(e) => e.key === 'Enter' && scrollToSection("project")}>
                                 <div className={styles.statNumber}>{totalProjects}+</div>
-                                <div className={styles.statLabel}>Projects Delivered</div>
+                                <div className={styles.statLabel}>Projects Contributed To</div>
                             </div>
-                            <div className={styles.statItem}>
+                            <div className={`${styles.statItem} ${styles.statItemClickable}`}
+                                 onClick={() => scrollToSection("skills")}
+                                 role="button" tabIndex={0}
+                                 onKeyDown={(e) => e.key === 'Enter' && scrollToSection("skills")}>
                                 <div className={styles.statNumber}>{totalTechnologies}+</div>
                                 <div className={styles.statLabel}>Technologies</div>
+                            </div>
+                            <div className={`${styles.statItem} ${styles.statItemClickable}`}
+                                 onClick={() => scrollToSection("open-source")}
+                                 role="button" tabIndex={0}
+                                 onKeyDown={(e) => e.key === 'Enter' && scrollToSection("open-source")}>
+                                <div className={styles.statNumber}>{openSource.length}+</div>
+                                <div className={styles.statLabel}>Open Source Contributions</div>
                             </div>
                         </div>
 
@@ -284,6 +298,10 @@ export default function Home() {
                                         <span className={styles.metaItem}>
                       <Calendar className={styles.metaIcon}/>
                                             {job.period}
+                    </span>
+                                        <span className={styles.metaItem}>
+                      <Clock className={styles.metaIcon}/>
+                                            {formatJobDurationYears(job.period)}
                     </span>
                                     </div>
                                     <Badge variant="outline" style={{marginTop: "8px"}}>
@@ -463,7 +481,7 @@ export default function Home() {
                 </div>
 
                 {openSource.length > 0 && (
-                    <>
+                    <div id="open-source">
                         <SectionHeader title="Open Source Contributions"
                                        subtitle="Contributing to the developer community"/>
                         <div className={styles.awardsList}>
@@ -500,7 +518,7 @@ export default function Home() {
                                 </div>
                             ))}
                         </div>
-                    </>
+                    </div>
                 )}
 
                 {certifications.length > 0 && (

@@ -12,12 +12,12 @@ export const personalInfo = {
 };
 
 export const overview = {
-    summary: "Senior Software Engineer with " + personalInfo.yearOfExperience + " years designing and shipping high-throughput distributed systems for fintech and enterprise clients. Core expertise in Java/Spring Boot microservices, event-driven architecture with Kafka, and cloud-native infrastructure on AWS and Kubernetes. Currently building core payment platform components as Augmented Staff at Bangladesh's leading mobile financial service handling millions of daily transactions. Passionate about clean architecture, system reliability, and shipping things that scale.",
+    summary: "Senior Software Engineer with " + personalInfo.yearOfExperience + " years designing and shipping high-throughput distributed systems for fintech and enterprise clients. Core expertise in Java/Spring Boot microservices, event-driven architecture with Kafka, and cloud-native infrastructure on AWS and Kubernetes. Currently building core payment platform components as Augmented Staff at Bangladesh's #1 Unicorn MFS, handling millions of daily transactions. Beyond client work, actively builds and publishes open-source developer tools — one of them now powers this portfolio's own AI assistant. Passionate about clean architecture, system reliability, and shipping things that scale.",
     highlights: [
         "Impactful contribution in architecture design for bK-MFS financial platform handling millions of daily transactions",
         "Achieved 40% performance improvement through database optimization and caching strategies",
         "Mentored junior engineers on best practices and technical decision-making",
-        "Contributed to open-source IoT platform ThingsBoard with merged pull requests",
+        "Published and maintain multiple open-source tools (an npm chat-widget package, Claude Code command extensions, a Linux dev-environment toolkit) alongside a merged contribution to ThingsBoard",
         "Established CI/CD pipelines and coding standards improving team productivity by 30%",
     ],
     expertise: [
@@ -27,12 +27,13 @@ export const overview = {
         "Message Queues: Kafka, RabbitMQ, AWS SNS-SQS",
         "Architecture: RESTful APIs, Event-Driven Systems, Domain-Driven Design",
         "IoT: MQTT, CoAP, SNMP, WebSocket, Real-time Data Processing",
+        "Open Source & Tooling: npm packages, Cloudflare Workers, CLI/automation scripting",
     ],
 };
 
 
 export const skills = {
-    "Programming Languages": ["Java (Spring Boot)", "PHP (Laravel)", "C/C++ with STL", "Python", "JavaScript", "Bash"],
+    "Programming Languages": ["Java (Spring Boot)", "PHP (Laravel)", "C/C++ with STL", "Python", "JavaScript", "TypeScript", "Bash"],
     "AI & LLM Engineering": [
         "LLM Integration",
         "RAG Pipelines",
@@ -236,6 +237,38 @@ export const openSource = [
             "Java library for the M-Bus (Meter-Bus) protocol — a JNA wrapper around the C libmbus library, bundling a compiled libmbus with Maven/Gradle builds and Maven Central publishing prepared. Grew out of the MBUS decoder work on the Tesenso IoT platform.",
         contribution: "Author & Maintainer",
         link: "https://github.com/towfiq-ul/jmbus",
+        status: "Maintained",
+    },
+    {
+        project: "chatling",
+        description:
+            "Framework-agnostic floating AI chat widget — a <script>-tag Custom Element or mount() function for any JS framework, paired with a Cloudflare Worker template that keeps the LLM API key off the browser. Published to npm; its engine now powers this portfolio's own AI assistant.",
+        contribution: "Author & Maintainer",
+        link: "https://github.com/towfiq-ul/chatling",
+        status: "Maintained",
+    },
+    {
+        project: "claude-auto-resume-command",
+        description:
+            "Claude Code /auto-resume slash command plus a Stop-hook-based session guardian that detects usage-limit banners and resumes paused sessions automatically.",
+        contribution: "Author & Maintainer",
+        link: "https://github.com/towfiq-ul/claude-auto-resume-command",
+        status: "Maintained",
+    },
+    {
+        project: "claude-export-session-command",
+        description:
+            "Claude Code /export-session slash command that saves a session's full transcript to a consistently named file, preserving tool output the built-in /export collapses.",
+        contribution: "Author & Maintainer",
+        link: "https://github.com/towfiq-ul/claude-export-session-command",
+        status: "Maintained",
+    },
+    {
+        project: "environment-setup",
+        description:
+            "50+ standalone shell scripts that bootstrap a fresh Linux dev machine — JDK/PHP toolchain switching, database tooling, Docker/K3D, cloud CLIs, IDEs, and Android platform tools.",
+        contribution: "Author & Maintainer",
+        link: "https://github.com/towfiq-ul/environment-setup",
         status: "Maintained",
     },
     {

@@ -85,3 +85,53 @@ export function formatExperienceShort(years: number, months: number): string {
     }
     return `${years} yr ${months} mo`;
 }
+
+/**
+ * Duration of a single job's "Month YYYY - Month YYYY|Current" period,
+ * as a decimal year count (e.g. 2.17 for 2 years 2 months).
+ */
+export function calculateJobDurationYears(period: string): number {
+    const [start, end] = period.split(" - ");
+    const startDate = parseExperienceDate(start);
+    const endDate = parseExperienceDate(end);
+    const {years, months} = calculateExperience(startDate, endDate);
+    return years + months / 12;
+}
+
+/**
+ * Format a whole years/months duration as "2Y 6M" (or just "2Y" / "6M" when
+ * the other component is zero) — avoids the ambiguity of a decimal year
+ * count, where e.g. "2.6" reads as "2 years 6 months" to a human but is
+ * actually 2 years 7.2 months.
+ */
+function formatYearsMonths(years: number, months: number): string {
+    if (years === 0) return `${months}M`;
+    if (months === 0) return `${years}Y`;
+    return `${years}Y ${months}M`;
+}
+
+/**
+ * Format a job period's duration for display.
+ *
+ * The "Current" role is still elapsed time-to-date, shown as "2Y 2M+" — the
+ * trailing "+" marks it as ongoing.
+ *
+ * Completed roles instead count both boundary months as fully worked (e.g.
+ * "October 2018 - August 2019" is 11 months of employment, not the 10-month
+ * calendar gap between the two dates) and never carry a "+" — the role has a
+ * definite end.
+ */
+export function formatJobDurationYears(period: string): string {
+    const [start, end] = period.split(" - ");
+    const isCurrent = end.trim().toLowerCase() === "current";
+    const startDate = parseExperienceDate(start);
+    const endDate = parseExperienceDate(end);
+    const {years, months} = calculateExperience(startDate, endDate);
+
+    if (isCurrent) {
+        return `${formatYearsMonths(years, months)}+`;
+    }
+
+    const totalMonths = years * 12 + months + 1;
+    return formatYearsMonths(Math.floor(totalMonths / 12), totalMonths % 12);
+}

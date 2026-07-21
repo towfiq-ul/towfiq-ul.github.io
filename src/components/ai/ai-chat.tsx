@@ -26,7 +26,7 @@ const GREETING: ChatMessage = {
 
 const CONNECTION_ERROR_MESSAGE = "I'm having trouble connecting. Please try again later.";
 
-export function FloatingChat({isChatOpen = true, onClose}: Readonly<AiChatProps>) {
+export function FloatingChat({isChatOpen = false, onClose}: Readonly<AiChatProps>) {
     const [isOpen, setIsOpen] = useState(isChatOpen);
     const [isFullScreen, setIsFullScreen] = useState(false);
     const [input, setInput] = useState("");
@@ -62,9 +62,12 @@ export function FloatingChat({isChatOpen = true, onClose}: Readonly<AiChatProps>
 
         coreRef.current = new ChatWidgetCore(
             {
-                initialMessages: [GREETING],
                 draggable: false,
                 workerUrl: import.meta.env.VITE_AI_PROXY_URL,
+                // Greeting text only — delay/cooldown are chatling's own
+                // defaults (1.2s delay, 30min cooldown; see chatling's
+                // ChatWidgetCore for the exact values).
+                greetingMessage: "Hello! How can I help you today?",
             },
             {
                 transport: async (messages, {workerUrl}) => {
@@ -122,6 +125,14 @@ export function FloatingChat({isChatOpen = true, onClose}: Readonly<AiChatProps>
     const chatState = useSyncExternalStore(subscribe, getSnapshot);
     const messages = chatState.messages;
     const isTyping = chatState.isLoading;
+    const showGreetingBubble = chatState.showGreeting && !isOpen;
+
+    // Keep chatling's internal greeting state in sync with our own isOpen —
+    // core.open()/toggleOpen() (which normally clear it) are never called
+    // since we manage isOpen ourselves rather than through the core.
+    useEffect(() => {
+        if (isOpen) coreRef.current?.dismissGreeting();
+    }, [isOpen]);
 
     useEffect(() => {
         setIsOpen(isChatOpen);
@@ -244,6 +255,13 @@ export function FloatingChat({isChatOpen = true, onClose}: Readonly<AiChatProps>
                     </div>
 
                     <div ref={scrollRef} className={styles.chatBody}>
+                        {messages.length === 0 && (
+                            <div className={`${styles.messageWrapper} ${styles.aiAlign}`}>
+                                <div className={styles.messageBubble}>
+                                    <div className={styles.messageText}>{GREETING.content}</div>
+                                </div>
+                            </div>
+                        )}
                         {messages.map((m, i) => (
                             <div key={i}
                                  className={`${styles.messageWrapper} ${m.role === 'user' ? styles.userAlign : styles.aiAlign}`}>
@@ -307,6 +325,24 @@ export function FloatingChat({isChatOpen = true, onClose}: Readonly<AiChatProps>
                             </button>
                         </div>
                     </div>
+                </div>
+            )}
+
+            {/* chatling greeting popup — text + timing (1.2s delay, 30min
+                cooldown) come from chatling's ChatWidgetCore defaults */}
+            {showGreetingBubble && (
+                <div className={styles.greetingBubble} onClick={() => setIsOpen(true)}>
+                    <span className={styles.greetingText}>{coreRef.current?.getOptions().greetingMessage}</span>
+                    <button
+                        className={styles.greetingClose}
+                        aria-label="Dismiss"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            coreRef.current?.dismissGreeting();
+                        }}
+                    >
+                        <X size={14}/>
+                    </button>
                 </div>
             )}
 
