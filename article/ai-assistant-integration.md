@@ -9,14 +9,14 @@ benchmarks its own model choice.*
 ## What the assistant actually does
 
 My portfolio ([towfiq-ul.github.io](https://towfiq-ul.github.io)) has a floating chat widget that answers questions
-about my background — recruiters and fellow developers ask it things like "what did he do at bKash" or "can I get his
-email," and it answers *only* from a grounded context, not from whatever the base model happens to know about the
-world.
+about my background — recruiters and fellow developers ask it things like "what did he do at his current role" or
+"can I get his email," and it answers *only* from a grounded context, not from whatever the base model happens to know
+about the world.
 
 The behavioral contract lives in `public/RULESET.md`, not in the component code — it defines the persona ("Towfiqul's AI
 Assistant," strictly professional, never abusive, de-escalates rudeness), a hard grounding rule ("If a question isn't
 answered in the provided context, say so — never hallucinate projects or years of experience"), a domain glossary (bK =
-bKash, MFS = Mobile Financial Services), and a contact-intent protocol: if a user asks to reach me, the assistant offers
+Bangladesh's #1 Unicorn MFS, MFS = Mobile Financial Services), and a contact-intent protocol: if a user asks to reach me, the assistant offers
 Email or WhatsApp, and only after they pick one does it emit a machine-readable token — `[ACTION:EMAIL_ME]` or
 `[ACTION:WHATSAPP_ME]` — at the end of its reply. The React component watches for those tokens, strips them from the
 rendered text, and shows a **Yes, thanks! / No, thanks!** confirmation before actually firing off a mailto link or

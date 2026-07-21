@@ -11,7 +11,7 @@
 Source for [Towfiqul Islam's](https://towfiq-ul.github.io) personal portfolio site, deployed via GitHub Pages.
 Built with React 19, TypeScript, and Vite. Showcases 7+ years of experience designing and shipping
 high-throughput distributed systems for fintech and enterprise — currently building core payment
-infrastructure at **bKash**, Bangladesh's #1 mobile financial platform.
+infrastructure at Bangladesh's **#1 Unicorn MFS**.
 
 ---
 

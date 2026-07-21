@@ -2,7 +2,7 @@ Title: Towfiqul Islam — Senior Software Engineer
 
 URL Source: https://towfiq-ul.github.io/
 
-Generated: Tue, 21 Jul 2026 21:46:40 GMT (locally from src/data, full content)
+Generated: Tue, 21 Jul 2026 22:03:28 GMT (locally from src/data, full content)
 
 Markdown Content:
 
@@ -159,13 +159,13 @@ A British Curriculum English Medium School affiliated with Cambridge University,
 
 ## Projects
 
-### bKash App (Featured)
+### bK-MFS App (Featured)
 
-bkash App for bKash Limited. Mobile Financial Service
+Consumer app for bK-MFS Limited
 
-Client: bkash Limited (via Exabyting)
+Client: bK-MFS Limited (via Exabyting)
 
-bKash is a leading mobile financial service in Bangladesh that allows users to perform instant money transfers, bill payments, mobile recharges, and merchant transactions securely from their smartphones.
+bK-MFS is a leading mobile financial service in Bangladesh that allows users to perform instant money transfers, bill payments, mobile recharges, and merchant transactions securely from their smartphones.
 
 *   Built and maintained scalable microservices using Java (11–21) and Spring Boot, exposing RESTful APIs and integrating third-party services
 *   Implemented modern concurrency solutions, including Virtual Threads and reactive programming

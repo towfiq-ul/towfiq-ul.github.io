@@ -11,9 +11,9 @@ type Project = {
 
 export const projects: Project[] = [
     {
-        name: "bKash App",
-        subname: "bkash App for bKash Limited. Mobile Financial Service",
-        client: "bkash Limited (via Exabyting)",
+        name: "bK-MFS App",
+        subname: "Consumer app for bK-MFS Limited",
+        client: "bK-MFS Limited (via Exabyting)",
         technologies: [
             "Java (Spring Boot)",
             "Spring Boot Web Flux",
@@ -29,7 +29,7 @@ export const projects: Project[] = [
             "Kubernetes"
         ],
         description:
-            "bKash is a leading mobile financial service in Bangladesh that allows users to perform instant money transfers, bill payments, mobile recharges, and merchant transactions securely from their smartphones.",
+            "bK-MFS is a leading mobile financial service in Bangladesh that allows users to perform instant money transfers, bill payments, mobile recharges, and merchant transactions securely from their smartphones.",
         highlights: [
             "Built and maintained scalable microservices using Java (11–21) and Spring Boot, exposing RESTful APIs and integrating third-party services",
             "Implemented modern concurrency solutions, including Virtual Threads and reactive programming",

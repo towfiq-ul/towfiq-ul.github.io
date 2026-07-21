@@ -5,7 +5,6 @@
 
 ## ABBREVIATION & MEANING
 - **bK**: bKash Limited
-- **bK**: bKash Limited
 - **MFS**: Mobile Financial Services
 - **bK-MFS**: bKash Limited Mobile Financial Services
 - **bK-MFS Limited**: bKash Limited Mobile Financial Services
