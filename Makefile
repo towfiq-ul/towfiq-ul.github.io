@@ -13,7 +13,7 @@ WORKER_DIR = workers
 
 # Prevent make from treating the targets as files
 .PHONY: all install run run-prod build typecheck preview sync sync-remote \
-        worker-dev worker-tail deploy increment_version commit_changes \
+        cv worker-dev worker-tail deploy increment_version commit_changes \
         create_tag push push_tags clean help
 
 ##@ Release
@@ -45,6 +45,15 @@ sync: ## Regenerate public/WEBSITE_CONTEXT.md from src/data
 
 sync-remote: ## Legacy: scrape the live deployed site into WEBSITE_CONTEXT.md
 	@npm run sync
+
+cv: ## Regenerate personal CV PDFs in cv/ from cv/build_cv.py (creates cv/.venv on first run)
+	@if [ ! -d cv/.venv ]; then \
+		echo "Creating venv for CV generation..."; \
+		python3 -m venv cv/.venv; \
+		cv/.venv/bin/pip install -q --upgrade pip reportlab pypdf; \
+	fi
+	@cv/.venv/bin/python cv/build_cv.py
+	@echo "CV PDFs regenerated in cv/."
 
 ##@ Cloudflare Worker (AI proxy)
 

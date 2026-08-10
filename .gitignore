@@ -17,3 +17,5 @@ CLAUDE.md
 .netlify
 .vite
 
+/cv/.venv/
+
