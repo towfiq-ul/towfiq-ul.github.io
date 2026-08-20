@@ -152,7 +152,7 @@ build(
     CONTACT_FULL,
     "Senior Software Engineer with 7+ years designing and shipping backend systems across two stacks: Java / Spring "
     "Boot microservices for high-throughput fintech platforms, and PHP / Laravel applications delivered for government, "
-    "private company, and open-source engagements. Currently building core payment platform components as "
+    "private company, and open-source engagements. Most recently built core payment platform components as "
     "Augmented Staff at bKash Limited, Bangladesh's #1 Unicorn MFS. Equally comfortable owning a Spring Boot "
     "microservice with Kafka and DynamoDB, or a Laravel codebase end-to-end — schema design, Eloquent, queues, "
     "Blade views, and RBAC. Passionate about clean architecture, system reliability, and shipping things that scale, in "
@@ -171,10 +171,11 @@ build(
         ])),
     ],
     [
-        ("Senior Software Engineer – Exabyting", LOC_EXABYTING, "May 2024 – Current",
-         "Augmented resource at bKash Limited. Designing Java / Spring Boot microservices, scalable REST APIs, Redis "
-         "caching, and CI/CD pipelines for a core payment platform handling millions of daily transactions. Mentors junior "
-         "engineers on best practices and technical decisions."),
+        ("Senior Software Engineer – Exabyting", LOC_EXABYTING, "May 2024 – August 2026",
+         "Augmented resource at bKash Limited. Built and maintained core backend services (Customer App MW, FinRec, "
+         "PIN Reset MW) on Java / Spring Boot, DynamoDB, and Kafka, processing 2.5M+ transactions daily. Led the Spring "
+         "Boot 2→3 migration on the PIN Reset service (javax→jakarta, AWS SDK v1→v2, Jedis→Lettuce) for zero-downtime "
+         "deployment. Mentored junior engineers on best practices, release readiness, and system architecture."),
         ("Software Engineer – SELISE", LOC_SELISE, "November 2021 – April 2024",
          "Extended ThingsBoard (Java, open-source IoT platform, merged contributor) into a multi-tenant IoT middleware "
          "platform for a Swiss enterprise customer, modeling and optimizing time-series telemetry at a scale of millions of "
@@ -203,9 +204,12 @@ build(
         ("Key Impacts", [
             "<b>bKash App:</b> built and maintained services processing 2.5M+ transactions/day",
             "<b>AMS:</b> reduced HTTP 429 rate-limit exceptions by solo-designing and building a self-contained, "
-            "single-responsibility TPS-limiting service with interval-based retry",
-            "<b>Spring Boot 2→3 migration:</b> led the migration across production services (javax→jakarta, AWS SDK v1→v2, "
-            "DynamoDB layer rewrite) with zero disruption to live transaction volume",
+            "single-responsibility TPS-limiting service with interval-based retry, later made dynamically configurable and "
+            "scalable to support Airtime Mobile Recharge Automation",
+            "<b>Spring Boot 2→3 migration:</b> led the migration on the PIN Reset service (javax→jakarta, AWS SDK v1→v2, "
+            "Jedis→Lettuce) for zero-downtime deployment",
+            "<b>Reactive Kafka:</b> implemented reactive Kafka integration using spring-kafka and reactor-kafka to improve "
+            "throughput and resilience across core banking microservices",
             "<b>Tesenso MW:</b> extended to handle millions of IoT data points across a multi-tenant platform for an "
             "EV/aerospace client",
             "<b>API latency:</b> reduced latency by replacing REST with GraphQL for client-facing data-fetching endpoints, "
@@ -240,15 +244,15 @@ build(
     CONTACT_FULL,
     "Senior Software Engineer with 7+ years designing and shipping high-throughput distributed systems for fintech and "
     "enterprise clients. Core expertise in Java (11–21) / Spring Boot microservices, event-driven architecture with Kafka, "
-    "and cloud-native infrastructure on AWS and Kubernetes. Currently building core payment platform components as "
+    "and cloud-native infrastructure on AWS and Kubernetes. Most recently built core payment platform components as "
     "Augmented Staff at bKash Limited, Bangladesh's #1 Unicorn MFS, handling millions of daily transactions. Passionate "
     "about clean architecture, system reliability, and shipping things that scale.",
     [
         ("Java / Spring Boot Highlights", bullets([
-            "Contributed to architecture design and implementation of microservices for bKash Limited's core payment "
-            "platform, handling millions of daily transactions",
+            "Built and maintained core backend services (Customer App MW, FinRec, PIN Reset MW) for bKash Limited's "
+            "core payment platform, processing 2.5M+ transactions daily",
             "Built and maintain scalable Java 11–21 / Spring Boot microservices exposing RESTful APIs, using Virtual "
-            "Threads and reactive programming (WebFlux)",
+            "Threads, reactive programming (WebFlux), and reactive Kafka (spring-kafka, reactor-kafka)",
             "Delivered bKash-FinRec, a financial reconciliation system with corporate LDAP authentication, custom "
             "AOP-based access-control annotations, and audit-event logging shipped to a SIEM endpoint",
             "Built PIN Reset MW, a Spring Boot SOAP+REST middleware bridging the Huawei CPS mobile-money core "
@@ -258,7 +262,8 @@ build(
             "Extended ThingsBoard (open-source IoT platform, merged contributor — PR #6614) into a multi-tenant IoT "
             "middleware handling millions of data points for a Swiss enterprise customer",
             "Established coding standards, development workflows, and CI/CD pipelines using Jenkins and Docker, "
-            "improving team productivity by 30%; mentors junior engineers on best practices and code reviews",
+            "improving team productivity by 30%; mentored junior engineers on best practices, release readiness, and "
+            "system architecture",
         ])),
         ("Core Expertise", bullets([
             "<b>Backend:</b> Java (11–21), Spring Boot, Spring MVC, Spring Security, Spring Integration, Spring Cloud, "
@@ -271,10 +276,10 @@ build(
         ])),
     ],
     [
-        ("Senior Software Engineer – Exabyting", LOC_EXABYTING, "May 2024 – Current",
-         "Augmented resource at bKash Limited. Designing microservices, scalable REST APIs, Redis caching, and CI/CD "
-         "pipelines for a core payment platform handling millions of daily transactions. Mentors junior engineers on best "
-         "practices and technical decisions."),
+        ("Senior Software Engineer – Exabyting", LOC_EXABYTING, "May 2024 – August 2026",
+         "Augmented resource at bKash Limited. Built and maintained core backend services (Customer App MW, FinRec, "
+         "PIN Reset MW) on Java / Spring Boot, DynamoDB, and Kafka, processing 2.5M+ transactions daily. Mentored "
+         "junior engineers on best practices and release readiness."),
         ("Software Engineer – SELISE", LOC_SELISE, "November 2021 – April 2024",
          "Extended ThingsBoard into a multi-tenant IoT middleware platform for a Swiss enterprise customer, modeling and "
          "optimizing time-series telemetry across PostgreSQL, TimescaleDB, and Cassandra at a scale of millions of data "
@@ -301,9 +306,10 @@ build(
         ("Key Impacts", [
             "<b>bKash App:</b> built and maintained services processing 2.5M+ transactions/day",
             "<b>AMS:</b> reduced HTTP 429 rate-limit exceptions by solo-designing and building a self-contained, "
-            "single-responsibility TPS-limiting service with interval-based retry",
-            "<b>Spring Boot 2→3 migration:</b> led the migration across production services (javax→jakarta, AWS SDK v1→v2, "
-            "DynamoDB layer rewrite) with zero disruption to live transaction volume",
+            "single-responsibility TPS-limiting service with interval-based retry, later made dynamically configurable and "
+            "scalable to support Airtime Mobile Recharge Automation",
+            "<b>Spring Boot 2→3 migration:</b> led the migration on the PIN Reset service (javax→jakarta, AWS SDK v1→v2, "
+            "Jedis→Lettuce) for zero-downtime deployment",
             "<b>Tesenso MW:</b> extended to handle millions of IoT data points across a multi-tenant platform for an "
             "EV/aerospace client",
             "<b>Urstamm:</b> delivered a 20% performance improvement on the blockchain data pipeline, including a 0.5GB "
@@ -367,9 +373,9 @@ build(
         ])),
     ],
     [
-        ("Senior Software Engineer – Exabyting", LOC_EXABYTING, "May 2024 – Current",
-         "Augmented resource at bKash Limited. Designing microservices, scalable REST APIs, Redis caching, and "
-         "CI/CD pipelines for a core payment platform handling millions of daily transactions."),
+        ("Senior Software Engineer – Exabyting", LOC_EXABYTING, "May 2024 – August 2026",
+         "Augmented resource at bKash Limited. Built and maintained core backend services (Customer App MW, "
+         "FinRec, PIN Reset MW) on Java / Spring Boot, DynamoDB, and Kafka, processing 2.5M+ transactions daily."),
         ("Software Engineer – Exabyting", LOC_EXABYTING, "December 2019 – November 2021",
          "Developed government and private Laravel web applications, including PREVENTO (a healthcare Android "
          "app backend), an inventory management system for the Electoral Training Institute, and an Annual "
@@ -434,9 +440,9 @@ build(
         ])),
     ],
     [
-        ("Senior Software Engineer – Exabyting", LOC_EXABYTING, "May 2024 – Current",
-         "Augmented resource at bKash Limited. Designing microservices, scalable REST APIs, Redis caching, and "
-         "CI/CD pipelines for a core payment platform handling millions of daily transactions."),
+        ("Senior Software Engineer – Exabyting", LOC_EXABYTING, "May 2024 – August 2026",
+         "Augmented resource at bKash Limited. Built and maintained core backend services (Customer App MW, "
+         "FinRec, PIN Reset MW) on Java / Spring Boot, DynamoDB, and Kafka, processing 2.5M+ transactions daily."),
         ("Software Engineer – SELISE", LOC_SELISE, "November 2021 – April 2024",
          "Extended ThingsBoard into a multi-tenant IoT middleware platform for a Swiss enterprise customer, "
          "modeling and optimizing time-series telemetry at a scale of millions of data points."),
@@ -473,7 +479,7 @@ build(
     CONTACT_UW,
     "Senior Software Engineer with 7+ years designing and shipping backend systems across two stacks: Java / Spring "
     "Boot microservices for high-throughput fintech platforms, and PHP / Laravel applications delivered for government, "
-    "private company, and open-source engagements. Currently building core payment platform components as "
+    "private company, and open-source engagements. Most recently built core payment platform components as "
     "Augmented Staff at bKash Limited, Bangladesh's #1 Unicorn MFS. Equally comfortable owning a Spring Boot "
     "microservice with Kafka and DynamoDB, or a Laravel codebase end-to-end — schema design, Eloquent, queues, "
     "Blade views, and RBAC. Passionate about clean architecture, system reliability, and shipping things that scale, in "
@@ -492,10 +498,11 @@ build(
         ])),
     ],
     [
-        ("Senior Software Engineer – Exabyting", LOC_EXABYTING, "May 2024 – Current",
-         "Augmented resource at bKash Limited. Designing Java / Spring Boot microservices, scalable REST APIs, Redis "
-         "caching, and CI/CD pipelines for a core payment platform handling millions of daily transactions. Mentors junior "
-         "engineers on best practices and technical decisions."),
+        ("Senior Software Engineer – Exabyting", LOC_EXABYTING, "May 2024 – August 2026",
+         "Augmented resource at bKash Limited. Built and maintained core backend services (Customer App MW, FinRec, "
+         "PIN Reset MW) on Java / Spring Boot, DynamoDB, and Kafka, processing 2.5M+ transactions daily. Led the Spring "
+         "Boot 2→3 migration on the PIN Reset service (javax→jakarta, AWS SDK v1→v2, Jedis→Lettuce) for zero-downtime "
+         "deployment. Mentored junior engineers on best practices, release readiness, and system architecture."),
         ("Software Engineer – SELISE", LOC_SELISE, "November 2021 – April 2024",
          "Extended ThingsBoard (Java, open-source IoT platform, merged contributor) into a multi-tenant IoT middleware "
          "platform for a Swiss enterprise customer, modeling and optimizing time-series telemetry at a scale of millions of "
@@ -524,9 +531,12 @@ build(
         ("Key Impacts", [
             "<b>bKash App:</b> built and maintained services processing 2.5M+ transactions/day",
             "<b>AMS:</b> reduced HTTP 429 rate-limit exceptions by solo-designing and building a self-contained, "
-            "single-responsibility TPS-limiting service with interval-based retry",
-            "<b>Spring Boot 2→3 migration:</b> led the migration across production services (javax→jakarta, AWS SDK v1→v2, "
-            "DynamoDB layer rewrite) with zero disruption to live transaction volume",
+            "single-responsibility TPS-limiting service with interval-based retry, later made dynamically configurable and "
+            "scalable to support Airtime Mobile Recharge Automation",
+            "<b>Spring Boot 2→3 migration:</b> led the migration on the PIN Reset service (javax→jakarta, AWS SDK v1→v2, "
+            "Jedis→Lettuce) for zero-downtime deployment",
+            "<b>Reactive Kafka:</b> implemented reactive Kafka integration using spring-kafka and reactor-kafka to improve "
+            "throughput and resilience across core banking microservices",
             "<b>Tesenso MW:</b> extended to handle millions of IoT data points across a multi-tenant platform for an "
             "EV/aerospace client",
             "<b>API latency:</b> reduced latency by replacing REST with GraphQL for client-facing data-fetching endpoints, "
