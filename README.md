@@ -30,7 +30,7 @@ Sections: Hero · Overview · Skills · Work Experience · Projects · Writing �
 | `src/`, `public/`, `index.html` | The site itself (React 19 + TypeScript + Vite). |
 | `workers/` | Cloudflare Worker (`ai-proxy.js`) that proxies the AI chat widget — holds the real API key/model as Worker secrets, never exposed to the browser. |
 | `build/` | Generated output (Vite build), served by GitHub Pages from `master`. Gitignored — never hand-edited, rebuilt on every push. |
-| `scripts/` | Build-time helper scripts (e.g. regenerating `public/WEBSITE_CONTEXT.md`). |
+| `scripts/` | Build-time helper scripts (e.g. regenerating `public/WEBSITE_CONTEXT.md` and `public/Towfiqul_Islam.md`). |
 | `prompts/` | Scaffolding-tool prompt docs — several are stale (see `CLAUDE.md`). |
 | `article/` | A published Medium engineering write-up on the AI chat's architecture, kept in-repo for reference (not part of the build). |
 
@@ -140,7 +140,8 @@ worker-tail, deploy, release, etc.).
 │   ├── favicon.svg
 │   ├── og-image.png            # 1200×630 Open Graph banner — required for social previews
 │   ├── RULESET.md              # AI chat system prompt / persona rules
-│   └── WEBSITE_CONTEXT.md      # generated AI chat context (npm run sync:local)
+│   ├── WEBSITE_CONTEXT.md      # generated AI chat context (npm run sync:local)
+│   └── Towfiqul_Islam.md       # generated AI chat knowledge doc (npm run sync:local)
 ├── src/
 │   ├── components/
 │   │   ├── ai/                 # Floating AI chat widget
@@ -176,7 +177,7 @@ worker-tail, deploy, release, etc.).
 ├── workers/
 │   ├── ai-proxy.js              # Cloudflare Worker — AI chat proxy
 │   └── wrangler.toml
-├── scripts/                     # WEBSITE_CONTEXT.md generation/scraping
+├── scripts/                     # WEBSITE_CONTEXT.md / Towfiqul_Islam.md generation/scraping
 ├── index.html                   # Meta, OG tags, JSON-LD structured data
 ├── vite.config.ts
 ├── Makefile                     # `make help` for all workflows

@@ -8,7 +8,7 @@
     "prebuild": "npm run sync:local",
     "build": "tsc && vite build",
     "sync": "npx tsx --env-file=.env scripts/scrape-website-context.js",
-    "sync:local": "npx tsx scripts/generate-website-context.js"
+    "sync:local": "npx tsx scripts/generate-website-context.js && npx tsx scripts/generate-knowledge-doc.js"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",

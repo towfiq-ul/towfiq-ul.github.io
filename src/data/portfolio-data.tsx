@@ -90,7 +90,7 @@ export const workExperience = [
         company: "Exabyting",
         location: "Dhaka, Bangladesh",
         type: "Full-time, Hybrid",
-        period: "May 2024 - August 2026",
+        period: "April 2024 - August 2026",
         description:
             "Exabyting, a software consultancy company works both on big scale government & private projects. Worked at bK-MFS as an Augmented Resource, a Unicorn MFS Company in Bangladesh.",
         responsibilities: [
@@ -156,7 +156,7 @@ export const workExperience = [
         ],
     },
     {
-        title: "Software Engineer",
+        title: "Software Engineering Intern",
         company: "Inflack Limited",
         location: "Dhaka, Bangladesh",
         type: "Full-time",

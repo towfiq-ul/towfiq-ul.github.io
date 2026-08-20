@@ -171,7 +171,7 @@ build(
         ])),
     ],
     [
-        ("Senior Software Engineer – Exabyting", LOC_EXABYTING, "May 2024 – August 2026",
+        ("Senior Software Engineer – Exabyting", LOC_EXABYTING, "April 2024 – August 2026",
          "Augmented resource at bKash Limited. Built and maintained core backend services (Customer App MW, FinRec, "
          "PIN Reset MW) on Java / Spring Boot, DynamoDB, and Kafka, processing 2.5M+ transactions daily. Led the Spring "
          "Boot 2→3 migration on the PIN Reset service (javax→jakarta, AWS SDK v1→v2, Jedis→Lettuce) for zero-downtime "
@@ -276,7 +276,7 @@ build(
         ])),
     ],
     [
-        ("Senior Software Engineer – Exabyting", LOC_EXABYTING, "May 2024 – August 2026",
+        ("Senior Software Engineer – Exabyting", LOC_EXABYTING, "April 2024 – August 2026",
          "Augmented resource at bKash Limited. Built and maintained core backend services (Customer App MW, FinRec, "
          "PIN Reset MW) on Java / Spring Boot, DynamoDB, and Kafka, processing 2.5M+ transactions daily. Mentored "
          "junior engineers on best practices and release readiness."),
@@ -373,7 +373,7 @@ build(
         ])),
     ],
     [
-        ("Senior Software Engineer – Exabyting", LOC_EXABYTING, "May 2024 – August 2026",
+        ("Senior Software Engineer – Exabyting", LOC_EXABYTING, "April 2024 – August 2026",
          "Augmented resource at bKash Limited. Built and maintained core backend services (Customer App MW, "
          "FinRec, PIN Reset MW) on Java / Spring Boot, DynamoDB, and Kafka, processing 2.5M+ transactions daily."),
         ("Software Engineer – Exabyting", LOC_EXABYTING, "December 2019 – November 2021",
@@ -440,7 +440,7 @@ build(
         ])),
     ],
     [
-        ("Senior Software Engineer – Exabyting", LOC_EXABYTING, "May 2024 – August 2026",
+        ("Senior Software Engineer – Exabyting", LOC_EXABYTING, "April 2024 – August 2026",
          "Augmented resource at bKash Limited. Built and maintained core backend services (Customer App MW, "
          "FinRec, PIN Reset MW) on Java / Spring Boot, DynamoDB, and Kafka, processing 2.5M+ transactions daily."),
         ("Software Engineer – SELISE", LOC_SELISE, "November 2021 – April 2024",
@@ -498,7 +498,7 @@ build(
         ])),
     ],
     [
-        ("Senior Software Engineer – Exabyting", LOC_EXABYTING, "May 2024 – August 2026",
+        ("Senior Software Engineer – Exabyting", LOC_EXABYTING, "April 2024 – August 2026",
          "Augmented resource at bKash Limited. Built and maintained core backend services (Customer App MW, FinRec, "
          "PIN Reset MW) on Java / Spring Boot, DynamoDB, and Kafka, processing 2.5M+ transactions daily. Led the Spring "
          "Boot 2→3 migration on the PIN Reset service (javax→jakarta, AWS SDK v1→v2, Jedis→Lettuce) for zero-downtime "

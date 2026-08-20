@@ -47,7 +47,7 @@ const CORE_EXPERTISE: { label: string; text: string }[] = [
 const WORK_EXPERIENCE: { title: string; meta: string; body: string }[] = [
     {
         title: "Senior Software Engineer – Exabyting",
-        meta: "May 2024 – August 2026 | Dhaka, Bangladesh",
+        meta: "April 2024 – August 2026 | Dhaka, Bangladesh",
         body:
             "Augmented resource at bKash Limited. Built and maintained core backend services (Customer App MW, FinRec, " +
             "PIN Reset MW) on Java / Spring Boot, DynamoDB, and Kafka, processing 2.5M+ transactions daily. Led the Spring " +

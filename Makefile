@@ -40,7 +40,7 @@ typecheck: ## Fast typecheck only (tsc --noEmit), no bundling
 preview: build ## Build, then serve ./build locally via vite preview
 	@npx vite preview
 
-sync: ## Regenerate public/WEBSITE_CONTEXT.md from src/data
+sync: ## Regenerate public/WEBSITE_CONTEXT.md and public/Towfiqul_Islam.md from src/data
 	@npm run sync:local
 
 sync-remote: ## Legacy: scrape the live deployed site into WEBSITE_CONTEXT.md
