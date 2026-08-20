@@ -12,7 +12,7 @@ export const personalInfo = {
 };
 
 export const overview = {
-    summary: "Senior Software Engineer with " + personalInfo.yearOfExperience + " years designing and shipping high-throughput distributed systems for fintech and enterprise clients. Core expertise in Java/Spring Boot microservices, event-driven architecture with Kafka, and cloud-native infrastructure on AWS and Kubernetes. Currently building core payment platform components as Augmented Staff at Bangladesh's #1 Unicorn MFS, handling millions of daily transactions. Beyond client work, actively builds and publishes open-source developer tools — one of them now powers this portfolio's own AI assistant. Passionate about clean architecture, system reliability, and shipping things that scale.",
+    summary: "Senior Software Engineer with " + personalInfo.yearOfExperience + " years designing and shipping high-throughput distributed systems for fintech and enterprise clients. Core expertise in Java/Spring Boot microservices, event-driven architecture with Kafka, and cloud-native infrastructure on AWS and Kubernetes. Most recently built core payment platform components as Augmented Staff at Bangladesh's #1 Unicorn MFS, handling millions of daily transactions. Beyond client work, actively builds and publishes open-source developer tools — one of them now powers this portfolio's own AI assistant. Passionate about clean architecture, system reliability, and shipping things that scale.",
     highlights: [
         "Impactful contribution in architecture design for bK-MFS financial platform handling millions of daily transactions",
         "Achieved 40% performance improvement through database optimization and caching strategies",
@@ -90,20 +90,20 @@ export const workExperience = [
         company: "Exabyting",
         location: "Dhaka, Bangladesh",
         type: "Full-time, Hybrid",
-        period: "May 2024 - Current",
+        period: "May 2024 - August 2026",
         description:
-            "Exabyting, a software consultancy company works both on big scale government & private projects. Currently working at bK-MFS as Augmented Resource which is a Unicorn MFS Company in Bangladesh.",
+            "Exabyting, a software consultancy company works both on big scale government & private projects. Worked at bK-MFS as an Augmented Resource, a Unicorn MFS Company in Bangladesh.",
         responsibilities: [
-            "Contributed in architecture design and implementation of microservices for bK-MFS's core payment platform handling millions of daily transactions",
-            "Mentor and guide team of junior engineers on best practices, code reviews, and technical decisions",
-            "Design and implement scalable REST APIs using Spring Boot, ensuring high availability and performance optimization",
-            "Collaborate with cross-functional teams including Product, QA, and DevOps to deliver features end-to-end",
-            "Optimize database queries and implement caching strategies using Redis, improving response time by 40%",
-            "Implement comprehensive unit and integration testing using JUnit and Mockito, achieving 85%+ code coverage",
-            "Lead technical discussions and provide innovative solutions for complex business requirements",
-            "Establish coding standards, development workflows, and CI/CD pipelines using Jenkins and Docker",
-            "Monitor production systems using Grafana and Kibana, proactively identifying and resolving issues",
-            "Drive adoption of clean code principles, SOLID design patterns, and Domain-Driven Design across the team",
+            "Built and maintained core backend services (Customer App MW, FinRec, PIN Reset MW) for bK-MFS's core payment platform, processing 2.5M+ transactions daily",
+            "Led the Spring Boot 2→3 migration on the PIN Reset service (javax→jakarta, AWS SDK v1→v2, Jedis→Lettuce) for zero-downtime deployment",
+            "Implemented reactive Kafka integration using spring-kafka and reactor-kafka to improve throughput and resilience across core banking microservices",
+            "Engineered a self-contained TPS-limiting service with interval-based retry logic, later made dynamically configurable and scalable to support Airtime Mobile Recharge Automation",
+            "Mentored junior engineers on best practices, release readiness, and system architecture",
+            "Designed and implemented scalable REST APIs using Spring Boot, ensuring high availability and performance optimization",
+            "Collaborated with cross-functional teams including Product, QA, and DevOps to deliver features end-to-end",
+            "Optimized database queries and implemented caching strategies using Redis, improving response time by 40%",
+            "Implemented comprehensive unit and integration testing using JUnit and Mockito, achieving 85%+ code coverage",
+            "Established coding standards, development workflows, and CI/CD pipelines using Jenkins and Docker",
         ],
     },
     {
