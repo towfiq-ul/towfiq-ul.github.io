@@ -1,31 +1,25 @@
-:root {
-    --font-body-cv: 'Ubuntu Mono';
-    --font-heading-cv: 'Ubuntu Mono';
-    --font-subheading-cv: 'Ubuntu Mono';
-}
 .cvPage {
     min-height: 100vh;
-    background: var(--color-neutral-4);
-    padding: calc(70px + var(--space-6)) var(--space-6) var(--space-9);
+    background: var(--color-neutral-3);
+    padding: calc(70px + var(--space-9)) var(--space-6) var(--space-9);
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.backButton {
+.toolbar {
     position: fixed;
     top: calc(30px + var(--space-4));
     right: var(--space-6);
     z-index: 100;
-    gap: var(--space-2);
-    box-shadow: var(--shadow-3);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: var(--space-3);
 }
 
+.backButton,
 .downloadButton {
-    position: fixed;
-    top: calc(70px + var(--space-4));
-    right: var(--space-6);
-    z-index: 100;
     gap: var(--space-2);
     box-shadow: var(--shadow-3);
 }
@@ -35,384 +29,173 @@
     height: 18px;
 }
 
-/* A4 dimensions: 210mm x 297mm */
-.cvContent {
-    width: 220mm;
-    height: 310mm;
-    background: white;
-    padding: 6mm;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    box-sizing: border-box;
-    color: #000;
+/* Horizontally-scrollable viewport so the true A4 width is never squeezed on
+   narrow screens — mirrors how a PDF viewer keeps the page size and scrolls. */
+.pageScroll {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.pageStack {
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    align-items: center;
+    gap: var(--space-6);
+    width: max-content;
+    margin: 0 auto;
 }
 
-/* Header */
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding: 0 0 3mm 0;
-    border-bottom: 2px solid #000;
-    margin-bottom: 3mm;
+/* A4 page: 210mm x 297mm, 17mm side margins, 13mm top/bottom margins — same
+   as cv/build_cv.py's SimpleDocTemplate(pagesize=A4, leftMargin=17mm, ...). */
+.page {
+    width: 210mm;
+    min-height: 297mm;
+    background: #ffffff;
+    color: #000000;
+    padding: 13mm 17mm;
+    box-sizing: border-box;
+    box-shadow: var(--shadow-2);
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
 }
 
-.headerLeft {
-    flex: 1;
+.page a {
+    color: inherit;
+    text-decoration: none;
 }
 
-.contactInfo {
-    font-family: var(--font-body-cv);
-    font-size: 0.875rem;
-    line-height: 1.4;
-}
-
-.contactInfo p {
-    margin: 0 0 0.5mm 0;
-}
-
-.contactInfo strong {
-    font-weight: 600;
-}
-
-.headerRight {
-    flex: 1;
-    text-align: right;
+.page a:hover {
+    text-decoration: underline;
 }
 
 .name {
-    font-family: var(--font-heading-cv);
-    font-size: 2rem;
+    font-size: 22pt;
+    line-height: 26pt;
     font-weight: 700;
-    margin: 0 0 1mm 0;
-    letter-spacing: 0.3px;
-    color: #111;
+    margin: 0 0 2pt 0;
+    color: #000000;
 }
 
-.title {
-    font-family: var(--font-subheading-cv);
-    font-size: 1.125rem;
-    margin: 0;
-    font-weight: 500;
-    color: #000;
+.role {
+    font-size: 11pt;
+    line-height: 14pt;
+    font-weight: 400;
+    color: #222222;
+    margin: 0 0 4pt 0;
 }
 
-/* Body Layout - Two Columns */
+.contactLine {
+    font-size: 9.5pt;
+    line-height: 13pt;
+    margin: 0 0 1pt 0;
+    color: #000000;
+}
+
+.h2 {
+    font-size: 12.5pt;
+    line-height: 15pt;
+    font-weight: 700;
+    color: #000000;
+    margin: 7pt 0 3pt 0;
+}
+
+.hr {
+    border: none;
+    border-top: 0.6pt solid #bbbbbb;
+    margin: 0 0 4pt 0;
+}
+
 .body {
-    display: grid;
-    grid-template-columns: 75mm 1fr;
-    gap: 4mm;
-    flex: 1;
-    overflow: hidden;
+    font-size: 9.5pt;
+    line-height: 13pt;
+    color: #000000;
+    margin: 0 0 2pt 0;
 }
 
-.sidebar {
-    border-right: 1px solid #000;
-    padding-right: 4mm;
-    display: flex;
-    flex-direction: column;
-    gap: 3mm;
-}
-
-.main {
-    display: flex;
-    flex-direction: column;
-    gap: 3mm;
-}
-
-/* Section Styling */
-.section {
+.bullets {
+    list-style: none;
     margin: 0;
+    padding: 0;
 }
 
-.sectionTitle {
-    font-family: var(--font-heading-cv);
-    font-size: 1rem;
-    font-weight: 700;
-    color: #000;
-    margin: 0 0 2mm 0;
-    padding-bottom: 1mm;
-    border-bottom: 1.5px solid #000;
-    text-transform: uppercase;
-    letter-spacing: 0.2px;
+.bullets li {
+    position: relative;
+    font-size: 9.5pt;
+    line-height: 13pt;
+    color: #000000;
+    margin: 0 0 3pt 0;
+    padding-left: 14pt;
 }
 
-.summary {
-    font-family: var(--font-body-cv);
-    font-size: 0.875rem;
-    line-height: 1.4;
-    color: #000;
-    text-align: justify;
+.bullets li::before {
+    content: "•";
+    position: absolute;
+    left: 2pt;
+}
+
+.job {
     margin: 0;
-}
-
-/* Skills */
-.skillsContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 1mm;
-}
-
-.skillItem {
-    font-family: var(--font-body-cv);
-    font-size: 0.875rem;
-    margin: 0;
-    line-height: 1.3;
-    color: #000;
-}
-
-.skillItem strong {
-    font-weight: 600;
-}
-
-/* Education */
-.educationItem {
-    margin: 0 0 2mm 0;
-}
-
-.educationItem:last-child {
-    margin-bottom: 0;
-}
-
-.degree {
-    font-family: var(--font-subheading-cv);
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: #000;
-    margin: 0 0 0.5mm 0;
-    line-height: 1.3;
-}
-
-.institution {
-    font-family: var(--font-body-cv);
-    font-size: 0.875rem;
-    color: #333;
-    margin: 0 0 0.5mm 0;
-    line-height: 1.2;
-}
-
-.period {
-    font-family: var(--font-body-cv);
-    font-size: 0.875rem;
-    color: #666;
-    font-style: italic;
-    margin: 0;
-}
-
-/* Awards */
-.awardItem {
-    margin: 0 0 1.5mm 0;
-}
-
-.awardItem:last-child {
-    margin-bottom: 0;
-}
-
-.awardTitle {
-    font-family: var(--font-body-cv);
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: #000;
-    margin: 0;
-    line-height: 1.3;
-}
-
-/* Open Source */
-.openSourceItem {
-    margin: 0 0 1.5mm 0;
-}
-
-.openSourceItem:last-child {
-    margin-bottom: 0;
-}
-
-.osProject {
-    font-family: var(--font-subheading-cv);
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: #000;
-    margin: 0;
-}
-
-/* Work Experience */
-.experienceItem {
-    margin: 0 0 3mm 0;
-}
-
-.experienceItem:last-child {
-    margin-bottom: 0;
-}
-
-.experienceHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 2mm;
-    margin-bottom: 0.5mm;
 }
 
 .jobTitle {
-    font-family: var(--font-subheading-cv);
-    font-size: 1rem;
+    font-size: 10.5pt;
+    line-height: 13pt;
     font-weight: 700;
-    color: #000;
-    margin: 0;
-    flex: 1;
+    color: #000000;
+    margin: 4pt 0 0 0;
 }
 
-.company {
-    font-family: var(--font-body-cv);
-    font-size: 0.875rem;
-    color: #333;
-    margin: 0 0 1.5mm 0;
+.jobMeta {
+    font-size: 9pt;
+    line-height: 12pt;
+    font-style: italic;
+    color: #666666;
+    margin: 0 0 3pt 0;
 }
 
-.responsibilities {
-    list-style: disc;
-    padding-left: 4mm;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.8mm;
+/* Responsive: below A4 width, allow horizontal scroll instead of reflow so the
+   page keeps its real proportions (matches the requested "follow page size"). */
+@media (max-width: 860px) {
+    .toolbar {
+        top: calc(30px + var(--space-3));
+        right: var(--space-4);
+    }
+
+    .backButton,
+    .downloadButton {
+        font-size: 0.8125rem;
+        padding: var(--space-2) var(--space-3);
+    }
+
+    .cvPage {
+        padding: calc(70px + var(--space-8)) var(--space-4) var(--space-6);
+    }
 }
 
-.responsibilities li {
-    font-family: var(--font-body-cv);
-    font-size: 0.875rem;
-    line-height: 1.3;
-    color: #000;
-}
-
-/* Projects */
-.projectItem {
-    margin: 0 0 1.5mm 0;
-}
-
-.projectItem:last-child {
-    margin-bottom: 0;
-}
-
-.projectHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 2mm;
-}
-
-.projectName {
-    font-family: var(--font-subheading-cv);
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: #000;
-    margin: 0;
-}
-
-.projectTech {
-    font-family: var(--font-body-cv);
-    font-size: 0.875rem;
-    color: #666;
-    margin: 0;
-    flex-shrink: 0;
-    text-align: right;
-}
-
-/* Print styles */
 @media print {
     .cvPage {
         background: white;
         padding: 0;
     }
 
-    .downloadButton {
+    .toolbar {
         display: none !important;
     }
 
-    .cvContent {
+    .pageScroll {
+        overflow: visible;
+    }
+
+    .pageStack {
+        gap: 0;
+    }
+
+    .page {
         box-shadow: none;
-        page-break-after: auto;
-    }
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .backButton {
-        top: calc(30px + var(--space-3));
-        right: var(--space-4);
-        font-size: 0.875rem;
-        padding: var(--space-2) var(--space-3);
     }
 
-    .downloadButton {
-        top: calc(60px + var(--space-3));
-        right: var(--space-4);
-        font-size: 0.875rem;
-        padding: var(--space-2) var(--space-3);
-    }
-
-    .cvPage {
-        padding: calc(70px + var(--space-4)) var(--space-4) var(--space-6);
-    }
-
-    .cvContent {
-        width: 100%;
-        height: auto;
-        padding: 20px 15px;
-    }
-
-    .header {
-        flex-direction: column-reverse;
-        gap: 15px;
-    }
-
-    .headerLeft,
-    .headerRight {
-        width: 100%;
-    }
-
-    .headerRight {
-        text-align: left;
-    }
-
-    .name {
-        font-size: 1.5rem;
-    }
-
-    .title {
-        font-size: 1rem;
-    }
-
-    .contactInfo {
-        font-size: 0.7rem;
-    }
-
-    .body {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-
-    .sidebar {
-        border-right: none;
-        border-bottom: 1px solid #000;
-        padding-right: 0;
-        padding-bottom: 15px;
-    }
-
-    .sectionTitle {
-        font-size: 1rem;
-    }
-
-    .experienceHeader {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 5px;
-    }
-
-    .contactCardIcon {
-        width: 32px;
-        height: 32px;
-        position: relative;
-        z-index: 1;
+    .page:not(:last-child) {
+        page-break-after: always;
     }
 }
