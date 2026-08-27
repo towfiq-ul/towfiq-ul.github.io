@@ -369,7 +369,7 @@ build(
             "<b>Frontend Integration:</b> React, TypeScript, Vite, jQuery",
             "<b>Databases:</b> MySQL",
             "<b>DevOps:</b> Docker, GitHub Actions CI, Git",
-            "<b>Cross-stack:</b> Java, Spring Boot, Microservices (primary professional stack)",
+            "<b>Cross-stack:</b> Java, Spring Boot, Microservices",
         ])),
     ],
     [
@@ -436,7 +436,7 @@ build(
             "engineering, LLM integration",
             "<b>Cloud &amp; Storage:</b> AWS S3, Google Drive API, Cloudflare Workers",
             "<b>Security:</b> AES-256-GCM client-side encryption",
-            "<b>Cross-stack:</b> Java, Spring Boot, Microservices (primary professional stack); PHP/Laravel",
+            "<b>Cross-stack:</b> Java, Spring Boot, Microservices; PHP/Laravel",
         ])),
     ],
     [
