@@ -18,7 +18,6 @@ function corsHeaders(origin) {
 
 const MAX_BODY_BYTES = 80_000;
 const MAX_MESSAGES = 60;
-const MAX_MESSAGE_CHARS = 4_000;
 const MAX_TOTAL_CHARS = 60_000;
 const MAX_TEMPERATURE = 2;
 const MAX_TOKENS_CAP = 1024;
@@ -107,7 +106,6 @@ function sanitizeChatRequest(body, model) {
         if (!m || typeof m !== "object") throw new Error("invalid message");
         if (!ALLOWED_ROLES.has(m.role)) throw new Error(`invalid role: ${m.role}`);
         if (typeof m.content !== "string") throw new Error("message content must be a string");
-        if (m.content.length > MAX_MESSAGE_CHARS) throw new Error(`message too long (max ${MAX_MESSAGE_CHARS} chars)`);
         totalChars += m.content.length;
         return { role: m.role, content: m.content };
     });

@@ -1,0 +1,6 @@
+# Copy to .dev.vars for local `wrangler dev` testing. Never commit .dev.vars.
+# In production these are set via `wrangler secret put`, not this file.
+
+AI_API_KEY=your_openrouter_api_key
+AI_BASE_URL=https://openrouter.ai/api/v1
+AI_MODEL=inclusionai/ling-3.0-flash-vl:free
