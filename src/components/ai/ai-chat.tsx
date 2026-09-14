@@ -84,7 +84,6 @@ export function FloatingChat({isChatOpen = false, onClose}: Readonly<AiChatProps
                             method: "POST",
                             headers: {"Content-Type": "application/json"},
                             body: JSON.stringify({
-                                model: import.meta.env.VITE_OPEN_AI_MODEL,
                                 temperature: Number(import.meta.env.VITE_OPEN_AI_TEMPERATURE) || 1,
                                 messages: [
                                     {role: "system", content: contextRef.current},

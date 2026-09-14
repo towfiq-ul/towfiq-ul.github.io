@@ -18,11 +18,6 @@ function corsHeaders(origin) {
 
 const MAX_BODY_BYTES = 80_000;
 const MAX_MESSAGES = 60;
-// The system message carries the grounding context (RULESET.md + PDF +
-// WEBSITE_CONTEXT.md + knowledge doc), measured ~20-25k chars in production —
-// it's fixed app content, not a user-controlled conversation turn, so it gets
-// a much higher ceiling than the per-turn cap below.
-const MAX_SYSTEM_CHARS = 40_000;
 const MAX_MESSAGE_CHARS = 4_000;
 const MAX_TOTAL_CHARS = 60_000;
 const MAX_TEMPERATURE = 2;
@@ -53,7 +48,7 @@ export default {
         }
 
         // Guard: secrets must exist
-        if (!env.AI_API_KEY || !env.AI_BASE_URL) {
+        if (!env.AI_API_KEY || !env.AI_BASE_URL || !env.AI_MODEL) {
             return json({ error: "Worker secrets not configured" }, 500, cors);
         }
 
@@ -72,7 +67,7 @@ export default {
 
         let payload;
         try {
-            payload = sanitizeChatRequest(await request.json());
+            payload = sanitizeChatRequest(await request.json(), env.AI_MODEL);
         } catch (err) {
             return json({ error: "Bad Request", detail: String(err.message ?? err) }, 400, cors);
         }
@@ -99,12 +94,11 @@ export default {
 
 // Whitelists fields and clamps values so a client can't inflate upstream cost
 // (huge max_tokens, unbounded message count/length) or smuggle unexpected params.
-function sanitizeChatRequest(body) {
+function sanitizeChatRequest(body, model) {
     if (!body || typeof body !== "object") throw new Error("invalid request body");
 
-    const { model, temperature, messages, max_tokens } = body;
+    const { temperature, messages, max_tokens } = body;
 
-    if (typeof model !== "string" || !model) throw new Error("model is required");
     if (!Array.isArray(messages) || messages.length === 0) throw new Error("messages must be a non-empty array");
     if (messages.length > MAX_MESSAGES) throw new Error(`too many messages (max ${MAX_MESSAGES})`);
 
@@ -113,8 +107,7 @@ function sanitizeChatRequest(body) {
         if (!m || typeof m !== "object") throw new Error("invalid message");
         if (!ALLOWED_ROLES.has(m.role)) throw new Error(`invalid role: ${m.role}`);
         if (typeof m.content !== "string") throw new Error("message content must be a string");
-        const limit = m.role === "system" ? MAX_SYSTEM_CHARS : MAX_MESSAGE_CHARS;
-        if (m.content.length > limit) throw new Error(`message too long (max ${limit} chars for role "${m.role}")`);
+        if (m.content.length > MAX_MESSAGE_CHARS) throw new Error(`message too long (max ${MAX_MESSAGE_CHARS} chars)`);
         totalChars += m.content.length;
         return { role: m.role, content: m.content };
     });

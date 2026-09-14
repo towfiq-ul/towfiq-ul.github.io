@@ -8,6 +8,7 @@ compatibility_date = "2026-06-01"
 # Secrets are set via CLI — never in this file:
 # wrangler secret put AI_API_KEY
 # wrangler secret put AI_BASE_URL
+# wrangler secret put AI_MODEL
 
 # Caps requests per client IP so a spoofed Origin header can't be used to
 # burn the AI_API_KEY. The worker checks `if (env.RATE_LIMITER)` and skips

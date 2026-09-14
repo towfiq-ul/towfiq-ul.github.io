@@ -92,7 +92,6 @@ model API key as a Worker secret — never in frontend env vars. Point the front
 
 ```env
 VITE_AI_PROXY_URL=https://your-worker.your-subdomain.workers.dev
-VITE_OPEN_AI_MODEL=your-model-id
 VITE_OPEN_AI_TEMPERATURE=0.5
 ```
 
