@@ -40,7 +40,7 @@ Senior Software Engineer with 7+ years designing and shipping high-throughput di
 ## Senior Software Engineer
 
 Exabyting — Dhaka, Bangladesh  
-April 2024 - August 2026  
+May 2024 - August 2026  
 Type: Full-time, Hybrid
 
 Exabyting, a software consultancy company works both on big scale government & private projects. Worked at bK-MFS as an Augmented Resource, a Unicorn MFS Company in Bangladesh.
@@ -61,7 +61,7 @@ Exabyting, a software consultancy company works both on big scale government & p
 ## Software Engineer
 
 SELISE — Zürich, Switzerland  
-November 2021 - April 2024  
+November 2021 - May 2024  
 Type: Full-time, Remote
 
 SELISE (Secure Link Service) headquartered in Zürich, Switzerland. A software company that works on big-scale private projects providing standard high-level software solutions worldwide.

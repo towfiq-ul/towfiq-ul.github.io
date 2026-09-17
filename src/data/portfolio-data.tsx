@@ -90,7 +90,7 @@ export const workExperience = [
         company: "Exabyting",
         location: "Dhaka, Bangladesh",
         type: "Full-time, Hybrid",
-        period: "April 2024 - August 2026",
+        period: "May 2024 - August 2026",
         description:
             "Exabyting, a software consultancy company works both on big scale government & private projects. Worked at bK-MFS as an Augmented Resource, a Unicorn MFS Company in Bangladesh.",
         responsibilities: [
@@ -111,7 +111,7 @@ export const workExperience = [
         company: "SELISE",
         location: "Zürich, Switzerland",
         type: "Full-time, Remote",
-        period: "November 2021 - April 2024",
+        period: "November 2021 - May 2024",
         description:
             "SELISE (Secure Link Service) headquartered in Zürich, Switzerland. A software company that works on big-scale private projects providing standard high-level software solutions worldwide.",
         responsibilities: [

@@ -2,7 +2,7 @@ Title: Towfiqul Islam — Senior Software Engineer
 
 URL Source: https://towfiq-ul.github.io/
 
-Generated: Thu, 20 Aug 2026 21:31:59 GMT (locally from src/data, full content)
+Generated: Thu, 17 Sep 2026 02:42:47 GMT (locally from src/data, full content)
 
 Markdown Content:
 
@@ -88,7 +88,7 @@ Senior Software Engineer with 7+ years designing and shipping high-throughput di
 
 ### Senior Software Engineer — Exabyting
 
-Dhaka, Bangladesh · Full-time, Hybrid · April 2024 - August 2026
+Dhaka, Bangladesh · Full-time, Hybrid · May 2024 - August 2026
 
 Exabyting, a software consultancy company works both on big scale government & private projects. Worked at bK-MFS as an Augmented Resource, a Unicorn MFS Company in Bangladesh.
 
@@ -105,7 +105,7 @@ Exabyting, a software consultancy company works both on big scale government & p
 
 ### Software Engineer — SELISE
 
-Zürich, Switzerland · Full-time, Remote · November 2021 - April 2024
+Zürich, Switzerland · Full-time, Remote · November 2021 - May 2024
 
 SELISE (Secure Link Service) headquartered in Zürich, Switzerland. A software company that works on big-scale private projects providing standard high-level software solutions worldwide.
 

@@ -171,12 +171,12 @@ build(
         ])),
     ],
     [
-        ("Senior Software Engineer – Exabyting", LOC_EXABYTING, "April 2024 – August 2026",
+        ("Senior Software Engineer – Exabyting", LOC_EXABYTING, "May 2024 – August 2026",
          "Augmented resource at bKash Limited. Built and maintained core backend services (Customer App MW, FinRec, "
          "PIN Reset MW) on Java / Spring Boot, DynamoDB, and Kafka, processing 2.5M+ transactions daily. Led the Spring "
          "Boot 2→3 migration on the PIN Reset service (javax→jakarta, AWS SDK v1→v2, Jedis→Lettuce) for zero-downtime "
          "deployment. Mentored junior engineers on best practices, release readiness, and system architecture."),
-        ("Software Engineer – SELISE", LOC_SELISE, "November 2021 – April 2024",
+        ("Software Engineer – SELISE", LOC_SELISE, "November 2021 – May 2024",
          "Extended ThingsBoard (Java, open-source IoT platform, merged contributor) into a multi-tenant IoT middleware "
          "platform for a Swiss enterprise customer, modeling and optimizing time-series telemetry at a scale of millions of "
          "data points."),
@@ -276,11 +276,11 @@ build(
         ])),
     ],
     [
-        ("Senior Software Engineer – Exabyting", LOC_EXABYTING, "April 2024 – August 2026",
+        ("Senior Software Engineer – Exabyting", LOC_EXABYTING, "May 2024 – August 2026",
          "Augmented resource at bKash Limited. Built and maintained core backend services (Customer App MW, FinRec, "
          "PIN Reset MW) on Java / Spring Boot, DynamoDB, and Kafka, processing 2.5M+ transactions daily. Mentored "
          "junior engineers on best practices and release readiness."),
-        ("Software Engineer – SELISE", LOC_SELISE, "November 2021 – April 2024",
+        ("Software Engineer – SELISE", LOC_SELISE, "November 2021 – May 2024",
          "Extended ThingsBoard into a multi-tenant IoT middleware platform for a Swiss enterprise customer, modeling and "
          "optimizing time-series telemetry across PostgreSQL, TimescaleDB, and Cassandra at a scale of millions of data "
          "points. Orchestrated the Swisscom integration and led direct client-facing discussions."),
@@ -373,7 +373,7 @@ build(
         ])),
     ],
     [
-        ("Senior Software Engineer – Exabyting", LOC_EXABYTING, "April 2024 – August 2026",
+        ("Senior Software Engineer – Exabyting", LOC_EXABYTING, "May 2024 – August 2026",
          "Augmented resource at bKash Limited. Built and maintained core backend services (Customer App MW, "
          "FinRec, PIN Reset MW) on Java / Spring Boot, DynamoDB, and Kafka, processing 2.5M+ transactions daily."),
         ("Software Engineer – Exabyting", LOC_EXABYTING, "December 2019 – November 2021",
@@ -381,7 +381,7 @@ build(
          "app backend), an inventory management system for the Electoral Training Institute, and an Annual "
          "Confidential Report generator for the Ministry of ICT. Worked as partner team with bKash Limited's Solution "
          "Engineering Team."),
-        ("Software Engineer – SELISE", LOC_SELISE, "November 2021 – April 2024",
+        ("Software Engineer – SELISE", LOC_SELISE, "November 2021 – May 2024",
          "Extended ThingsBoard into a multi-tenant IoT middleware platform for a Swiss enterprise customer "
          "(primarily Java-based; included for continuity of employment history)."),
     ],
@@ -440,10 +440,10 @@ build(
         ])),
     ],
     [
-        ("Senior Software Engineer – Exabyting", LOC_EXABYTING, "April 2024 – August 2026",
+        ("Senior Software Engineer – Exabyting", LOC_EXABYTING, "May 2024 – August 2026",
          "Augmented resource at bKash Limited. Built and maintained core backend services (Customer App MW, "
          "FinRec, PIN Reset MW) on Java / Spring Boot, DynamoDB, and Kafka, processing 2.5M+ transactions daily."),
-        ("Software Engineer – SELISE", LOC_SELISE, "November 2021 – April 2024",
+        ("Software Engineer – SELISE", LOC_SELISE, "November 2021 – May 2024",
          "Extended ThingsBoard into a multi-tenant IoT middleware platform for a Swiss enterprise customer, "
          "modeling and optimizing time-series telemetry at a scale of millions of data points."),
         ("Software Engineer – Exabyting", LOC_EXABYTING, "December 2019 – November 2021",
@@ -498,12 +498,12 @@ build(
         ])),
     ],
     [
-        ("Senior Software Engineer – Exabyting", LOC_EXABYTING, "April 2024 – August 2026",
+        ("Senior Software Engineer – Exabyting", LOC_EXABYTING, "May 2024 – August 2026",
          "Augmented resource at bKash Limited. Built and maintained core backend services (Customer App MW, FinRec, "
          "PIN Reset MW) on Java / Spring Boot, DynamoDB, and Kafka, processing 2.5M+ transactions daily. Led the Spring "
          "Boot 2→3 migration on the PIN Reset service (javax→jakarta, AWS SDK v1→v2, Jedis→Lettuce) for zero-downtime "
          "deployment. Mentored junior engineers on best practices, release readiness, and system architecture."),
-        ("Software Engineer – SELISE", LOC_SELISE, "November 2021 – April 2024",
+        ("Software Engineer – SELISE", LOC_SELISE, "November 2021 – May 2024",
          "Extended ThingsBoard (Java, open-source IoT platform, merged contributor) into a multi-tenant IoT middleware "
          "platform for a Swiss enterprise customer, modeling and optimizing time-series telemetry at a scale of millions of "
          "data points."),
