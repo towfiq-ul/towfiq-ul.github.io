@@ -380,17 +380,27 @@ export default function Home() {
                                     </Badge>
                                 )}
                             </div>
-                            {project.link && (
-                                <a href={project.link} target="_blank" rel="noopener noreferrer"
-                                   className={styles.awardLink}>
-                                    {project.link.includes("github.com")
-                                        ? "View on GitHub"
-                                        : project.link.includes("play.google.com")
-                                            ? "View on Google Play"
-                                            : "Visit Website"}
-                                    {" "}<ExternalLink size={14}/>
-                                </a>
-                            )}
+                            <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', alignItems: 'center' }}>
+                                {project.link && (
+                                    <a href={project.link} target="_blank" rel="noopener noreferrer"
+                                       className={styles.awardLink}>
+                                        {project.link.includes("github.com")
+                                            ? "View on GitHub"
+                                            : project.link.includes("play.google.com")
+                                                ? "View on Google Play"
+                                                : project.link.includes("chromewebstore.google.com")
+                                                    ? "View on Chrome Web Store"
+                                                    : "Visit Website"}
+                                        {" "}<ExternalLink size={14}/>
+                                    </a>
+                                )}
+                                {project.githubLink && (
+                                    <a href={project.githubLink} target="_blank" rel="noopener noreferrer"
+                                       className={styles.awardLink}>
+                                        View on GitHub <ExternalLink size={14}/>
+                                    </a>
+                                )}
+                            </div>
                         </div>
                     ))}
                 </div>
@@ -510,10 +520,23 @@ export default function Home() {
                                            style={{fontSize: '13px', opacity: 0.8, marginBottom: '8px'}}>
                                             {contribution.contribution}
                                         </p>
-                                        <a href={contribution.link} target="_blank" rel="noopener noreferrer"
-                                           className={styles.awardLink}>
-                                            View on GitHub <ExternalLink size={14}/>
-                                        </a>
+                                        <div style={{
+                                            display: 'flex',
+                                            gap: '16px',
+                                            flexWrap: 'wrap',
+                                            alignItems: 'center',
+                                        }}>
+                                            <a href={contribution.link} target="_blank" rel="noopener noreferrer"
+                                               className={styles.awardLink}>
+                                                View on GitHub <ExternalLink size={14}/>
+                                            </a>
+                                            {contribution.storeLink && (
+                                                <a href={contribution.storeLink} target="_blank" rel="noopener noreferrer"
+                                                   className={styles.awardLink}>
+                                                    Chrome Web Store <ExternalLink size={14}/>
+                                                </a>
+                                            )}
+                                        </div>
                                     </div>
                                 </div>
                             ))}

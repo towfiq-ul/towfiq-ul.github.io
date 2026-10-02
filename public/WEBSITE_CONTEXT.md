@@ -2,7 +2,7 @@ Title: Towfiqul Islam — Senior Software Engineer
 
 URL Source: https://towfiq-ul.github.io/
 
-Generated: Thu, 17 Sep 2026 02:42:47 GMT (locally from src/data, full content)
+Generated: Fri, 02 Oct 2026 03:34:04 GMT (locally from src/data, full content)
 
 Markdown Content:
 
@@ -21,7 +21,7 @@ Senior Software Engineer with 7+ years designing and shipping high-throughput di
 *   Impactful contribution in architecture design for bK-MFS financial platform handling millions of daily transactions
 *   Achieved 40% performance improvement through database optimization and caching strategies
 *   Mentored junior engineers on best practices and technical decision-making
-*   Published and maintain multiple open-source tools (an npm chat-widget package, Claude Code command extensions, a Linux dev-environment toolkit) alongside a merged contribution to ThingsBoard
+*   Published and maintain multiple open-source tools (a published Chrome extension, an npm chat-widget package, Claude Code command extensions, a Linux dev-environment toolkit) alongside a merged contribution to ThingsBoard
 *   Established CI/CD pipelines and coding standards improving team productivity by 30%
 
 ### Core Expertise
@@ -32,7 +32,7 @@ Senior Software Engineer with 7+ years designing and shipping high-throughput di
 *   Message Queues: Kafka, RabbitMQ, AWS SNS-SQS
 *   Architecture: RESTful APIs, Event-Driven Systems, Domain-Driven Design
 *   IoT: MQTT, CoAP, SNMP, WebSocket, Real-time Data Processing
-*   Open Source & Tooling: npm packages, Cloudflare Workers, CLI/automation scripting
+*   Open Source & Tooling: Chrome extensions, npm packages, Cloudflare Workers, CLI/automation scripting
 
 ## Technical Skills
 
@@ -82,7 +82,7 @@ Senior Software Engineer with 7+ years designing and shipping high-throughput di
 
 ### Other Technologies
 
-`Redis` · `GraphQL` · `Thymeleaf` · `Web3J` · `IoT Protocols (MQTT, CoAP, SNMP)` · `WebSocket` · `Google Analytics`
+`Redis` · `GraphQL` · `Thymeleaf` · `Web3J` · `IoT Protocols (MQTT, CoAP, SNMP)` · `WebSocket` · `Google Analytics` · `Chrome Extensions (Manifest V3)` · `WebAssembly (WASM)` · `Tesseract.js (OCR)`
 
 ## Work Experience
 
@@ -249,6 +249,27 @@ A framework-agnostic floating AI chat assistant widget — draggable, persists a
 Technologies: TypeScript, Web Components, Cloudflare Workers, npm
 
 Link: https://github.com/towfiq-ul/chatling
+
+### Meeting Invite Scanner (Featured)
+
+Privacy-first offline OCR browser extension for Zoom invites
+
+Client: Personal Project — Open Source
+
+A privacy-first Manifest V3 browser extension that reads a screenshot, photo, or pasted text of a Zoom invite, extracts the meeting ID and passcode using on-device WebAssembly OCR (Tesseract.js), and opens the meeting in the Zoom desktop app or web client with your display name pre-filled. 100% offline with zero external network calls.
+
+*   Published on the Chrome Web Store and open-sourced under Apache-2.0
+*   100% offline & private: bundled Tesseract.js WASM core runs entirely on-device with zero external network requests
+*   Multi-variant image preprocessing (Lanczos-3 upscaling, percentile contrast stretching, unsharp mask) with weighted voting
+*   8-hour smart cache in local storage for instant meeting rejoining
+*   Drag-to-crop selection for noisy photos and direct invite text parsing
+*   One-click launch to Zoom desktop app (zoommtg://) or browser web client
+
+Technologies: JavaScript, Chrome Extension (MV3), WebAssembly, Tesseract.js, Canvas API, HTML/CSS
+
+Link: https://chromewebstore.google.com/detail/meeting-invite-scanner/pamoninmaooeedmaebkbgmhgfdiogeip
+
+GitHub: https://github.com/towfiq-ul/zoom-meeting-joiner-plugin
 
 ### Google Drive Backup Utility (Featured)
 
@@ -566,6 +587,16 @@ Link: https://algo.codemarshal.org/contests/cseweek-2016/standings
 Participated in divisional onsite contests: IIUC IUPC 2015, 2016, USTC IUPC 2016. Solved 500+ problems across various online judges.
 
 ## Open Source Contributions
+
+### Meeting Invite Scanner (Maintained)
+
+Privacy-first Manifest V3 browser extension that scans Zoom invite photos, screenshots, or pasted text to extract meeting ID and passcode via on-device WebAssembly OCR (Tesseract.js). 100% offline with zero external network calls, an 8-hour smart cache, drag-to-crop selection, and one-click launch into Zoom desktop or web client.
+
+Contribution: Author & Maintainer
+
+Link: https://github.com/towfiq-ul/zoom-meeting-joiner-plugin
+
+Chrome Web Store: https://chromewebstore.google.com/detail/meeting-invite-scanner/pamoninmaooeedmaebkbgmhgfdiogeip
 
 ### laravel-gitstamp (Maintained)
 

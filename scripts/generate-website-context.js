@@ -76,6 +76,7 @@ for (const project of projects) {
     }
     push(`Technologies: ${project.technologies.join(', ')}`);
     if (project.link) push(`Link: ${project.link}`);
+    if (project.githubLink) push(`GitHub: ${project.githubLink}`);
 }
 
 push('## Writing');
@@ -107,6 +108,9 @@ for (const item of openSource) {
         `Contribution: ${item.contribution}`,
         '',
         `Link: ${item.link}`);
+    if (item.storeLink) {
+        push(`Chrome Web Store: ${item.storeLink}`);
+    }
 }
 
 push('## Certifications');

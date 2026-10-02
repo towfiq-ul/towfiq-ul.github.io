@@ -22,7 +22,7 @@ Senior Software Engineer with 7+ years designing and shipping high-throughput di
 - Impactful contribution in architecture design for bK-MFS financial platform handling millions of daily transactions
 - Achieved 40% performance improvement through database optimization and caching strategies
 - Mentored junior engineers on best practices and technical decision-making
-- Published and maintain multiple open-source tools (an npm chat-widget package, Claude Code command extensions, a Linux dev-environment toolkit) alongside a merged contribution to ThingsBoard
+- Published and maintain multiple open-source tools (a published Chrome extension, an npm chat-widget package, Claude Code command extensions, a Linux dev-environment toolkit) alongside a merged contribution to ThingsBoard
 - Established CI/CD pipelines and coding standards improving team productivity by 30%
 
 ## Core Expertise
@@ -33,7 +33,7 @@ Senior Software Engineer with 7+ years designing and shipping high-throughput di
 - Message Queues: Kafka, RabbitMQ, AWS SNS-SQS
 - Architecture: RESTful APIs, Event-Driven Systems, Domain-Driven Design
 - IoT: MQTT, CoAP, SNMP, WebSocket, Real-time Data Processing
-- Open Source & Tooling: npm packages, Cloudflare Workers, CLI/automation scripting
+- Open Source & Tooling: Chrome extensions, npm packages, Cloudflare Workers, CLI/automation scripting
 
 # Work Experience
 
@@ -230,6 +230,10 @@ Healthcare app creating personalized health care plans based on user information
 
 # Open Source Contributions
 
+## Meeting Invite Scanner (Maintained)
+
+Author & Maintainer — https://github.com/towfiq-ul/zoom-meeting-joiner-plugin | Chrome Web Store: https://chromewebstore.google.com/detail/meeting-invite-scanner/pamoninmaooeedmaebkbgmhgfdiogeip
+
 ## laravel-gitstamp (Maintained)
 
 Author & Maintainer — https://github.com/m-tech-org/laravel-gitstamp
@@ -264,4 +268,4 @@ Pull Request #44 — https://github.com/MBSTUPC/tech-companies-in-bangladesh/pul
 
 # AI Indexing Keywords
 
-Java (Spring Boot), PHP (Laravel), C/C++ with STL, Python, JavaScript, TypeScript, Bash, LLM Integration, RAG Pipelines, OpenSearch / Vector Search, Embeddings, Prompt Engineering & Grounding, Cloudflare Workers (AI Edge Proxy), Spring Boot, Laravel (LAMP Stack), React, Spring MVC, Spring Security, Spring Integration, Spring SFTP, Apache Camel, Feign Client, Rest Template, jQuery, JUnit, TestNG, Postman, Rest Assured, Maven, Gradle, Composer, MySQL, Oracle, DynamoDB, PostgreSQL, Cassandra, Spring Data, Spring JDBC Template, JPA, Hibernate, Apache, Tomcat, GlassFish, Docker, Jenkins, Kubernetes, AWS CLI, Ansible, AWS, Azure DevOps, Firebase, Git Actions, OAuth2, JWT, KeyCloak, Agile (Scrum), JIRA, GIT, Linux, Windows, Kafka, RabbitMQ, Active MQ, AWS SNS, AWS SQS, Redis, GraphQL, Thymeleaf, Web3J, IoT Protocols (MQTT, CoAP, SNMP), WebSocket, Google Analytics
+Java (Spring Boot), PHP (Laravel), C/C++ with STL, Python, JavaScript, TypeScript, Bash, LLM Integration, RAG Pipelines, OpenSearch / Vector Search, Embeddings, Prompt Engineering & Grounding, Cloudflare Workers (AI Edge Proxy), Spring Boot, Laravel (LAMP Stack), React, Spring MVC, Spring Security, Spring Integration, Spring SFTP, Apache Camel, Feign Client, Rest Template, jQuery, JUnit, TestNG, Postman, Rest Assured, Maven, Gradle, Composer, MySQL, Oracle, DynamoDB, PostgreSQL, Cassandra, Spring Data, Spring JDBC Template, JPA, Hibernate, Apache, Tomcat, GlassFish, Docker, Jenkins, Kubernetes, AWS CLI, Ansible, AWS, Azure DevOps, Firebase, Git Actions, OAuth2, JWT, KeyCloak, Agile (Scrum), JIRA, GIT, Linux, Windows, Kafka, RabbitMQ, Active MQ, AWS SNS, AWS SQS, Redis, GraphQL, Thymeleaf, Web3J, IoT Protocols (MQTT, CoAP, SNMP), WebSocket, Google Analytics, Chrome Extensions (Manifest V3), WebAssembly (WASM), Tesseract.js (OCR)

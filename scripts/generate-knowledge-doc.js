@@ -97,7 +97,8 @@ for (const award of awards) {
 
 push('# Open Source Contributions');
 for (const item of openSource) {
-    push(`## ${item.project} (${item.status})`, '', `${item.contribution} — ${item.link}`);
+    const links = [item.link, item.storeLink ? `Chrome Web Store: ${item.storeLink}` : null].filter(Boolean).join(' | ');
+    push(`## ${item.project} (${item.status})`, '', `${item.contribution} — ${links}`);
 }
 
 push('# AI Indexing Keywords', '', [...new Set(Object.values(skills).flat())].join(', '));

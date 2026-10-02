@@ -17,7 +17,7 @@ export const overview = {
         "Impactful contribution in architecture design for bK-MFS financial platform handling millions of daily transactions",
         "Achieved 40% performance improvement through database optimization and caching strategies",
         "Mentored junior engineers on best practices and technical decision-making",
-        "Published and maintain multiple open-source tools (an npm chat-widget package, Claude Code command extensions, a Linux dev-environment toolkit) alongside a merged contribution to ThingsBoard",
+        "Published and maintain multiple open-source tools (a published Chrome extension, an npm chat-widget package, Claude Code command extensions, a Linux dev-environment toolkit) alongside a merged contribution to ThingsBoard",
         "Established CI/CD pipelines and coding standards improving team productivity by 30%",
     ],
     expertise: [
@@ -27,7 +27,7 @@ export const overview = {
         "Message Queues: Kafka, RabbitMQ, AWS SNS-SQS",
         "Architecture: RESTful APIs, Event-Driven Systems, Domain-Driven Design",
         "IoT: MQTT, CoAP, SNMP, WebSocket, Real-time Data Processing",
-        "Open Source & Tooling: npm packages, Cloudflare Workers, CLI/automation scripting",
+        "Open Source & Tooling: Chrome extensions, npm packages, Cloudflare Workers, CLI/automation scripting",
     ],
 };
 
@@ -81,6 +81,9 @@ export const skills = {
         "IoT Protocols (MQTT, CoAP, SNMP)",
         "WebSocket",
         "Google Analytics",
+        "Chrome Extensions (Manifest V3)",
+        "WebAssembly (WASM)",
+        "Tesseract.js (OCR)",
     ],
 };
 
@@ -223,6 +226,15 @@ export const awards = [
 ];
 
 export const openSource = [
+    {
+        project: "Meeting Invite Scanner",
+        description:
+            "Privacy-first Manifest V3 browser extension that scans Zoom invite photos, screenshots, or pasted text to extract meeting ID and passcode via on-device WebAssembly OCR (Tesseract.js). 100% offline with zero external network calls, an 8-hour smart cache, drag-to-crop selection, and one-click launch into Zoom desktop or web client.",
+        contribution: "Author & Maintainer",
+        link: "https://github.com/towfiq-ul/zoom-meeting-joiner-plugin",
+        storeLink: "https://chromewebstore.google.com/detail/meeting-invite-scanner/pamoninmaooeedmaebkbgmhgfdiogeip",
+        status: "Maintained",
+    },
     {
         project: "laravel-gitstamp",
         description:

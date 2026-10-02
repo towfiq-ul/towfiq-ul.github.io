@@ -6,6 +6,8 @@ type Project = {
     description: string;
     highlights: string[];
     link?: string;
+    githubLink?: string;
+    storeLink?: string;
     featured?: boolean;
 };
 
@@ -120,6 +122,32 @@ export const projects: Project[] = [
             "Dogfooded on this very site — its engine now drives the AI assistant here",
         ],
         link: "https://github.com/towfiq-ul/chatling",
+        featured: true,
+    },
+    {
+        name: "Meeting Invite Scanner",
+        subname: "Privacy-first offline OCR browser extension for Zoom invites",
+        client: "Personal Project — Open Source",
+        technologies: [
+            "JavaScript",
+            "Chrome Extension (MV3)",
+            "WebAssembly",
+            "Tesseract.js",
+            "Canvas API",
+            "HTML/CSS"
+        ],
+        description:
+            "A privacy-first Manifest V3 browser extension that reads a screenshot, photo, or pasted text of a Zoom invite, extracts the meeting ID and passcode using on-device WebAssembly OCR (Tesseract.js), and opens the meeting in the Zoom desktop app or web client with your display name pre-filled. 100% offline with zero external network calls.",
+        highlights: [
+            "Published on the Chrome Web Store and open-sourced under Apache-2.0",
+            "100% offline & private: bundled Tesseract.js WASM core runs entirely on-device with zero external network requests",
+            "Multi-variant image preprocessing (Lanczos-3 upscaling, percentile contrast stretching, unsharp mask) with weighted voting",
+            "8-hour smart cache in local storage for instant meeting rejoining",
+            "Drag-to-crop selection for noisy photos and direct invite text parsing",
+            "One-click launch to Zoom desktop app (zoommtg://) or browser web client",
+        ],
+        link: "https://chromewebstore.google.com/detail/meeting-invite-scanner/pamoninmaooeedmaebkbgmhgfdiogeip",
+        githubLink: "https://github.com/towfiq-ul/zoom-meeting-joiner-plugin",
         featured: true,
     },
     {
