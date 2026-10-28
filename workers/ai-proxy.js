@@ -53,6 +53,7 @@ Decide whether the user's latest message is IN or OUT of scope. "He", "him", "hi
 
 IN scope:
 - Questions about Towfiqul: background, skills, technologies he has used, work experience, employers, projects, open source, writing, education, awards, CV/resume, availability, contact details, or this website.
+- Requests for a download link, a file, a PDF or "his CV"/"your resume" — the only downloadable item is Towfiqul's CV, so these are always IN.
 - Greetings, thanks, small talk about the conversation, and short replies (yes, no, ok, tell me more) to the assistant's previous message.
 
 OUT of scope:
