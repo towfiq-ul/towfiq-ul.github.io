@@ -19,7 +19,7 @@ Senior Software Engineer with 7+ years designing and shipping high-throughput di
 
 ## Career Highlights
 
-- Impactful contribution in architecture design for bK-MFS financial platform handling millions of daily transactions
+- Impactful contribution in architecture design for bKash Limited financial platform handling millions of daily transactions
 - Achieved 40% performance improvement through database optimization and caching strategies
 - Mentored junior engineers on best practices and technical decision-making
 - Published and maintain multiple open-source tools (a published Chrome extension, an npm chat-widget package, Claude Code command extensions, a Linux dev-environment toolkit) alongside a merged contribution to ThingsBoard
@@ -43,11 +43,11 @@ Exabyting — Dhaka, Bangladesh
 May 2024 - August 2026  
 Type: Full-time, Hybrid
 
-Exabyting, a software consultancy company works both on big scale government & private projects. Worked at bK-MFS as an Augmented Resource, a Unicorn MFS Company in Bangladesh.
+Exabyting, a software consultancy company works both on big scale government & private projects. Worked at bKash Limited as an Augmented Resource, a Unicorn MFS Company in Bangladesh.
 
 ### Responsibilities
 
-- Built and maintained core backend services (Customer App MW, FinRec, PIN Reset MW) for bK-MFS's core payment platform, processing 2.5M+ transactions daily
+- Built and maintained core backend services (Customer App MW, FinRec, PIN Reset MW) for bKash Limited's core payment platform, processing 2.5M+ transactions daily
 - Led the Spring Boot 2→3 migration on the PIN Reset service (javax→jakarta, AWS SDK v1→v2, Jedis→Lettuce) for zero-downtime deployment
 - Implemented reactive Kafka integration using spring-kafka and reactor-kafka to improve throughput and resilience across core banking microservices
 - Engineered a self-contained TPS-limiting service with interval-based retry logic, later made dynamically configurable and scalable to support Airtime Mobile Recharge Automation
@@ -86,7 +86,7 @@ Exabyting, a software consultancy company works both on big scale government & p
 
 - Developed various Govt and Private Web Application and Services
 - Planned development cycle and collected requirements for developing software
-- Worked with bK-MFS Limited as Partner Team with their Solution Engineering Team
+- Worked with bKash Limited as Partner Team with their Solution Engineering Team
 - Learned software design patterns, clean coding, communication and taking ownership
 - Work in Agile/Scrum development process
 - Review and Analyze Project requirement Document
@@ -174,19 +174,19 @@ A project focusing on sustainable wood sourcing with blockchain integration for 
 
 ## Agent App MW
 
-Client: bK-MFS Limited
+Client: bKash Limited
 
 Tech: Java (Spring Boot), DynamoDB, AWS, Firebase
 
-Middleware service supporting bK-MFS Agent App, one of the most popular financial apps for bK-MFS Agents. Implemented Pay Bill service integration.
+Middleware service supporting bKash Agent App, one of the most popular financial apps for bKash Agents. Implemented Pay Bill service integration.
 
-- Core product of bK-MFS Limited
+- Core product of bKash Limited
 - High-availability architecture
 - AWS cloud infrastructure
 
 ## MULTIBANK
 
-Client: bK-MFS Limited
+Client: bKash Limited
 
 Tech: Java (Spring Boot), Spring Integration, MySQL, jQuery
 

@@ -13,14 +13,14 @@
  */
 import RULESET from "../public/RULESET.md";
 
-const ALLOWED_ORIGINS = new Set([
-    "https://towfiq-ul.github.io",
-    // Local dev frontend (vite.config.ts server.port). Origin is already
-    // client-supplied and spoofable by non-browser callers (see below), so
-    // allowing localhost doesn't weaken anything a curl script couldn't
-    // already do by spoofing the production origin directly.
-    "http://localhost:3000",
-]);
+const PRODUCTION_ORIGIN = "https://towfiq-ul.github.io";
+// Local dev on any port, via localhost or 127.0.0.1 (vite dev / preview). Origin
+// is client-supplied and spoofable by non-browser callers anyway (see below),
+// so allowing loopback doesn't weaken anything a curl script couldn't already
+// do by spoofing the production origin directly.
+const LOCAL_ORIGIN = /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/;
+
+const isAllowedOrigin = (origin) => origin === PRODUCTION_ORIGIN || LOCAL_ORIGIN.test(origin);
 
 const EMBEDDING_MODEL = "@cf/baai/bge-base-en-v1.5"; // 768 dims — must match the Vectorize index
 // Override with the AI_MODELS var (comma-separated, first = primary, rest = fallbacks).
@@ -37,6 +37,7 @@ const TOP_K = 6;
 const MIN_SCORE = 0.45; // cosine; weaker matches are noise
 const ALLOWED_ROLES = new Set(["user", "assistant"]);
 const INGEST_BATCH = 50;
+const DELETE_BATCH = 100;
 const MAX_INGEST_CHUNKS = 1000;
 
 const BUSY_MESSAGE =
@@ -45,7 +46,7 @@ const BUSY_MESSAGE =
 
 function corsHeaders(origin) {
     return {
-        "Access-Control-Allow-Origin": ALLOWED_ORIGINS.has(origin) ? origin : "",
+        "Access-Control-Allow-Origin": isAllowedOrigin(origin) ? origin : "",
         "Access-Control-Allow-Methods": "POST, OPTIONS",
         "Access-Control-Allow-Headers": "Content-Type",
         "Vary": "Origin",
@@ -79,7 +80,7 @@ export default {
         // Origin is client-supplied and trivially spoofed by non-browser
         // callers, so it's not real auth — the rate limiter below is what
         // actually bounds abuse of the free allocation.
-        if (!ALLOWED_ORIGINS.has(origin)) {
+        if (!isAllowedOrigin(origin)) {
             return json({ error: "Forbidden" }, 403, cors);
         }
 
@@ -198,8 +199,11 @@ async function ingest(request, env) {
             upserted += batch.length;
         }
 
+        // Vectorize accepts at most 100 ids per delete call.
         const deleteIds = Array.isArray(body.deleteIds) ? body.deleteIds.filter((id) => typeof id === "string") : [];
-        if (deleteIds.length) await env.VECTORIZE.deleteByIds(deleteIds);
+        for (let i = 0; i < deleteIds.length; i += DELETE_BATCH) {
+            await env.VECTORIZE.deleteByIds(deleteIds.slice(i, i + DELETE_BATCH));
+        }
 
         return json({ upserted, deleted: deleteIds.length });
     } catch (err) {

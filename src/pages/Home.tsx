@@ -375,6 +375,12 @@ export default function Home() {
                 footer={footer}
                 overlay={pagerOpen ? <Suspense fallback={<Loading/>}><CvPager onQuit={closePager}/></Suspense> : undefined}
             >
+                {groups.length === 0 && (
+                    // After `clear`: an empty prompt with a blinking cursor, like bash.
+                    <div className={session.cmdLine}>
+                        <PromptPrefix/><span className={styles.cursor} aria-hidden="true"/>
+                    </div>
+                )}
                 {groups.map((group, i) => (
                     <div
                         key={group[0].id}

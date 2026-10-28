@@ -2,7 +2,7 @@ Title: Towfiqul Islam — Senior Software Engineer
 
 URL Source: https://towfiq-ul.github.io/
 
-Generated: Fri, 02 Oct 2026 03:34:04 GMT (locally from src/data, full content)
+Generated: Wed, 28 Oct 2026 10:31:46 GMT (locally from src/data, full content)
 
 Markdown Content:
 
@@ -18,7 +18,7 @@ Senior Software Engineer with 7+ years designing and shipping high-throughput di
 
 ### Key Highlights
 
-*   Impactful contribution in architecture design for bK-MFS financial platform handling millions of daily transactions
+*   Impactful contribution in architecture design for bKash Limited financial platform handling millions of daily transactions
 *   Achieved 40% performance improvement through database optimization and caching strategies
 *   Mentored junior engineers on best practices and technical decision-making
 *   Published and maintain multiple open-source tools (a published Chrome extension, an npm chat-widget package, Claude Code command extensions, a Linux dev-environment toolkit) alongside a merged contribution to ThingsBoard
@@ -90,9 +90,9 @@ Senior Software Engineer with 7+ years designing and shipping high-throughput di
 
 Dhaka, Bangladesh · Full-time, Hybrid · May 2024 - August 2026
 
-Exabyting, a software consultancy company works both on big scale government & private projects. Worked at bK-MFS as an Augmented Resource, a Unicorn MFS Company in Bangladesh.
+Exabyting, a software consultancy company works both on big scale government & private projects. Worked at bKash Limited as an Augmented Resource, a Unicorn MFS Company in Bangladesh.
 
-*   Built and maintained core backend services (Customer App MW, FinRec, PIN Reset MW) for bK-MFS's core payment platform, processing 2.5M+ transactions daily
+*   Built and maintained core backend services (Customer App MW, FinRec, PIN Reset MW) for bKash Limited's core payment platform, processing 2.5M+ transactions daily
 *   Led the Spring Boot 2→3 migration on the PIN Reset service (javax→jakarta, AWS SDK v1→v2, Jedis→Lettuce) for zero-downtime deployment
 *   Implemented reactive Kafka integration using spring-kafka and reactor-kafka to improve throughput and resilience across core banking microservices
 *   Engineered a self-contained TPS-limiting service with interval-based retry logic, later made dynamically configurable and scalable to support Airtime Mobile Recharge Automation
@@ -123,7 +123,7 @@ Exabyting, a software consultancy company works both on big scale government & p
 
 *   Developed various Govt and Private Web Application and Services
 *   Planned development cycle and collected requirements for developing software
-*   Worked with bK-MFS Limited as Partner Team with their Solution Engineering Team
+*   Worked with bKash Limited as Partner Team with their Solution Engineering Team
 *   Learned software design patterns, clean coding, communication and taking ownership
 *   Work in Agile/Scrum development process
 *   Review and Analyze Project requirement Document
@@ -159,13 +159,13 @@ A British Curriculum English Medium School affiliated with Cambridge University,
 
 ## Projects
 
-### bK-MFS App (Featured)
+### bKash App (Featured)
 
-Consumer app for bK-MFS Limited
+Consumer app for bKash Limited
 
-Client: bK-MFS Limited (via Exabyting)
+Client: bKash Limited (via Exabyting)
 
-bK-MFS is a leading mobile financial service in Bangladesh that allows users to perform instant money transfers, bill payments, mobile recharges, and merchant transactions securely from their smartphones.
+bKash is a leading mobile financial service in Bangladesh that allows users to perform instant money transfers, bill payments, mobile recharges, and merchant transactions securely from their smartphones.
 
 *   Built and maintained scalable microservices using Java (11–21) and Spring Boot, exposing RESTful APIs and integrating third-party services
 *   Implemented modern concurrency solutions, including Virtual Threads and reactive programming
@@ -409,13 +409,13 @@ Technologies: Java 11, Spring Boot, Web3J, PostgreSQL, Spring Batch, Blockchain
 
 ### Agent App MW
 
-bK-MFS Agent App Middleware
+bKash Agent App Middleware
 
-Client: bK-MFS Limited
+Client: bKash Limited
 
-Middleware service supporting bK-MFS Agent App, one of the most popular financial apps for bK-MFS Agents. Implemented Pay Bill service integration.
+Middleware service supporting bKash Agent App, one of the most popular financial apps for bKash Agents. Implemented Pay Bill service integration.
 
-*   Core product of bK-MFS Limited
+*   Core product of bKash Limited
 *   High-availability architecture
 *   AWS cloud infrastructure
 
@@ -427,7 +427,7 @@ Link: https://play.google.com/store/apps/details?id=com.bkash.businessapp&hl=en
 
 Airtime Management System (AMS)
 
-Client: bK-MFS Limited
+Client: bKash Limited
 
 Internal web application for automated airtime management. Features automated CSV/XLS/PDF generation, financial calculations, and email notifications.
 
@@ -442,12 +442,12 @@ Technologies: Java (Spring Boot), Oracle, JavaScript
 
 Saving-DPS
 
-Client: bK-MFS Limited
+Client: bKash Limited
 
-Internal service for bK-MFS App allowing customers to open DPS (Deposit Pension Scheme) accounts.
+Internal service for bKash App allowing customers to open DPS (Deposit Pension Scheme) accounts.
 
 *   Customer-facing feature
-*   Integrated with bK-MFS App
+*   Integrated with bKash App
 *   Secure financial transactions
 
 Technologies: Java (Spring Boot), MySQL, AWS, JavaScript
@@ -456,7 +456,7 @@ Technologies: Java (Spring Boot), MySQL, AWS, JavaScript
 
 MULTIBANK
 
-Client: bK-MFS Limited
+Client: bKash Limited
 
 Internal web application for automated bank transactions. Features SFTP inbound/outbound, configurable email notifications, and maker-checker approval flow.
 
@@ -467,7 +467,7 @@ Internal web application for automated bank transactions. Features SFTP inbound/
 
 Technologies: Java (Spring Boot), Spring Integration, MySQL, jQuery
 
-### bK-FinRec
+### bKash-FinRec
 
 Financial reconciliation system (BanglaQR recon)
 

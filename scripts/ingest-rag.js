@@ -28,7 +28,7 @@ const SOURCES = [
 
 const TARGET_CHARS = 1200; // merge small sibling sections up to this
 const MAX_CHARS = 2000;    // split long sections past this
-const STALE_ID_WINDOW = 200; // ids past the new count that get deleted (left over from bigger past runs)
+const STALE_ID_WINDOW = 30; // ids past the new count that get deleted (3 sources × 30 stays under Vectorize's 100-id limit)
 
 /** Split markdown into sections by heading, keeping the heading path as context. */
 function sections(markdown) {
