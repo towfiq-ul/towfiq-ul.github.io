@@ -2,7 +2,7 @@ Title: Towfiqul Islam — Senior Software Engineer
 
 URL Source: https://towfiq-ul.github.io/
 
-Generated: Wed, 28 Oct 2026 10:31:46 GMT (locally from src/data, full content)
+Generated: Wed, 28 Oct 2026 12:18:44 GMT (locally from src/data, full content)
 
 Markdown Content:
 
@@ -42,7 +42,7 @@ Senior Software Engineer with 7+ years designing and shipping high-throughput di
 
 ### AI & LLM Engineering
 
-`LLM Integration` · `RAG Pipelines` · `OpenSearch / Vector Search` · `Embeddings` · `Prompt Engineering & Grounding` · `Cloudflare Workers (AI Edge Proxy)`
+`LLM Integration` · `RAG Pipelines` · `OpenSearch / Vector Search` · `Embeddings` · `Prompt Engineering & Grounding` · `Cloudflare Workers (AI Edge Proxy)` · `AI Agent Coding (Claude Code, GitHub Copilot, Google Antigravity)`
 
 ### Frameworks & Libraries
 
@@ -66,7 +66,7 @@ Senior Software Engineer with 7+ years designing and shipping high-throughput di
 
 ### Cloud & DevOps
 
-`AWS` · `Azure DevOps` · `Firebase` · `Git Actions`
+`AWS` · `Cloudflare (Workers, Workers AI, Vectorize)` · `Azure DevOps` · `Firebase` · `Git Actions`
 
 ### Security & Authentication
 

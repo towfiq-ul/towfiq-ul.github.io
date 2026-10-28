@@ -41,6 +41,7 @@ export const skills = {
         "Embeddings",
         "Prompt Engineering & Grounding",
         "Cloudflare Workers (AI Edge Proxy)",
+        "AI Agent Coding (Claude Code, GitHub Copilot, Google Antigravity)",
     ],
     "Frameworks & Libraries": [
         "Spring Boot",
@@ -69,7 +70,7 @@ export const skills = {
         "Hibernate",
     ],
     "Servers & Deployment": ["Apache", "Tomcat", "GlassFish", "Docker", "Jenkins", "Kubernetes", "AWS CLI", "Ansible"],
-    "Cloud & DevOps": ["AWS", "Azure DevOps", "Firebase", "Git Actions"],
+    "Cloud & DevOps": ["AWS", "Cloudflare (Workers, Workers AI, Vectorize)", "Azure DevOps", "Firebase", "Git Actions"],
     "Security & Authentication": ["OAuth2", "JWT", "KeyCloak"],
     "Methodologies & Tools": ["Agile (Scrum)", "JIRA", "GIT", "Linux", "Windows"],
     "Message Queues": ["Kafka", "RabbitMQ", "Active MQ", "AWS SNS", "AWS SQS"],
