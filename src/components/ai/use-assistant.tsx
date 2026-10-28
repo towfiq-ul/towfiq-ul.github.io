@@ -2,8 +2,10 @@ import {useCallback, useEffect, useRef, useState, useSyncExternalStore} from "re
 import {ChatWidgetCore} from "chatling";
 import type {ChatMessage} from "chatling";
 import {
+    ACTION_TAG_DOWNLOAD_CV,
     ACTION_TAG_EMAIL_ME,
     ACTION_TAG_WHATSAPP_ME,
+    TRIGGER_DOWNLOAD_CV,
     TRIGGER_EMAIL_ME,
     TRIGGER_WHATSAPP_ME
 } from "../../config/helper";
@@ -84,6 +86,8 @@ export function useAssistant() {
                             setPendingAction(TRIGGER_EMAIL_ME);
                         } else if (aiResponse.includes(ACTION_TAG_WHATSAPP_ME)) {
                             setPendingAction(TRIGGER_WHATSAPP_ME);
+                        } else if (aiResponse.includes(ACTION_TAG_DOWNLOAD_CV)) {
+                            setPendingAction(TRIGGER_DOWNLOAD_CV);
                         }
 
                         lastSources.current = Array.isArray(completion?.sources) ? completion.sources : [];
@@ -91,7 +95,8 @@ export function useAssistant() {
 
                         return aiResponse
                             .replace(ACTION_TAG_WHATSAPP_ME, "").trim()
-                            .replace(ACTION_TAG_EMAIL_ME, "").trim();
+                            .replace(ACTION_TAG_EMAIL_ME, "").trim()
+                            .replace(ACTION_TAG_DOWNLOAD_CV, "").trim();
                     } catch (error) {
                         console.error("AI Error:", error);
                         setIsConnected(false);

@@ -3,6 +3,7 @@ import type {KeyboardEvent} from "react";
 import Markdown from "react-markdown";
 import cx from "classnames";
 import {CV_MARKDOWN} from "../../data/cv-content";
+import {downloadCV} from "../../config/helper";
 import styles from "./terminal.module.css";
 import cv from "./cv-pager.module.css";
 
@@ -26,17 +27,6 @@ export function CvPager({onQuit}: Readonly<CvPagerProps>) {
     useEffect(() => {
         scrollRef.current?.focus();
     }, []);
-
-    const handleDownloadCVFromStorage = async () => {
-        const response = await fetch('/Towfiqul_Islam_CV.pdf');
-        const blob = await response.blob();
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = 'Towfiqul_Islam_CV.pdf';
-        link.click();
-        URL.revokeObjectURL(url);
-    };
 
     const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
         const el = scrollRef.current;
@@ -72,7 +62,7 @@ export function CvPager({onQuit}: Readonly<CvPagerProps>) {
                     <button type="button" className={styles.btn} onClick={() => setFontSize((s) => Math.max(MIN_FONT, s - 1))} aria-label="Smaller text">A−</button>
                     <span role="status" className={styles.muted}>{fontSize}px</span>
                     <button type="button" className={styles.btn} onClick={() => setFontSize((s) => Math.min(MAX_FONT, s + 1))} aria-label="Larger text">A+</button>
-                    <button type="button" className={cx(styles.btn, styles.btnSolid)} onClick={handleDownloadCVFromStorage}>↓ Download CV</button>
+                    <button type="button" className={cx(styles.btn, styles.btnSolid)} onClick={downloadCV}>↓ Download CV</button>
                 </span>
             </div>
 

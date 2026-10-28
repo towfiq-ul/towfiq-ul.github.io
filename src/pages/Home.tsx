@@ -18,7 +18,7 @@ import {openWhatsApp, WhatsApp} from "../components/sections/whatsapp";
 import {GREETING, NO_BUTTON_TEXT, useAssistant, YES_BUTTON_TEXT} from "../components/ai/use-assistant";
 import type {AssistantReply} from "../components/ai/use-assistant";
 import {CV_ALIAS, FILES, SECTION_ALIASES} from "../config/aliases";
-import {TRIGGER_EMAIL_ME, TRIGGER_TOGGLE_THEME, TRIGGER_WHATSAPP_ME} from "../config/helper";
+import {downloadCV, TRIGGER_DOWNLOAD_CV, TRIGGER_EMAIL_ME, TRIGGER_TOGGLE_THEME, TRIGGER_WHATSAPP_ME} from "../config/helper";
 
 // Loaded on first use: the CV pager and the mail form (EmailJS) stay out of the initial bundle.
 const CvPager = lazy(() => import("../components/terminal/cv-pager").then((m) => ({default: m.CvPager})));
@@ -36,6 +36,11 @@ type Entry =
 type NewEntry = Entry extends infer E ? (E extends Entry ? Omit<E, "id"> : never) : never;
 
 /** "try" chips: every command, in portfolio order. */
+const CONFIRM_PROMPTS: Record<string, string> = {
+    [TRIGGER_EMAIL_ME]: "Open the email form?",
+    [TRIGGER_WHATSAPP_ME]: "Start a WhatsApp chat?",
+    [TRIGGER_DOWNLOAD_CV]: "Download the CV (PDF)?",
+};
 const CHIPS = ["whoami", ...SECTION_ALIASES.map((a) => a.alias), CV_ALIAS.alias, "mail", "whatsapp", "theme", "alias", "help"];
 
 
@@ -255,15 +260,17 @@ export default function Home() {
         return () => globalThis.removeEventListener?.("keydown", onKey);
     }, [pagerOpen]);
 
-    // The AI assistant can hand off to the mail form or WhatsApp (RULESET action tokens).
+    // The AI assistant can hand off to the mail form, WhatsApp or the CV download (RULESET action tokens).
     useEffect(() => {
         const emailMe = () => execRef.current("mail");
         const whatsAppMe = () => execRef.current("whatsapp");
         globalThis.addEventListener?.(TRIGGER_EMAIL_ME, emailMe);
         globalThis.addEventListener?.(TRIGGER_WHATSAPP_ME, whatsAppMe);
+        globalThis.addEventListener?.(TRIGGER_DOWNLOAD_CV, downloadCV);
         return () => {
             globalThis.removeEventListener?.(TRIGGER_EMAIL_ME, emailMe);
             globalThis.removeEventListener?.(TRIGGER_WHATSAPP_ME, whatsAppMe);
+            globalThis.removeEventListener?.(TRIGGER_DOWNLOAD_CV, downloadCV);
         };
     }, []);
 
@@ -395,7 +402,7 @@ export default function Home() {
                         )}
                         {i === groups.length - 1 && assistant.pendingAction && !assistant.isLoading && (
                             <div className={session.confirm}>
-                                <span>? {assistant.pendingAction === TRIGGER_EMAIL_ME ? "Open the email form?" : "Start a WhatsApp chat?"}</span>
+                                <span>? {CONFIRM_PROMPTS[assistant.pendingAction] ?? "Continue?"}</span>
                                 <button type="button" className={cx(styles.btn, styles.btnAccent)} onClick={() => confirm(true)}>{YES_BUTTON_TEXT}</button>
                                 <button type="button" className={styles.btn} onClick={() => confirm(false)}>{NO_BUTTON_TEXT}</button>
                             </div>
