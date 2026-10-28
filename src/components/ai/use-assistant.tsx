@@ -66,10 +66,8 @@ export function useAssistant() {
                         const res = await fetch(workerUrl, {
                             method: "POST",
                             headers: {"Content-Type": "application/json"},
-                            body: JSON.stringify({
-                                temperature: Number(import.meta.env.VITE_OPEN_AI_TEMPERATURE) || undefined,
-                                messages: conversation,
-                            }),
+                            // Model settings (temperature, tokens) are owned by the Worker.
+                            body: JSON.stringify({messages: conversation}),
                         });
                         const completion = await res.json().catch(() => null);
                         const aiResponse: string | undefined = completion?.choices?.[0]?.message?.content;

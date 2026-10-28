@@ -16,30 +16,23 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # Builds on every push and PR to master (PRs: build check only).
   build:
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [ 20 ]
-
-    env:
-      DEPLOY_USER: 'towfiq-ul'
+    runs-on: ubuntu-24.04
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
+      - name: Use Node.js 24
+        uses: actions/setup-node@v7
         with:
-          node-version: ${{ matrix.node-version }}
-
-      - name: Install packages
-        run: npm install
+          node-version: 24
+          cache: npm
 
       - name: Install dependencies
         run: npm ci
 
+      # prebuild runs `sync:local`, regenerating the AI context docs from src/data.
       - name: Build project
         run: npm run build
         env:
@@ -47,37 +40,51 @@ jobs:
           VITE_EMAILJS_SERVICE_ID: ${{ secrets.VITE_EMAILJS_SERVICE_ID }}
           VITE_EMAILJS_TEMPLATE_ID: ${{ secrets.VITE_EMAILJS_TEMPLATE_ID }}
           VITE_RECEIVER_EMAIL: ${{ secrets.VITE_RECEIVER_EMAIL }}
-          VITE_OPEN_AI_TEMPERATURE: ${{ secrets.VITE_OPEN_AI_TEMPERATURE }}
-          VITE_CV_FILE_PATHS: ${{ secrets.VITE_CV_FILE_PATHS }}
-          VITE_AI_CONTEXT_DATA_URL: ${{ secrets.VITE_AI_CONTEXT_DATA_URL }}
-          VITE_SCRAPPER_DOMAIN: ${{ secrets.VITE_SCRAPPER_DOMAIN }}
-          VITE_SCRAPPER_TOKEN: ${{ secrets.VITE_SCRAPPER_TOKEN }}
           VITE_AI_PROXY_URL: ${{ secrets.VITE_AI_PROXY_URL }}
 
       - name: Setup Pages
-        uses: actions/configure-pages@v4
+        uses: actions/configure-pages@v6
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: './build'
 
-      - name: Show build files
-        run: ls -la ./build/
-
+  # Only pushes to master ship to production.
   deploy:
+    if: github.event_name == 'push'
+    needs: build
+    runs-on: ubuntu-24.04
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
 
-    runs-on: ubuntu-latest
-    needs: build
-
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
 
-      - name: Deployment Ready
-        run: echo "Build completed successfully!"
+  # Re-index the AI assistant's knowledge (Vectorize via the Worker's /ingest)
+  # so its answers track the content that was just deployed.
+  reindex-ai:
+    if: github.event_name == 'push'
+    needs: deploy
+    runs-on: ubuntu-24.04
 
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Use Node.js 24
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Re-index AI assistant (RAG)
+        run: npm run rag:ingest
+        env:
+          VITE_AI_PROXY_URL: ${{ secrets.VITE_AI_PROXY_URL }}
+          RAG_INGEST_TOKEN: ${{ secrets.RAG_INGEST_TOKEN }}
