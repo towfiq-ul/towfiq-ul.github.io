@@ -3,16 +3,31 @@ main       = "ai-proxy.js"
 compatibility_date = "2026-06-01"
 
 [vars]
-# Non-sensitive vars go here (none needed)
+# Chat models (comma-separated; first = primary, rest = fallbacks). All run on
+# Workers AI's free daily allocation — no third-party API keys.
+AI_MODELS = "@cf/meta/llama-3.1-8b-instruct-fp8-fast,@cf/ibm-granite/granite-4.0-h-micro"
 
-# Secrets are set via CLI — never in this file:
-# wrangler secret put AI_API_KEY
-# wrangler secret put AI_BASE_URL
-# wrangler secret put AI_MODEL            (comma-separated list = fallbacks)
-# wrangler secret put AI_REASONING_EFFORT (optional: minimal|low|medium|high)
+# Secret, set via CLI — never in this file:
+#   npx wrangler secret put INGEST_TOKEN   (any long random string; used by `npm run rag:ingest`)
+
+# Workers AI — embeddings (bge-base-en-v1.5) + chat models.
+[ai]
+binding = "AI"
+
+# Vector index of the portfolio content. Create once:
+#   npx wrangler vectorize create portfolio-rag --dimensions=768 --metric=cosine
+[[vectorize]]
+binding = "VECTORIZE"
+index_name = "portfolio-rag"
+
+# Bundle public/RULESET.md into the Worker as the system prompt.
+[[rules]]
+type = "Text"
+globs = ["**/*.md"]
+fallthrough = true
 
 # Caps requests per client IP so a spoofed Origin header can't be used to
-# burn the AI_API_KEY. The worker checks `if (env.RATE_LIMITER)` and skips
+# burn the free daily Workers AI allocation. The worker checks `if (env.RATE_LIMITER)` and skips
 # limiting if this binding isn't present, so it fails open rather than broken.
 [[ratelimits]]
 name = "RATE_LIMITER"

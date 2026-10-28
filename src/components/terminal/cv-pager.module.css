@@ -96,15 +96,23 @@
   gap: 6px;
 }
 
+/* A plain block with a hanging bullet: react-markdown puts each list item's
+ * text and <strong> label straight inside the <li>, so a grid here would split
+ * them into separate cells. */
 .md li {
-  display: grid;
-  grid-template-columns: 2ch minmax(0, 1fr);
-  gap: 6px;
+  position: relative;
+  padding-left: 2.5ch;
 }
 
 .md li::before {
   content: "•";
+  position: absolute;
+  left: 0.5ch;
   color: var(--t-c3);
+}
+
+.md li > p {
+  margin: 0;
 }
 
 .status {

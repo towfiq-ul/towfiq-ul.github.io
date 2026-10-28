@@ -1,7 +1,6 @@
 import {useCallback, useEffect, useRef, useState, useSyncExternalStore} from "react";
 import {ChatWidgetCore} from "chatling";
 import type {ChatMessage} from "chatling";
-import {ParsedMdContext} from "./parse-md-context";
 import {
     ACTION_TAG_EMAIL_ME,
     ACTION_TAG_WHATSAPP_ME,
@@ -18,24 +17,25 @@ export const YES_BUTTON_TEXT = "Yes, thanks!";
 export const NO_BUTTON_TEXT = "No, thanks!";
 
 const CONNECTION_ERROR_MESSAGE = "I'm having trouble connecting. Please try again later.";
-const SERVICE_ERROR_MESSAGE = "The AI service is unavailable right now. Please try again later, or reach Towfiqul via the mail.sh tab.";
+const SERVICE_ERROR_MESSAGE = "The AI service is unavailable right now. Please try again later, or reach Towfiqul via `mail`.";
 const RATE_LIMITED_MESSAGE = "Too many questions in a short time. Please wait a minute and try again.";
+
+export interface AssistantReply {
+    text: string;
+    /** Portfolio documents the answer was grounded in (from the RAG Worker). */
+    sources: string[];
+}
 
 /**
  * Towfiqul's AI Assistant, headless. ChatWidgetCore (from `chatling`) owns
- * message history and send/loading orchestration; this hook supplies the
- * custom transport (system prompt assembled client-side, posted to the
- * Cloudflare Worker proxy) and the grounding context. The UI lives in the
- * terminal's agent prompt.
+ * message history and send/loading orchestration. Retrieval and grounding
+ * happen server-side in the RAG Worker (workers/ai-proxy.js): the browser
+ * only sends the conversation and gets back an answer plus its sources.
  */
 export function useAssistant() {
     const [isConnected, setIsConnected] = useState<boolean>(globalThis.navigator?.onLine ?? true);
     const [pendingAction, setPendingAction] = useState<string | null>(null);
-
-    // Grounding context (RULESET + CV + website context + knowledge doc) loads
-    // asynchronously after mount; kept in a ref so the transport closure
-    // (created once, with the core) always reads the latest value.
-    const contextRef = useRef("");
+    const lastSources = useRef<string[]>([]);
 
     const coreRef = useRef<ChatWidgetCore | null>(null);
     if (coreRef.current === null) {
@@ -54,32 +54,29 @@ export function useAssistant() {
             },
             {
                 transport: async (messages, {workerUrl}) => {
-                    // A leading assistant message is display-only, never a real
-                    // model turn — drop it so requests don't start system->assistant.
-                    const conversationHistory = messages[0]?.role === "assistant"
-                        ? messages.slice(1)
-                        : messages;
+                    // Only real user/assistant turns; a leading assistant
+                    // message is display-only and the Worker rejects it.
+                    const conversation = messages
+                        .filter((m) => m.role === "user" || m.role === "assistant")
+                        .map(({role, content}) => ({role, content}));
+                    while (conversation[0]?.role === "assistant") conversation.shift();
 
+                    lastSources.current = [];
                     try {
                         const res = await fetch(workerUrl, {
                             method: "POST",
                             headers: {"Content-Type": "application/json"},
                             body: JSON.stringify({
-                                temperature: Number(import.meta.env.VITE_OPEN_AI_TEMPERATURE) || 1,
-                                messages: [
-                                    {role: "system", content: contextRef.current},
-                                    ...conversationHistory,
-                                ],
+                                temperature: Number(import.meta.env.VITE_OPEN_AI_TEMPERATURE) || undefined,
+                                messages: conversation,
                             }),
                         });
                         const completion = await res.json().catch(() => null);
                         const aiResponse: string | undefined = completion?.choices?.[0]?.message?.content;
 
-                        // The Worker relays upstream errors as JSON (e.g. a model
-                        // that's no longer available) — log the real cause instead
-                        // of crashing on a missing `choices`.
+                        // Log the Worker's real error instead of crashing on a missing `choices`.
                         if (!res.ok || !aiResponse) {
-                            const detail = completion?.error?.message ?? completion?.error ?? completion?.detail;
+                            const detail = completion?.error?.message ?? completion?.detail ?? completion?.error;
                             console.error(`AI proxy error (HTTP ${res.status}):`, detail ?? completion);
                             setIsConnected(true);
                             return res.status === 429 ? RATE_LIMITED_MESSAGE : SERVICE_ERROR_MESSAGE;
@@ -91,6 +88,7 @@ export function useAssistant() {
                             setPendingAction(TRIGGER_WHATSAPP_ME);
                         }
 
+                        lastSources.current = Array.isArray(completion?.sources) ? completion.sources : [];
                         setIsConnected(true);
 
                         return aiResponse
@@ -114,8 +112,6 @@ export function useAssistant() {
     const getSnapshot = useCallback(() => coreRef.current!.getState(), []);
     const chatState = useSyncExternalStore(subscribe, getSnapshot);
 
-    // Load the grounding context once on mount. pdf.js is imported lazily so
-    // it stays out of the initial bundle.
     useEffect(() => {
         coreRef.current?.start();
         coreRef.current?.dismissGreeting();
@@ -125,29 +121,6 @@ export function useAssistant() {
         globalThis.addEventListener?.("online", handleOnline);
         globalThis.addEventListener?.("offline", handleOffline);
 
-        const loadAllContext = async () => {
-            try {
-                const {ParsePdfContext} = await import("./parse-pdf-context");
-                const [rulesetContext, documentPdfContext, websiteContext, documentMdContext] = await Promise.all([
-                    ParsedMdContext("/RULESET.md"),
-                    ParsePdfContext("/Towfiqul_Islam_AI.pdf"),
-                    ParsedMdContext("/WEBSITE_CONTEXT.md"),
-                    ParsedMdContext("/Towfiqul_Islam.md")
-                ]);
-
-                contextRef.current = [
-                    `SYSTEM RULES:\n${rulesetContext}`,
-                    `Document Context:\n${documentPdfContext}`,
-                    `Website Context:\n${websiteContext}`,
-                    `AI Knowledge:\n${documentMdContext}`,
-                ].join("\n\n");
-            } catch (error) {
-                console.error("Error initializing AI context:", error);
-            }
-        };
-
-        loadAllContext().then();
-
         return () => {
             globalThis.removeEventListener?.("online", handleOnline);
             globalThis.removeEventListener?.("offline", handleOffline);
@@ -155,12 +128,12 @@ export function useAssistant() {
         };
     }, []);
 
-    const send = useCallback(async (text: string): Promise<string | null> => {
+    const send = useCallback(async (text: string): Promise<AssistantReply | null> => {
         const core = coreRef.current!;
         if (!text.trim() || core.getState().isLoading) return null;
         await core.sendMessage(text);
         const last = core.getState().messages.at(-1);
-        return last?.role === "assistant" ? last.content : null;
+        return last?.role === "assistant" ? {text: last.content, sources: lastSources.current} : null;
     }, []);
 
     const confirmAction = useCallback(async (confirmed: boolean) => {

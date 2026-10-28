@@ -14,8 +14,9 @@ import {Experience} from "../components/sections/experience";
 import {Projects} from "../components/sections/projects";
 import {Awards, Certifications, Education, OpenSource, Writing} from "../components/sections/records";
 import {Connect} from "../components/sections/connect";
-import {WhatsAppChat} from "../components/whatsapp-chat/whatsapp-chat";
+import {openWhatsApp, WhatsApp} from "../components/sections/whatsapp";
 import {GREETING, NO_BUTTON_TEXT, useAssistant, YES_BUTTON_TEXT} from "../components/ai/use-assistant";
+import type {AssistantReply} from "../components/ai/use-assistant";
 import {CV_ALIAS, FILES, SECTION_ALIASES} from "../config/aliases";
 import {TRIGGER_EMAIL_ME, TRIGGER_TOGGLE_THEME, TRIGGER_WHATSAPP_ME} from "../config/helper";
 
@@ -23,7 +24,7 @@ import {TRIGGER_EMAIL_ME, TRIGGER_TOGGLE_THEME, TRIGGER_WHATSAPP_ME} from "../co
 const CvPager = lazy(() => import("../components/terminal/cv-pager").then((m) => ({default: m.CvPager})));
 const MailForm = lazy(() => import("../components/sections/mail-form").then((m) => ({default: m.MailForm})));
 
-type SectionKey = "hero" | "mail" | (typeof SECTION_ALIASES)[number]["sectionId"];
+type SectionKey = "hero" | "mail" | "whatsapp" | (typeof SECTION_ALIASES)[number]["sectionId"];
 
 type Entry =
     | { id: number; kind: "login" }
@@ -37,7 +38,6 @@ type NewEntry = Entry extends infer E ? (E extends Entry ? Omit<E, "id"> : never
 /** "try" chips: every command, in portfolio order. */
 const CHIPS = ["whoami", ...SECTION_ALIASES.map((a) => a.alias), CV_ALIAS.alias, "mail", "whatsapp", "theme", "alias", "help"];
 
-const CONTEXT_LINE = "⎿  context: RULESET.md · Towfiqul_Islam_AI.pdf · WEBSITE_CONTEXT.md · Towfiqul_Islam.md";
 
 const HELP_TEXT = [
     "portfolio (~/.bash_aliases):",
@@ -97,7 +97,6 @@ export default function Home() {
     const [history, setHistory] = useState<string[]>([]);
     const [sidebar, setSidebar] = useState(false);
     const [pagerOpen, setPagerOpen] = useState(false);
-    const [whatsApp, setWhatsApp] = useState(0);
     const [viewport, setViewport] = useState(0);
     const scrollTo = useRef<number | null>(null);
     const mainRef = useRef<HTMLElement>(null);
@@ -109,11 +108,13 @@ export default function Home() {
     };
     const clear = () => setEntries([]);
 
-    const ask = async (question: string) => {
-        push({kind: "tool", text: CONTEXT_LINE});
-        const answer = await assistant.send(question);
-        if (answer) push({kind: "agent", text: answer});
+    const pushReply = (reply: AssistantReply | null) => {
+        if (!reply) return;
+        if (reply.sources.length) push({kind: "tool", text: `⎿  searched portfolio: ${reply.sources.join(" · ")}`});
+        push({kind: "agent", text: reply.text});
     };
+
+    const ask = async (question: string) => pushReply(await assistant.send(question));
 
     const openPager = () => setPagerOpen(true);
 
@@ -150,8 +151,8 @@ export default function Home() {
         } else if (cmd === "mail") {
             out.push({kind: "section", section: "mail"});
         } else if (cmd === "whatsapp") {
-            out.push({kind: "text", text: "opening WhatsApp chat…"});
-            setWhatsApp((n) => n + 1);
+            openWhatsApp();
+            out.push({kind: "section", section: "whatsapp"});
         } else if (cmd === "sidebar") {
             const arg = rest.toLowerCase();
             if (/^(enable|enabled|on|show)$/.test(arg)) {
@@ -205,8 +206,7 @@ export default function Home() {
 
     const confirm = async (yes: boolean) => {
         push({kind: "cmd", text: yes ? YES_BUTTON_TEXT : NO_BUTTON_TEXT});
-        const answer = await assistant.confirmAction(yes);
-        if (answer) push({kind: "agent", text: answer});
+        pushReply(await assistant.confirmAction(yes));
     };
 
     // The newest command's output takes over the screen: size the last group to
@@ -258,7 +258,7 @@ export default function Home() {
     // The AI assistant can hand off to the mail form or WhatsApp (RULESET action tokens).
     useEffect(() => {
         const emailMe = () => execRef.current("mail");
-        const whatsAppMe = () => setWhatsApp((n) => n + 1);
+        const whatsAppMe = () => execRef.current("whatsapp");
         globalThis.addEventListener?.(TRIGGER_EMAIL_ME, emailMe);
         globalThis.addEventListener?.(TRIGGER_WHATSAPP_ME, whatsAppMe);
         return () => {
@@ -299,6 +299,8 @@ export default function Home() {
                 return <Connect onEmailMe={() => exec("mail")}/>;
             case "mail":
                 return <Suspense fallback={<Loading/>}><MailForm/></Suspense>;
+            case "whatsapp":
+                return <WhatsApp/>;
         }
     };
 
@@ -383,7 +385,7 @@ export default function Home() {
                             <div key={entry.id} data-entry={entry.id}>{renderEntry(entry)}</div>
                         ))}
                         {i === groups.length - 1 && assistant.isLoading && (
-                            <div className={cx(session.thinking, styles.spinner)}>Thinking…</div>
+                            <div className={cx(session.thinking, styles.spinner)}>Searching portfolio &amp; thinking…</div>
                         )}
                         {i === groups.length - 1 && assistant.pendingAction && !assistant.isLoading && (
                             <div className={session.confirm}>
@@ -396,7 +398,6 @@ export default function Home() {
                 ))}
             </TerminalWindow>
 
-            {whatsApp > 0 && <WhatsAppChat key={whatsApp} isChatOpen/>}
         </>
     );
 }
