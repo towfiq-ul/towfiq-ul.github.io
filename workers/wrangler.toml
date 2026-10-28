@@ -13,12 +13,16 @@ AI_MODELS = "@cf/meta/llama-3.1-8b-instruct-fp8-fast,@cf/ibm-granite/granite-4.0
 # Workers AI — embeddings (bge-base-en-v1.5) + chat models.
 [ai]
 binding = "AI"
+remote = true   # Workers AI always runs remotely; this just silences the dev warning
 
 # Vector index of the portfolio content. Create once:
 #   npx wrangler vectorize create portfolio-rag --dimensions=768 --metric=cosine
 [[vectorize]]
 binding = "VECTORIZE"
 index_name = "portfolio-rag"
+# Vectorize has no local simulator, so `wrangler dev` queries the real index.
+# Note: POSTing to /ingest on the dev server writes to that real index too.
+remote = true
 
 # Bundle public/RULESET.md into the Worker as the system prompt.
 [[rules]]
