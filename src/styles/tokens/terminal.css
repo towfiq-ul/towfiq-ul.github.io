@@ -1,6 +1,7 @@
 /*
  * Terminal design tokens (sea-glass palette).
- * Dark is the default; `html.light` (set by useColorScheme) swaps the terminal to its light variant.
+ * Light is the default look (index.html ships `<html class="light">`, useColorScheme keeps it in
+ * sync); `:root` holds the dark values as the no-class fallback, and `html.light` overrides them.
  */
 :root,
 html.dark {
