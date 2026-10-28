@@ -1,0 +1,207 @@
+/* The session scrollback + the agent-style prompt footer. */
+
+/* One command and everything it printed. The latest group is at least one
+ * screen tall, so each command's output takes over the view on its own. */
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-bottom: 14px;
+}
+
+.cmdLine {
+  font-size: 17px;
+  animation: show 0.01s both;
+}
+
+.text {
+  white-space: pre-wrap;
+  color: var(--t-muted);
+}
+
+.err {
+  color: var(--t-c4);
+}
+
+.agent {
+  display: grid;
+  grid-template-columns: 2ch minmax(0, 1fr);
+  gap: 6px;
+  animation: up 0.35s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.agentDot {
+  color: var(--t-c1);
+}
+
+.markdown p,
+.markdown ul,
+.markdown ol {
+  margin: 0 0 6px;
+}
+
+.markdown ul,
+.markdown ol {
+  padding-left: 2ch;
+}
+
+.markdown a {
+  color: var(--t-c1);
+}
+
+.markdown code {
+  color: var(--t-c4);
+}
+
+.tool {
+  padding-left: 2ch;
+  color: var(--t-muted);
+  font-size: 15px;
+}
+
+.thinking {
+  color: var(--t-c4);
+}
+
+.confirm {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding-left: 2ch;
+}
+
+.suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 26px;
+  color: var(--t-c2);
+}
+
+/* ---------- footer: chips + input box + hints ---------- */
+.footer {
+  flex: none;
+  border-top: 1px solid var(--t-line);
+  background: var(--t-panel);
+  padding: 10px 28px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
+}
+
+.chip {
+  font-size: 14px;
+  min-height: 32px;
+  padding: 3px 10px;
+  border-radius: 4px;
+}
+
+.chipClear {
+  border-color: var(--t-c4);
+  color: var(--t-c4);
+}
+
+.inputBox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 6px 6px 14px;
+  border: 1px solid var(--t-line-2);
+  border-radius: 10px;
+  background: var(--t-bg);
+  transition: border-color 0.15s;
+}
+
+.inputBox:focus-within {
+  border-color: var(--t-c1);
+}
+
+.caret {
+  color: var(--t-c1);
+  font-weight: 800;
+  font-size: 18px;
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  font: inherit;
+  font-size: 17px;
+  padding: 6px 0;
+  border: 0;
+  background: transparent;
+  color: var(--t-ink);
+  caret-color: var(--t-c1);
+}
+
+.input:focus {
+  outline: none;
+}
+
+.run {
+  min-height: 36px;
+  min-width: 44px;
+}
+
+.hints {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 2px 16px;
+  padding: 0 4px;
+  font-size: 14px;
+  color: var(--t-muted);
+}
+
+@keyframes show {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (max-width: 759px) {
+  .footer {
+    padding: 8px 10px 6px;
+  }
+
+  .chips {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+  }
+
+  .chip {
+    flex: none;
+  }
+
+  .input {
+    font-size: 16px; /* avoids iOS zoom-on-focus */
+  }
+
+  .hintKeys {
+    display: none;
+  }
+}

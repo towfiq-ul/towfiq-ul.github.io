@@ -1,0 +1,80 @@
+/*
+ * Terminal design tokens (sea-glass palette).
+ * Dark is the default; `html.light` (set by useColorScheme) swaps the terminal to its light variant.
+ */
+:root,
+html.dark {
+  --t-page: #0c181d;
+  --t-page-line: #1f333c;
+  --t-rain: #5fc4b6;
+
+  --t-bg: #15242b;
+  --t-panel: #1a2c34;
+  --t-raised: #1f333c;
+  --t-ink: #dcebe7;
+  --t-muted: #93abb2;
+  --t-line: #27404a;
+  --t-line-2: #3a5862;
+
+  --t-c1: #5fc4b6; /* teal — prompt, links, accents */
+  --t-c2: #8dc0ea; /* sky — paths, keys, headings */
+  --t-c3: #8fd0a0; /* leaf — user@host, OK, additions */
+  --t-c4: #f0a08a; /* coral — hashes, dates, errors */
+  --t-on-c1: #0f2028;
+
+  --t-shadow: 0 30px 80px rgba(15, 32, 40, 0.28);
+  --t-scanlines: 1;
+
+  --t-font: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+html.light {
+  --t-page: #e5f0ec;
+  --t-page-line: #d3e3dd;
+  --t-rain: #2a9d8f;
+
+  --t-bg: #ffffff;
+  --t-panel: #f5faf8;
+  --t-raised: #eef5f2;
+  --t-ink: #1e3340;
+  --t-muted: #4a606b;
+  --t-line: #d3e3dd;
+  --t-line-2: #aac6bd;
+
+  --t-c1: #1f7468;
+  --t-c2: #2f6a9e;
+  --t-c3: #3a7a4c;
+  --t-c4: #a64a32;
+  --t-on-c1: #ffffff;
+
+  --t-shadow: 0 30px 80px rgba(30, 51, 64, 0.14);
+  --t-scanlines: 0;
+}
+
+/* UI scale for the terminal window (text, spacing, controls together, via
+ * `zoom`). Fonts are sized for ~0.9 on tablets/desktops; phones render 1:1. */
+:root {
+  --ui-scale: 1;
+}
+
+@media (min-width: 760px) {
+  :root {
+    --ui-scale: 0.9;
+  }
+}
+
+html,
+body {
+  overflow: hidden;
+  background-color: var(--t-page);
+  color: var(--t-ink);
+}
+
+body {
+  font-family: var(--t-font);
+}
+
+::selection {
+  background: var(--t-c1);
+  color: var(--t-on-c1);
+}

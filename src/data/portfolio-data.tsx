@@ -14,7 +14,7 @@ export const personalInfo = {
 export const overview = {
     summary: "Senior Software Engineer with " + personalInfo.yearOfExperience + " years designing and shipping high-throughput distributed systems for fintech and enterprise clients. Core expertise in Java/Spring Boot microservices, event-driven architecture with Kafka, and cloud-native infrastructure on AWS and Kubernetes. Most recently built core payment platform components as Augmented Staff at Bangladesh's #1 Unicorn MFS, handling millions of daily transactions. Beyond client work, actively builds and publishes open-source developer tools — one of them now powers this portfolio's own AI assistant. Passionate about clean architecture, system reliability, and shipping things that scale.",
     highlights: [
-        "Impactful contribution in architecture design for bK-MFS financial platform handling millions of daily transactions",
+        "Impactful contribution in architecture design for bKash Limited financial platform handling millions of daily transactions",
         "Achieved 40% performance improvement through database optimization and caching strategies",
         "Mentored junior engineers on best practices and technical decision-making",
         "Published and maintain multiple open-source tools (a published Chrome extension, an npm chat-widget package, Claude Code command extensions, a Linux dev-environment toolkit) alongside a merged contribution to ThingsBoard",
@@ -95,9 +95,9 @@ export const workExperience = [
         type: "Full-time, Hybrid",
         period: "May 2024 - August 2026",
         description:
-            "Exabyting, a software consultancy company works both on big scale government & private projects. Worked at bK-MFS as an Augmented Resource, a Unicorn MFS Company in Bangladesh.",
+            "Exabyting, a software consultancy company works both on big scale government & private projects. Worked at bKash Limited as an Augmented Resource, a Unicorn MFS Company in Bangladesh.",
         responsibilities: [
-            "Built and maintained core backend services (Customer App MW, FinRec, PIN Reset MW) for bK-MFS's core payment platform, processing 2.5M+ transactions daily",
+            "Built and maintained core backend services (Customer App MW, FinRec, PIN Reset MW) for bKash Limited's core payment platform, processing 2.5M+ transactions daily",
             "Led the Spring Boot 2→3 migration on the PIN Reset service (javax→jakarta, AWS SDK v1→v2, Jedis→Lettuce) for zero-downtime deployment",
             "Implemented reactive Kafka integration using spring-kafka and reactor-kafka to improve throughput and resilience across core banking microservices",
             "Engineered a self-contained TPS-limiting service with interval-based retry logic, later made dynamically configurable and scalable to support Airtime Mobile Recharge Automation",
@@ -135,7 +135,7 @@ export const workExperience = [
         responsibilities: [
             "Developed various Govt and Private Web Application and Services",
             "Planned development cycle and collected requirements for developing software",
-            "Worked with bK-MFS Limited as Partner Team with their Solution Engineering Team",
+            "Worked with bKash Limited as Partner Team with their Solution Engineering Team",
             "Learned software design patterns, clean coding, communication and taking ownership",
             "Work in Agile/Scrum development process",
             "Review and Analyze Project requirement Document",

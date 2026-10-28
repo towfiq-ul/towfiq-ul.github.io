@@ -1,0 +1,76 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+  font-size: 15px;
+}
+
+.cardBar {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--t-line);
+  background: var(--t-raised);
+  color: var(--t-muted);
+}
+
+.cardBody {
+  flex: 1;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.p {
+  margin: 0;
+}
+
+.tags {
+  margin-top: auto;
+  padding-top: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.moreTech {
+  min-height: 0;
+  padding: 3px 7px;
+  font-size: 14px;
+}
+
+.cardLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  padding: 10px 16px;
+  border-top: 1px solid var(--t-line);
+}
+
+.skeletonCard {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 340px;
+  box-sizing: border-box;
+}
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 18px;
+}
+
+@media (max-width: 759px) {
+  .cardBar span:first-child {
+    display: none;
+  }
+
+  .skeletonCard {
+    min-height: 260px;
+  }
+}

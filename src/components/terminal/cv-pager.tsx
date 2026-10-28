@@ -1,12 +1,13 @@
-import {ArrowLeft, Download} from "lucide-react";
-import {Fragment} from "react";
-import {Button} from "../components/ui/button/button";
-import {personalInfo} from "../data/portfolio-data";
-import styles from "./CV.module.css";
-import {Particles} from "../components/particles/particles";
+import {useEffect, useRef, useState} from "react";
+import type {KeyboardEvent} from "react";
+import Markdown from "react-markdown";
+import cx from "classnames";
+import {personalInfo} from "../../data/portfolio-data";
+import styles from "./terminal.module.css";
+import cv from "./cv-pager.module.css";
 
-interface CVProps {
-    onClose?: () => void;
+interface CvPagerProps {
+    onQuit: () => void;
 }
 
 /**
@@ -139,40 +140,52 @@ const OPEN_SOURCE: string[] = [
     "claude-auto-resume-command – Author & Maintainer; Claude Code /auto-resume slash command plus a Stop-hook-based session guardian that auto-resumes paused sessions",
 ];
 
-function SectionHeading({children}: { children: React.ReactNode }) {
-    return (
-        <Fragment>
-            <h2 className={styles.h2}>{children}</h2>
-            <hr className={styles.hr}/>
-        </Fragment>
-    );
-}
+const MIN_FONT = 14;
+const MAX_FONT = 22;
+const SCROLL_STEP = 48;
 
-function LabeledBullets({items, separator}: { items: { label: string; text: string }[]; separator: string }) {
-    return (
-        <ul className={styles.bullets}>
-            {items.map((item, idx) => (
-                <li key={idx}>
-                    <strong>{item.label}</strong>
-                    {separator}
-                    {item.text}
-                </li>
-            ))}
-        </ul>
-    );
-}
+const bullets = (items: string[]) => items.map((item) => `- ${item}`).join("\n");
+const labeled = (items: { label: string; text: string }[], separator: string) =>
+    bullets(items.map((item) => `**${item.label}**${separator}${item.text}`));
 
-function PlainBullets({items}: { items: string[] }) {
-    return (
-        <ul className={styles.bullets}>
-            {items.map((item, idx) => (
-                <li key={idx}>{item}</li>
-            ))}
-        </ul>
-    );
-}
+/** The CV as a Markdown document — what `less cv.md` shows. */
+const CV_MARKDOWN = [
+    `# ${personalInfo.name}`,
+    "**Senior Software Engineer | Java / Spring Boot & PHP / Laravel | Dhaka, Bangladesh**",
+    CONTACT_LINES.map((c) => `[${c.label}](${c.href})`).join(" | "),
+    `Portfolio: [https://${personalInfo.portfolio}](https://${personalInfo.portfolio})  `,
+    `GitHub: [${personalInfo.github}](${personalInfo.github}) | LinkedIn: [${personalInfo.linkedin}](${personalInfo.linkedin})`,
+    "## Professional Summary",
+    SUMMARY,
+    "## Core Expertise",
+    labeled(CORE_EXPERTISE, ": "),
+    "## Work Experience",
+    ...WORK_EXPERIENCE.map((job) => `### ${job.title}\n*${job.meta}*\n\n${job.body}`),
+    "## Key Projects",
+    labeled([...KEY_PROJECTS_PAGE1, ...KEY_PROJECTS_PAGE2].map((p) => ({label: p.name, text: p.text})), " – "),
+    "## Key Impacts",
+    labeled(KEY_IMPACTS, ": "),
+    "## Education",
+    EDUCATION_LINE,
+    "## Certifications & Awards",
+    bullets(CERTIFICATIONS_AWARDS),
+    "## Open Source Contributions",
+    bullets(OPEN_SOURCE),
+].join("\n\n");
 
-export function CV({onClose}: CVProps) {
+/**
+ * `less cv.md`: the CV rendered from Markdown, taking over the terminal like a
+ * pager. q / Esc quits; j / k / space / b / g / G scroll.
+ */
+export function CvPager({onQuit}: Readonly<CvPagerProps>) {
+    const [fontSize, setFontSize] = useState(17);
+    const [atEnd, setAtEnd] = useState(false);
+    const scrollRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        scrollRef.current?.focus();
+    }, []);
+
     const handleDownloadCVFromStorage = async () => {
         const response = await fetch('/Towfiqul_Islam_CV.pdf');
         const blob = await response.blob();
@@ -184,92 +197,69 @@ export function CV({onClose}: CVProps) {
         URL.revokeObjectURL(url);
     };
 
+    const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
+        const el = scrollRef.current;
+        if (!el || e.ctrlKey || e.metaKey || e.altKey) return;
+        const page = el.clientHeight - SCROLL_STEP;
+        const actions: Record<string, () => void> = {
+            q: onQuit,
+            Escape: onQuit,
+            j: () => el.scrollBy({top: SCROLL_STEP}),
+            k: () => el.scrollBy({top: -SCROLL_STEP}),
+            " ": () => el.scrollBy({top: page}),
+            b: () => el.scrollBy({top: -page}),
+            g: () => el.scrollTo({top: 0}),
+            G: () => el.scrollTo({top: el.scrollHeight}),
+        };
+        const action = actions[e.key];
+        if (action) {
+            e.preventDefault();
+            action();
+        }
+    };
+
+    const onScroll = () => {
+        const el = scrollRef.current;
+        if (el) setAtEnd(el.scrollTop + el.clientHeight >= el.scrollHeight - 4);
+    };
+
     return (
-        <div className={styles.cvPage}>
-            <Particles/>
-
-            <div className={styles.toolbar}>
-                <Button onClick={onClose} className={styles.backButton} aria-label="Go back">
-                    <ArrowLeft/>
-                    <span>Back to Portfolio</span>
-                </Button>
-
-                <Button className={styles.downloadButton} onClick={handleDownloadCVFromStorage}>
-                    <Download/>
-                    Download CV
-                </Button>
+        <div className={cv.pager}>
+            <div className={cv.toolbar}>
+                <button type="button" className={styles.btn} onClick={onQuit}>q <span className={styles.muted}>quit</span></button>
+                <span className={cv.tools}>
+                    <button type="button" className={styles.btn} onClick={() => setFontSize((s) => Math.max(MIN_FONT, s - 1))} aria-label="Smaller text">A−</button>
+                    <span role="status" className={styles.muted}>{fontSize}px</span>
+                    <button type="button" className={styles.btn} onClick={() => setFontSize((s) => Math.min(MAX_FONT, s + 1))} aria-label="Larger text">A+</button>
+                    <button type="button" className={cx(styles.btn, styles.btnSolid)} onClick={handleDownloadCVFromStorage}>↓ Download CV</button>
+                </span>
             </div>
 
-            <div className={styles.pageScroll}>
-                <div className={styles.pageStack}>
-                    {/* Page 1 */}
-                    <article className={styles.page}>
-                        <h1 className={styles.name}>{personalInfo.name}</h1>
-                        <p className={styles.role}>
-                            Senior Software Engineer | Java / Spring Boot &amp; PHP / Laravel | Dhaka, Bangladesh
-                        </p>
-                        <p className={styles.contactLine}>
-                            {CONTACT_LINES.map((c, i) => (
-                                <Fragment key={c.href}>
-                                    {i > 0 && " | "}
-                                    <a href={c.href}>{c.label}</a>
-                                </Fragment>
-                            ))}
-                        </p>
-                        <p className={styles.contactLine}>
-                            Portfolio: <a href={`https://${personalInfo.portfolio}`} target="_blank" rel="noreferrer">https://{personalInfo.portfolio}</a>
-                        </p>
-                        <p className={styles.contactLine}>
-                            GitHub: <a href={personalInfo.github} target="_blank" rel="noreferrer">{personalInfo.github}</a>
-                            {" | "}
-                            LinkedIn: <a href={personalInfo.linkedin} target="_blank" rel="noreferrer">{personalInfo.linkedin}</a>
-                        </p>
+            <div
+                ref={scrollRef}
+                className={cv.scroll}
+                tabIndex={0}
+                role="document"
+                aria-label="CV — press q to quit"
+                onKeyDown={onKeyDown}
+                onScroll={onScroll}
+            >
+                <article className={cx(styles.fadeUp, cv.md)} style={{fontSize}}>
+                    <Markdown
+                        components={{
+                            a: ({href, children}) => (
+                                <a href={href} target={href?.startsWith("http") ? "_blank" : undefined} rel="noreferrer">{children}</a>
+                            ),
+                        }}
+                    >
+                        {CV_MARKDOWN}
+                    </Markdown>
+                </article>
+            </div>
 
-                        <SectionHeading>Professional Summary</SectionHeading>
-                        <p className={styles.body}>{SUMMARY}</p>
-
-                        <SectionHeading>Core Expertise</SectionHeading>
-                        <LabeledBullets items={CORE_EXPERTISE} separator=": "/>
-
-                        <SectionHeading>Work Experience</SectionHeading>
-                        {WORK_EXPERIENCE.map((job) => (
-                            <div key={job.title} className={styles.job}>
-                                <p className={styles.jobTitle}>{job.title}</p>
-                                <p className={styles.jobMeta}>{job.meta}</p>
-                                <p className={styles.body}>{job.body}</p>
-                            </div>
-                        ))}
-
-                        <SectionHeading>Key Projects</SectionHeading>
-                        <LabeledBullets
-                            items={KEY_PROJECTS_PAGE1.map((p) => ({label: p.name, text: p.text}))}
-                            separator=" – "
-                        />
-                    </article>
-
-                    {/* Page 2 */}
-                    <article className={styles.page}>
-                        <ul className={styles.bullets}>
-                            {KEY_PROJECTS_PAGE2.map((p) => (
-                                <li key={p.name}>
-                                    <strong>{p.name}</strong> – {p.text}
-                                </li>
-                            ))}
-                        </ul>
-
-                        <SectionHeading>Key Impacts</SectionHeading>
-                        <LabeledBullets items={KEY_IMPACTS} separator=": "/>
-
-                        <SectionHeading>Education</SectionHeading>
-                        <p className={styles.body}>{EDUCATION_LINE}</p>
-
-                        <SectionHeading>Certifications &amp; Awards</SectionHeading>
-                        <PlainBullets items={CERTIFICATIONS_AWARDS}/>
-
-                        <SectionHeading>Open Source Contributions</SectionHeading>
-                        <PlainBullets items={OPEN_SOURCE}/>
-                    </article>
-                </div>
+            <div className={cv.status}>
+                <span>cv.md {atEnd ? "(END)" : ":"}</span>
+                <span className={cv.statusHint}>q quit · j/k line · space/b page · g/G top/end</span>
             </div>
         </div>
     );

@@ -1,299 +1,230 @@
-/* Floating Button */
+/* Terminal-styled WhatsApp hand-off. Sits top-right, under the window's title
+ * bar, so it never covers the agent prompt pinned to the bottom. */
+
 .floatingButton {
   position: fixed;
-  top: var(--space-mid);
-  right: var(--space-4);
-  width: 64px;
-  height: 64px;
-  border-radius: var(--radius-round);
-  background: linear-gradient(135deg, #25d366, #128c7e);
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4);
-  transition: all 0.3s var(--ease);
+  zoom: var(--ui-scale, 1);
+  top: 84px;
+  right: 20px;
   z-index: 998;
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  border: 1px solid var(--t-line-2);
+  background: var(--t-bg);
+  color: var(--t-c1);
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(15, 32, 40, 0.25);
   opacity: 0;
   visibility: hidden;
-  transform: translateY(20px);
-  animation: slideInUp 0.8s var(--ease-out), pulse 2s ease-in-out infinite;
-}
-
-@keyframes slideInUp {
-  from {
-    transform: translateY(100px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-@keyframes pulse {
-  0%,
-  100% {
-    box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4);
-  }
-  50% {
-    box-shadow: 0 8px 32px rgba(37, 211, 102, 0.7);
-  }
-}
-
-.floatingButton:hover {
-  transform: scale(1.1);
-  box-shadow: 0 12px 32px rgba(37, 211, 102, 0.6);
-}
-
-.floatingButton:active {
-  transform: scale(0.95);
-}
-
-.buttonIcon {
-  width: 32px;
-  height: 32px;
-  color: white;
-}
-
-.notificationBadge {
-  position: absolute;
-  top: -4px;
-  right: -4px;
-  background: var(--color-error-9);
-  color: white;
-  font-size: 11px;
-  font-weight: 700;
-  width: 20px;
-  height: 20px;
-  border-radius: var(--radius-round);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 2px solid var(--color-neutral-1);
-  animation: bounce 1s ease-in-out infinite;
-}
-
-@keyframes bounce {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-4px);
-  }
-}
-
-/* Chat Popup */
-.chatPopup {
-  position: fixed;
-  bottom: 100px;
-  right: var(--space-6);
-  width: 360px;
-  max-width: calc(100vw - var(--space-8));
-  background: white;
-  border-radius: var(--radius-4);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-  z-index: 999;
-  overflow: hidden;
-  animation: slideInUp 0.4s var(--ease-out);
-}
-
-@media (prefers-color-scheme: dark) {
-  .chatPopup {
-    background: var(--color-neutral-2);
-  }
-}
-
-.chatHeader {
-  background: linear-gradient(135deg, #25d366, #128c7e);
-  padding: var(--space-4);
-  color: white;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-}
-
-.chatHeaderContent {
-  display: flex;
-  gap: var(--space-3);
-  flex: 1;
-}
-
-.avatar {
-  width: 48px;
-  height: 48px;
-  border-radius: var(--radius-round);
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.avatarIcon {
-  width: 24px;
-  height: 24px;
-}
-
-.headerText {
-  flex: 1;
-}
-
-.headerTitle {
-  margin: 0;
-  font-size: var(--font-size-2);
-  font-weight: 700;
-  color: white;
-}
-
-.headerSubtitle {
-  margin: 4px 0 0;
-  font-size: var(--font-size-0);
-  opacity: 0.9;
-  color: white;
-}
-
-.closeButton {
-  background: rgba(255, 255, 255, 0.2);
-  border: none;
-  width: 32px;
-  height: 32px;
-  border-radius: var(--radius-2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  color: white;
-  transition: all 0.2s var(--ease);
-  flex-shrink: 0;
-}
-
-.closeButton:hover {
-  background: rgba(255, 255, 255, 0.3);
-}
-
-.chatBody {
-  padding: var(--space-5);
-  min-height: 150px;
-  background: var(--color-neutral-1);
-}
-
-@media (prefers-color-scheme: dark) {
-  .chatBody {
-    background: var(--color-neutral-3);
-  }
-}
-
-.messageBubble {
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(10px);
-  padding: var(--space-4);
-  border-radius: var(--radius-3);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  animation: fadeIn 0.5s var(--ease-out);
-}
-
-@media (prefers-color-scheme: dark) {
-  .messageBubble {
-    background: var(--color-neutral-4);
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.messageText {
-  margin: 0;
-  color: var(--color-neutral-12);
-  font-size: var(--font-size-1);
-  line-height: 1.6;
-}
-
-.messageText + .messageText {
-  margin-top: var(--space-2);
-}
-
-.chatFooter {
-  padding: var(--space-4);
-  background: white;
-  border-top: 1px solid var(--color-neutral-3);
-}
-
-@media (prefers-color-scheme: dark) {
-  .chatFooter {
-    background: var(--color-neutral-2);
-    border-top: 1px solid var(--color-neutral-4);
-  }
-}
-
-.sendButton {
-  width: 100%;
-  padding: var(--space-3) var(--space-4);
-  background: linear-gradient(135deg, #25d366, #128c7e);
-  color: white;
-  border: none;
-  border-radius: var(--radius-3);
-  font-size: var(--font-size-1);
-  font-weight: 600;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-2);
-  transition: all 0.3s var(--ease);
-  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
-}
-
-.sendButton:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(37, 211, 102, 0.4);
-}
-
-.sendButton:active {
-  transform: translateY(0);
-}
-
-.whatsappIcon {
-  width: 20px;
-  height: 20px;
+  transform: translateY(-8px);
+  transition: opacity 0.3s, transform 0.3s, background-color 0.15s, color 0.15s;
 }
 
 .floatingButton.visible {
   opacity: 1;
   visibility: visible;
-  transform: translateY(0);
+  transform: none;
 }
 
-/* Mobile Responsive */
-@media (max-width: 768px) {
-  .floatingButton {
-    bottom: var(--space-4);
-    right: var(--space-4);
-    width: 56px;
-    height: 56px;
-  }
+.floatingButton:hover {
+  background: var(--t-c1);
+  color: var(--t-on-c1);
+}
 
-  .buttonIcon {
-    width: 28px;
-    height: 28px;
+.floatingButton:focus-visible {
+  outline: 2px solid var(--t-c1);
+  outline-offset: 2px;
+}
+
+.buttonIcon {
+  width: 24px;
+  height: 24px;
+}
+
+.notificationBadge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 18px;
+  height: 18px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--t-c4);
+  color: var(--t-on-c1);
+  font-family: var(--t-font);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.chatPopup {
+  position: fixed;
+  zoom: var(--ui-scale, 1);
+  top: 146px;
+  right: 20px;
+  z-index: 999;
+  width: 340px;
+  max-width: calc(100vw - 32px);
+  overflow: hidden;
+  border: 1px solid var(--t-c1);
+  border-radius: 10px;
+  background: var(--t-bg);
+  color: var(--t-ink);
+  font-family: var(--t-font);
+  font-size: 15px;
+  box-shadow: 0 20px 50px rgba(15, 32, 40, 0.3);
+  animation: drop 0.3s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.chatHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  background: var(--t-panel);
+  border-bottom: 1px solid var(--t-line);
+}
+
+.chatHeaderContent {
+  display: flex;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 6px;
+  border: 1px solid var(--t-line-2);
+  color: var(--t-c1);
+}
+
+.avatarIcon {
+  width: 18px;
+  height: 18px;
+}
+
+.headerText {
+  flex: 1;
+  min-width: 0;
+}
+
+.headerTitle {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.headerSubtitle {
+  margin: 2px 0 0;
+  color: var(--t-muted);
+  font-size: 14px;
+}
+
+.closeButton {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 6px;
+  border: 1px solid var(--t-line-2);
+  background: transparent;
+  color: var(--t-ink);
+  cursor: pointer;
+}
+
+.closeButton:hover {
+  border-color: var(--t-c1);
+  color: var(--t-c1);
+}
+
+.chatBody {
+  padding: 14px;
+}
+
+.messageBubble {
+  padding: 10px 12px;
+  border-radius: 6px;
+  background: var(--t-panel);
+}
+
+.messageText {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.chatFooter {
+  padding: 0 14px 14px;
+}
+
+.sendButton {
+  width: 100%;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 6px;
+  border: 1px solid var(--t-c1);
+  background: transparent;
+  color: var(--t-c1);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.sendButton:hover {
+  background: var(--t-c1);
+  color: var(--t-on-c1);
+}
+
+.whatsappIcon {
+  width: 18px;
+  height: 18px;
+}
+
+@keyframes drop {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (max-width: 759px) {
+  .floatingButton {
+    top: 64px;
+    right: 12px;
+    width: 46px;
+    height: 46px;
   }
 
   .chatPopup {
-    bottom: 80px;
-    right: var(--space-4);
-    left: var(--space-4);
+    top: 120px;
+    left: 12px;
+    right: 12px;
     width: auto;
     max-width: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .floatingButton,
+  .chatPopup {
+    transition: none;
+    animation: none;
   }
 }

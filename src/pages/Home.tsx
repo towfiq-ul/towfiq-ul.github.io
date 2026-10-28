@@ -1,655 +1,402 @@
-import {useEffect, useState} from "react";
-import styles from "./Home.module.css";
-import {
-    Award as AwardIcon,
-    BadgeCheck,
-    BookOpen,
-    Briefcase,
-    Calendar,
-    Clock,
-    ExternalLink,
-    Github,
-    Linkedin,
-    Mail,
-    MapPin,
-    Phone, Sparkles,
-    TrendingUp
-} from "lucide-react";
-import {Badge} from "../components/ui/badge/badge";
-import {Button} from "../components/ui/button/button";
-import {SectionHeader} from "../components/section-header";
-import {Navbar} from "../components/navbar/navbar";
-import {SkillModal} from "../components/skill-modal/skill-modal";
-import {StatsChart} from "../components/stats-chart/stats-chart";
-import {ExperienceChart} from "../components/experience-chart/experience-chart";
-import {ScrollToTop} from "../components/scroll-to-top/scroll-to-top";
-import {Particles} from "../components/particles/particles";
+import {lazy, Suspense, useEffect, useLayoutEffect, useRef, useState} from "react";
+import type {ReactNode} from "react";
+import cx from "classnames";
+import Markdown from "react-markdown";
+import styles from "../components/terminal/terminal.module.css";
+import session from "../components/terminal/session.module.css";
+import {PromptPrefix, TerminalWindow} from "../components/terminal/terminal-window";
+import {FileTree} from "../components/terminal/file-tree";
+import {PromptInput} from "../components/terminal/prompt-input";
+import {Hero} from "../components/sections/hero";
+import {Overview} from "../components/sections/overview";
+import {Skills} from "../components/sections/skills";
+import {Experience} from "../components/sections/experience";
+import {Projects} from "../components/sections/projects";
+import {Awards, Certifications, Education, OpenSource, Writing} from "../components/sections/records";
+import {Connect} from "../components/sections/connect";
 import {WhatsAppChat} from "../components/whatsapp-chat/whatsapp-chat";
-import {
-    awards,
-    certifications,
-    education,
-    openSource,
-    overview,
-    personalInfo,
-    skills,
-    workExperience,
-    writing
-} from "../data/portfolio-data";
-import {calculateTotalExperience, formatExperience, formatJobDurationYears} from "../utils/date-utils";
-import {projects} from "../data/project-list";
-import {FloatingChat} from "../components/ai/ai-chat";
-import {useNavigation} from "../config/navigation-context";
-import {TRIGGER_AI_CHAT, TRIGGER_EMAIL_ME, TRIGGER_WHATSAPP_ME, scrollToSection} from "../config/helper";
+import {GREETING, NO_BUTTON_TEXT, useAssistant, YES_BUTTON_TEXT} from "../components/ai/use-assistant";
+import {CV_ALIAS, FILES, SECTION_ALIASES} from "../config/aliases";
+import {TRIGGER_EMAIL_ME, TRIGGER_TOGGLE_THEME, TRIGGER_WHATSAPP_ME} from "../config/helper";
 
+// Loaded on first use: the CV pager and the mail form (EmailJS) stay out of the initial bundle.
+const CvPager = lazy(() => import("../components/terminal/cv-pager").then((m) => ({default: m.CvPager})));
+const MailForm = lazy(() => import("../components/sections/mail-form").then((m) => ({default: m.MailForm})));
+
+type SectionKey = "hero" | "mail" | (typeof SECTION_ALIASES)[number]["sectionId"];
+
+type Entry =
+    | { id: number; kind: "login" }
+    | { id: number; kind: "cmd"; text: string }
+    | { id: number; kind: "section"; section: SectionKey }
+    | { id: number; kind: "text" | "err" | "agent" | "tool"; text: string }
+    | { id: number; kind: "suggest"; items: string[] };
+
+type NewEntry = Entry extends infer E ? (E extends Entry ? Omit<E, "id"> : never) : never;
+
+/** "try" chips: every command, in portfolio order. */
+const CHIPS = ["whoami", ...SECTION_ALIASES.map((a) => a.alias), CV_ALIAS.alias, "mail", "whatsapp", "theme", "alias", "help"];
+
+const CONTEXT_LINE = "⎿  context: RULESET.md · Towfiqul_Islam_AI.pdf · WEBSITE_CONTEXT.md · Towfiqul_Islam.md";
+
+const HELP_TEXT = [
+    "portfolio (~/.bash_aliases):",
+    "  whoami · " + SECTION_ALIASES.map((a) => a.alias).join(" · "),
+    "  cv (less cv.md) · mail · whatsapp",
+    "terminal:",
+    "  sidebar enable|disable · theme · alias · type <alias> · history · clear (ctrl+l)",
+    "  ls · pwd · cd <file> · cat <file> · less <file> · echo · date",
+    "agent:",
+    "  ask <question> — or type any question (e.g. ending in ?)",
+    "keys: tab complete · tab tab list · ↑↓ history · ctrl+l clear",
+].join("\n");
+
+const ALIAS_SECTIONS: Record<string, SectionKey> = {
+    whoami: "hero",
+    ...Object.fromEntries(SECTION_ALIASES.map((a) => [a.alias, a.sectionId])),
+};
+
+const FILE_SECTIONS: Record<string, SectionKey> = {
+    "whoami.sh": "hero",
+    ...Object.fromEntries(SECTION_ALIASES.map((a) => [a.file.replace(/\/$/, ""), a.sectionId])),
+};
+
+const QUESTION_WORDS = new Set([
+    "what", "who", "whom", "whose", "how", "why", "when", "where", "which",
+    "is", "are", "was", "were", "does", "do", "did", "can", "could", "would", "will", "should", "has", "have",
+    "tell", "explain", "describe", "summarize", "summarise", "give", "hi", "hello", "hey",
+]);
+
+/** Only natural-language questions reach the agent; shell-looking input gets bash's answer. */
+const isQuestion = (line: string) => {
+    const words = line.trim().split(/\s+/);
+    return line.trim().endsWith("?") || QUESTION_WORDS.has(words[0].toLowerCase()) || words.length >= 4;
+};
+
+const INITIAL: NewEntry[] = [{kind: "login"}, {kind: "cmd", text: "whoami"}, {kind: "section", section: "hero"}];
+
+function Loading() {
+    return <div className={cx(styles.muted, styles.spinner)}>loading…</div>;
+}
+
+function lastLogin(d = new Date()) {
+    return d.toLocaleString("en-US", {weekday: "short", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit", hour12: false});
+}
+
+/**
+ * The site: one bash session. It opens with `whoami`; every command prints its
+ * section (or answer) into the scrollback, and the newest command's output
+ * takes over the screen. `clear` / Ctrl+L wipes everything.
+ */
 export default function Home() {
-    const [selectedSkill, setSelectedSkill] = useState<{ category: string; skills: string[] } | null>(null);
-    const [showAllProjects, setShowAllProjects] = useState(false);
-    const [expandedSkillCategory, setExpandedSkillCategory] = useState<string | null>(null);
-    const [expandedProjectTech, setExpandedProjectTech] = useState<string | null>(null);
-    const featuredProjects = projects.filter((project) => project.featured);
-    const totalExp = calculateTotalExperience(workExperience);
-    const totalProjects = projects.length;
-    const totalTechnologies = 20;
-    const {setCurrentPage} = useNavigation();
-    const [isAiChatOpen, setIsAiChatOpen] = useState(false);
-    const [isWhatsAppForceOpen, setIsWhatsAppForceOpen] = useState(false);
+    const assistant = useAssistant();
+    const nextId = useRef(0);
+    const withIds = (items: NewEntry[]) => items.map((item) => ({...item, id: nextId.current++}) as Entry);
 
-    const triggerContactEmailMe = () => {
-        handleNavigateToContact();
+    const [entries, setEntries] = useState<Entry[]>(() => withIds(INITIAL));
+    const [history, setHistory] = useState<string[]>([]);
+    const [sidebar, setSidebar] = useState(false);
+    const [pagerOpen, setPagerOpen] = useState(false);
+    const [whatsApp, setWhatsApp] = useState(0);
+    const [viewport, setViewport] = useState(0);
+    const scrollTo = useRef<number | null>(null);
+    const mainRef = useRef<HTMLElement>(null);
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    const push = (...items: NewEntry[]) => {
+        const added = withIds(items);
+        setEntries((prev) => [...prev, ...added]);
+    };
+    const clear = () => setEntries([]);
+
+    const ask = async (question: string) => {
+        push({kind: "tool", text: CONTEXT_LINE});
+        const answer = await assistant.send(question);
+        if (answer) push({kind: "agent", text: answer});
     };
 
-    const triggerContactWhatsAppMe = () => {
-        setIsWhatsAppForceOpen(true);
-        setIsAiChatOpen(false);
+    const openPager = () => setPagerOpen(true);
+
+    const exec = (raw: string) => {
+        const line = raw.trim();
+        if (!line) return;
+        const [first, ...restParts] = line.split(/\s+/);
+        const cmd = first.toLowerCase();
+        const rest = restParts.join(" ");
+        const file = rest.replace(/^\.?\/|\/$/g, "");
+
+        if (cmd === "clear") {
+            clear();
+            return;
+        }
+        if (pagerOpen && cmd !== CV_ALIAS.alias) setPagerOpen(false);
+
+        setHistory((prev) => [...prev, line].slice(-100));
+        const id = nextId.current;
+        scrollTo.current = id;
+        const out: NewEntry[] = [{kind: "cmd", text: line}];
+
+        if (cmd === "ask") {
+            push(...out);
+            if (rest) ask(rest).then();
+            else push({kind: "err", text: "usage: ask <question>"});
+            return;
+        }
+
+        if (ALIAS_SECTIONS[cmd] && !rest) {
+            out.push({kind: "section", section: ALIAS_SECTIONS[cmd]});
+        } else if (cmd === CV_ALIAS.alias || ((cmd === "less" || cmd === "cat") && file === "cv.md")) {
+            openPager();
+        } else if (cmd === "mail") {
+            out.push({kind: "section", section: "mail"});
+        } else if (cmd === "whatsapp") {
+            out.push({kind: "text", text: "opening WhatsApp chat…"});
+            setWhatsApp((n) => n + 1);
+        } else if (cmd === "sidebar") {
+            const arg = rest.toLowerCase();
+            if (/^(enable|enabled|on|show)$/.test(arg)) {
+                setSidebar(true);
+                out.push({kind: "text", text: "sidebar: enabled"});
+            } else if (/^(disable|disabled|off|hide)$/.test(arg)) {
+                setSidebar(false);
+                out.push({kind: "text", text: "sidebar: disabled"});
+            } else {
+                out.push({kind: "text", text: `sidebar: ${sidebar ? "enabled" : "disabled"}\nusage: sidebar enable|disable`});
+            }
+        } else if (cmd === "theme") {
+            globalThis.dispatchEvent?.(new CustomEvent(TRIGGER_TOGGLE_THEME));
+            out.push({kind: "text", text: "theme switched"});
+        } else if (cmd === "help") {
+            out.push({kind: "text", text: HELP_TEXT});
+        } else if (cmd === "alias") {
+            out.push({kind: "text", text: [...SECTION_ALIASES, CV_ALIAS].map((a) => `alias ${a.alias}='${a.expands}'`).join("\n")});
+        } else if (cmd === "type" && rest) {
+            const hit = [...SECTION_ALIASES, CV_ALIAS].find((a) => a.alias === rest);
+            out.push(hit ? {kind: "text", text: `${rest} is aliased to \`${hit.expands}'`} : {kind: "err", text: `bash: type: ${rest}: not found`});
+        } else if (cmd === "history") {
+            const lines = [...history, line];
+            out.push({kind: "text", text: lines.map((c, i) => `${String(i + 1).padStart(4)}  ${c}`).join("\n")});
+        } else if (cmd === "ls" || cmd === "ll" || cmd === "tree") {
+            out.push({kind: "text", text: FILES.join("  ")});
+        } else if (cmd === "pwd") {
+            out.push({kind: "text", text: "/home/towfiq/portfolio"});
+        } else if (cmd === "date") {
+            out.push({kind: "text", text: new Date().toString()});
+        } else if (cmd === "echo") {
+            out.push({kind: "text", text: rest});
+        } else if ((cmd === "cd" || cmd === "cat" || cmd === "less") && rest) {
+            if (FILE_SECTIONS[file]) out.push({kind: "section", section: FILE_SECTIONS[file]});
+            else out.push({kind: "err", text: `bash: ${cmd}: ${rest}: No such file or directory`});
+        } else if (cmd === "cd") {
+            // `cd` alone: home, nothing printed — like bash.
+        } else if (isQuestion(line)) {
+            push(...out);
+            ask(line).then();
+            return;
+        } else {
+            out.push({kind: "err", text: `bash: ${first}: command not found`}, {kind: "text", text: "hint: help lists commands · ask <question> talks to towfiq-agent"});
+        }
+        push(...out);
     };
 
-    const triggerContactAiChat = () => {
-        setIsAiChatOpen(true);
-        setIsWhatsAppForceOpen(false);
+    // Latest exec for listeners registered once.
+    const execRef = useRef(exec);
+    execRef.current = exec;
+
+    const confirm = async (yes: boolean) => {
+        push({kind: "cmd", text: yes ? YES_BUTTON_TEXT : NO_BUTTON_TEXT});
+        const answer = await assistant.confirmAction(yes);
+        if (answer) push({kind: "agent", text: answer});
     };
 
-
+    // The newest command's output takes over the screen: size the last group to
+    // the viewport and scroll the command line to the top.
     useEffect(() => {
-        globalThis.addEventListener?.(TRIGGER_EMAIL_ME, triggerContactEmailMe);
-        globalThis.addEventListener?.(TRIGGER_WHATSAPP_ME, triggerContactWhatsAppMe);
-        globalThis.addEventListener?.(TRIGGER_AI_CHAT, triggerContactAiChat);
+        const main = mainRef.current;
+        if (!main) return;
+        const observer = new ResizeObserver(() => setViewport(main.clientHeight));
+        observer.observe(main);
+        return () => observer.disconnect();
+    }, []);
 
+    useLayoutEffect(() => {
+        const main = mainRef.current;
+        const id = scrollTo.current;
+        if (!main || id === null) return;
+        const el = main.querySelector<HTMLElement>(`[data-entry="${id}"]`);
+        if (!el) return;
+        scrollTo.current = null;
+        main.scrollTo({top: el.offsetTop - 16, behavior: "smooth"});
+    }, [entries]);
+
+    // Global keys: Ctrl+L clears; typing anywhere outside a field goes to the prompt.
+    useEffect(() => {
+        const onKey = (e: KeyboardEvent) => {
+            const target = e.target as HTMLElement | null;
+            const inField = target?.closest("input, textarea, select, [contenteditable='true']");
+            if (pagerOpen) {
+                // `less`: q / Esc quits even when focus isn't inside the pager.
+                if (!e.defaultPrevented && !inField && (e.key === "q" || e.key === "Escape")) {
+                    e.preventDefault();
+                    closePager();
+                }
+                return;
+            }
+            if (e.ctrlKey && e.key.toLowerCase() === "l") {
+                e.preventDefault();
+                setEntries([]);
+                return;
+            }
+            if (!inField && !e.ctrlKey && !e.metaKey && !e.altKey && e.key.length === 1) {
+                inputRef.current?.focus();
+            }
+        };
+        globalThis.addEventListener?.("keydown", onKey);
+        return () => globalThis.removeEventListener?.("keydown", onKey);
+    }, [pagerOpen]);
+
+    // The AI assistant can hand off to the mail form or WhatsApp (RULESET action tokens).
+    useEffect(() => {
+        const emailMe = () => execRef.current("mail");
+        const whatsAppMe = () => setWhatsApp((n) => n + 1);
+        globalThis.addEventListener?.(TRIGGER_EMAIL_ME, emailMe);
+        globalThis.addEventListener?.(TRIGGER_WHATSAPP_ME, whatsAppMe);
         return () => {
-            globalThis.removeEventListener?.(TRIGGER_EMAIL_ME, triggerContactEmailMe);
-            globalThis.removeEventListener?.(TRIGGER_WHATSAPP_ME, triggerContactWhatsAppMe);
-            globalThis.removeEventListener?.(TRIGGER_AI_CHAT, triggerContactAiChat);
+            globalThis.removeEventListener?.(TRIGGER_EMAIL_ME, emailMe);
+            globalThis.removeEventListener?.(TRIGGER_WHATSAPP_ME, whatsAppMe);
         };
     }, []);
 
-    const handleNavigateToContact = () => {
-        setCurrentPage("contact")
+    const closePager = () => {
+        setPagerOpen(false);
+        requestAnimationFrame(() => inputRef.current?.focus());
     };
 
-    const handleNavigateToCV = () => {
-        setCurrentPage("cv")
+    const renderSection = (section: SectionKey): ReactNode => {
+        const run = (command: string) => exec(command);
+        switch (section) {
+            case "hero":
+                return <Hero onRun={run}/>;
+            case "overview":
+                return <Overview/>;
+            case "skills":
+                return <Skills/>;
+            case "experience":
+                return <Experience/>;
+            case "project":
+                return <Projects/>;
+            case "writing":
+                return <Writing/>;
+            case "education":
+                return <Education/>;
+            case "awards":
+                return <Awards/>;
+            case "open-source":
+                return <OpenSource/>;
+            case "certifications":
+                return <Certifications/>;
+            case "contact":
+                return <Connect onEmailMe={() => exec("mail")}/>;
+            case "mail":
+                return <Suspense fallback={<Loading/>}><MailForm/></Suspense>;
+        }
     };
+
+    const renderEntry = (entry: Entry): ReactNode => {
+        switch (entry.kind) {
+            case "login":
+                return <div className={session.text}>Last login: {lastLogin()} on pts/0</div>;
+            case "cmd":
+                return <div className={session.cmdLine}><PromptPrefix/> {entry.text}</div>;
+            case "section":
+                return renderSection(entry.section);
+            case "text":
+                return <div className={session.text}>{entry.text}</div>;
+            case "err":
+                return <div className={session.err}>{entry.text}</div>;
+            case "tool":
+                return <div className={session.tool}>{entry.text}</div>;
+            case "agent":
+                return (
+                    <div className={session.agent}>
+                        <span className={session.agentDot} aria-hidden="true">●</span>
+                        <div className={session.markdown}><Markdown>{entry.text}</Markdown></div>
+                    </div>
+                );
+            case "suggest":
+                return <div className={session.suggestions}>{entry.items.map((item) => <span key={item}>{item}</span>)}</div>;
+        }
+    };
+
+    // Group the scrollback by command: each group is a command and its output.
+    const groups: Entry[][] = [];
+    for (const entry of entries) {
+        if (entry.kind === "cmd" || groups.length === 0) groups.push([entry]);
+        else groups[groups.length - 1].push(entry);
+    }
+    const lastSection = [...entries].reverse().find((e) => e.kind === "section");
+    const activeSection = lastSection?.kind === "section" ? lastSection.section : null;
+
+    const footer = (
+        <div className={session.footer}>
+            <div className={session.chips} role="group" aria-label="Commands">
+                <span className={styles.muted}>try:</span>
+                {CHIPS.map((chip) => (
+                    <button key={chip} type="button" className={cx(styles.btn, session.chip)} onClick={() => exec(chip)}>{chip}</button>
+                ))}
+                <button type="button" className={cx(styles.btn, session.chip)} onClick={() => exec(`sidebar ${sidebar ? "disable" : "enable"}`)}>
+                    sidebar {sidebar ? "disable" : "enable"}
+                </button>
+                <button type="button" className={cx(styles.btn, session.chip, session.chipClear)} onClick={clear}>clear</button>
+            </div>
+            <PromptInput
+                ref={inputRef}
+                busy={assistant.isLoading}
+                history={history}
+                onSubmit={exec}
+                onClear={clear}
+                onSuggest={(line, matches) => push({kind: "cmd", text: line}, {kind: "suggest", items: matches})}
+            />
+            <div className={session.hints}>
+                <span><span className={styles.c1}>towfiq-agent</span> {GREETING.content.replace(/^Hi! /, "")}</span>
+                <span className={session.hintKeys}>tab complete · ↑↓ history · ctrl+l clear · agent {assistant.isConnected ? "online" : "offline"}</span>
+            </div>
+        </div>
+    );
 
     return (
-        <div className={styles.page}>
-            <Particles/>
-            <Navbar onNavigateToContact={handleNavigateToContact} onNavigateToCV={handleNavigateToCV}
-                    currentPage={'home'}/>
-
-            {/* Hero Section */}
-            <section id="hero" className={styles.hero}>
-                <div className={styles.heroBackground}>
-                    <div className={styles.heroCircle1}></div>
-                    <div className={styles.heroCircle2}></div>
-                    <div className={styles.heroCircle3}></div>
-                </div>
-                <div className={styles.heroContent}>
-                    <div className={styles.heroGlass}>
-                        <div className={styles.badgeContainer}>
-                            <Badge variant="outline" className={styles.heroBadge}>
-                              <Sparkles className={styles.badgeIcon} />
-                              Available for Opportunities
-                            </Badge>
-                        </div>
-                        <h1 className={styles.name}>{personalInfo.name}</h1>
-                        <p className={styles.jobTitle}>{personalInfo.title}</p>
-                        <p className={styles.heroDescription}>
-                            Designing and shipping high-throughput distributed systems for fintech and enterprise.
-                            Specialized in Java · Spring Boot · Kafka · AWS. Working experience with
-                            payment infrastructure at Bangladesh's #1 mobile financial platform.
-                        </p>
-
-                        <div className={styles.heroStats}>
-                            <div className={styles.statItem}>
-                                <div className={styles.statNumber}>{totalExp.years}+</div>
-                                <div className={styles.statLabel}>Years Experience</div>
+        <>
+            <TerminalWindow
+                title="towfiq@portfolio: ~ — bash"
+                mainRef={mainRef}
+                sidebar={sidebar ? <FileTree activeSection={activeSection} onRun={exec}/> : undefined}
+                footer={footer}
+                overlay={pagerOpen ? <Suspense fallback={<Loading/>}><CvPager onQuit={closePager}/></Suspense> : undefined}
+            >
+                {groups.map((group, i) => (
+                    <div
+                        key={group[0].id}
+                        className={session.group}
+                        style={i === groups.length - 1 ? {minHeight: viewport ? viewport - 40 : undefined} : undefined}
+                    >
+                        {group.map((entry) => (
+                            <div key={entry.id} data-entry={entry.id}>{renderEntry(entry)}</div>
+                        ))}
+                        {i === groups.length - 1 && assistant.isLoading && (
+                            <div className={cx(session.thinking, styles.spinner)}>Thinking…</div>
+                        )}
+                        {i === groups.length - 1 && assistant.pendingAction && !assistant.isLoading && (
+                            <div className={session.confirm}>
+                                <span>? {assistant.pendingAction === TRIGGER_EMAIL_ME ? "Open the email form?" : "Start a WhatsApp chat?"}</span>
+                                <button type="button" className={cx(styles.btn, styles.btnAccent)} onClick={() => confirm(true)}>{YES_BUTTON_TEXT}</button>
+                                <button type="button" className={styles.btn} onClick={() => confirm(false)}>{NO_BUTTON_TEXT}</button>
                             </div>
-                            <div className={`${styles.statItem} ${styles.statItemClickable}`}
-                                 onClick={() => scrollToSection("project")}
-                                 role="button" tabIndex={0}
-                                 onKeyDown={(e) => e.key === 'Enter' && scrollToSection("project")}>
-                                <div className={styles.statNumber}>{totalProjects}+</div>
-                                <div className={styles.statLabel}>Projects Contributed To</div>
-                            </div>
-                            <div className={`${styles.statItem} ${styles.statItemClickable}`}
-                                 onClick={() => scrollToSection("skills")}
-                                 role="button" tabIndex={0}
-                                 onKeyDown={(e) => e.key === 'Enter' && scrollToSection("skills")}>
-                                <div className={styles.statNumber}>{totalTechnologies}+</div>
-                                <div className={styles.statLabel}>Technologies</div>
-                            </div>
-                            <div className={`${styles.statItem} ${styles.statItemClickable}`}
-                                 onClick={() => scrollToSection("open-source")}
-                                 role="button" tabIndex={0}
-                                 onKeyDown={(e) => e.key === 'Enter' && scrollToSection("open-source")}>
-                                <div className={styles.statNumber}>{openSource.length}+</div>
-                                <div className={styles.statLabel}>Open Source Contributions</div>
-                            </div>
-                        </div>
-
-                        <div className={styles.socialLinks}>
-                            <a
-                                href={personalInfo.linkedin}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className={styles.socialLink}
-                                aria-label="LinkedIn Profile"
-                            >
-                                <Linkedin className={styles.socialIcon}/>
-                            </a>
-                            <a
-                                href={personalInfo.github}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className={styles.socialLink}
-                                aria-label="GitHub Profile"
-                            >
-                                <Github className={styles.socialIcon}/>
-                            </a>
-                            <a
-                                href={personalInfo.stackoverflow}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className={styles.socialLink}
-                                aria-label="Stack Overflow Profile"
-                            >
-                                <svg className={styles.socialIcon} viewBox="0 0 24 24" fill="currentColor">
-                                    <path
-                                        d="M18.986 21.865v-6.404h2.134V24H1.844v-8.539h2.13v6.404h15.012zM6.111 19.731H16.85v-2.137H6.111v2.137zm.259-4.852l10.48 2.189.451-2.07-10.478-2.187-.453 2.068zm1.359-5.056l9.705 4.53.903-1.95-9.706-4.53-.902 1.936v.014zm2.715-4.785l8.217 6.855 1.359-1.62-8.216-6.853-1.35 1.617-.01.001zM15.751 0l-1.746 1.294 6.405 8.604 1.746-1.294L15.749 0h.002z"/>
-                                </svg>
-                            </a>
-                        </div>
+                        )}
                     </div>
-                </div>
-            </section>
+                ))}
+            </TerminalWindow>
 
-            {/* Overview Section */}
-            <section id="overview" className={styles.section}>
-                <SectionHeader
-                    title="Professional Overview"
-                    subtitle="Summary of experience, achievements, and core competencies"
-                />
-                <div className={styles.overviewContainer}>
-                    <div className={styles.overviewCard}>
-                        <h3 className={styles.overviewSubtitle}>Summary</h3>
-                        <p className={styles.overviewText}>{overview.summary}</p>
-                    </div>
-
-                    <div className={styles.overviewCard}>
-                        <h3 className={styles.overviewSubtitle}>Key Highlights</h3>
-                        <ul className={styles.highlightsList}>
-                            {overview.highlights.map((highlight, index) => (
-                                <li key={index} className={styles.highlightItem}
-                                    style={{animationDelay: `${index * 0.1}s`}}>
-                                    {highlight}
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-
-                    <div className={styles.overviewCard}>
-                        <h3 className={styles.overviewSubtitle}>Core Expertise</h3>
-                        <div className={styles.expertiseGrid}>
-                            {overview.expertise.map((item, index) => (
-                                <div key={index} className={styles.expertiseItem}
-                                     style={{animationDelay: `${index * 0.1}s`}}>
-                                    <div className={styles.expertiseDot}></div>
-                                    <span>{item}</span>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* Skills Section */}
-            <section id="skills" className={styles.section}>
-                <SectionHeader
-                    title="Technical Skills"
-                    // subtitle="Click on any category to explore my expertise in detail"
-                />
-                <div className={styles.skillsGrid}>
-                    {Object.entries(skills).map(([category, skillList], index) => (
-                        <div
-                            key={category}
-                            className={styles.skillCategory}
-                            onClick={() => setSelectedSkill({category, skills: skillList})}
-                            onMouseLeave={() => setExpandedSkillCategory(
-                                (prev) => (prev === category ? null : prev)
-                            )}
-                            style={{animationDelay: `${index * 0.1}s`}}
-                        >
-                            <div className={styles.skillCategoryInner}>
-                                <h3 className={styles.categoryTitle}>{category}</h3>
-                                <div className={styles.skillCount}>{skillList.length} skills</div>
-                                <div className={styles.skillPreview}>
-                                    {(expandedSkillCategory === category
-                                        ? skillList
-                                        : skillList.slice(0, 3)).map((skill) => (
-                                        <Badge key={skill} variant="secondary" className={styles.skillBadge}>
-                                            {skill.length > 20 ? skill.substring(0, 20) + "..." : skill}
-                                        </Badge>
-                                    ))}
-                                    {skillList.length > 3 && expandedSkillCategory !== category && (
-                                        <Badge
-                                            variant="outline"
-                                            className={`${styles.moreBadge} ${styles.expandableBadge}`}
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                setExpandedSkillCategory(category);
-                                            }}
-                                        >
-                                            +{skillList.length - 3} more
-                                        </Badge>
-                                    )}
-                                </div>
-                                <div className={styles.clickHint}></div>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-
-                {/* Charts Section */}
-                <div className={styles.chartsGrid}>
-                    <StatsChart/>
-                    <ExperienceChart/>
-                </div>
-            </section>
-
-            {/* Work Experience Section */}
-            <section id="experience" className={`${styles.section} ${styles.sectionAlt}`}>
-                <SectionHeader title="Work Experience"
-                               subtitle={`${formatExperience(totalExp.years, totalExp.months)} of Professional Software Development`}/>
-                <div className={styles.experienceTimeline}>
-                    {workExperience.map((job, index) => (
-                        <div key={index} className={styles.experienceItem} style={{animationDelay: `${index * 0.15}s`}}>
-                            <div className={styles.experienceCard}>
-                                <div className={styles.experienceHeader}>
-                                    <h3 className={styles.experienceTitle}>{job.title}</h3>
-                                    <div className={styles.experienceMeta}>
-                    <span className={styles.metaItem}>
-                      <Briefcase className={styles.metaIcon}/>
-                        {job.company}
-                    </span>
-                                        <span className={styles.metaItem}>
-                      <MapPin className={styles.metaIcon}/>
-                                            {job.location}
-                    </span>
-                                        <span className={styles.metaItem}>
-                      <Calendar className={styles.metaIcon}/>
-                                            {job.period}
-                    </span>
-                                        <span className={styles.metaItem}>
-                      <Clock className={styles.metaIcon}/>
-                                            {formatJobDurationYears(job.period)}
-                    </span>
-                                    </div>
-                                    <Badge variant="outline" style={{marginTop: "8px"}}>
-                                        {job.type}
-                                    </Badge>
-                                </div>
-                                <p className={styles.experienceDescription}>{job.description}</p>
-                                {job.responsibilities.length > 0 && (
-                                    <div className={styles.responsibilitiesContainer}>
-                                        <ul className={styles.responsibilitiesList}>
-                                            {job.responsibilities.map((resp, idx) => (
-                                                <li
-                                                    key={idx}
-                                                    className={`${styles.responsibilityItem} ${
-                                                        idx >= 3 ? styles.responsibilityItemHidden : ""
-                                                    }`}
-                                                >
-                                                    {resp}
-                                                </li>
-                                            ))}
-                                        </ul>
-                                        {job.responsibilities.length > 3 && (
-                                            <div className={styles.hoverHint}>see more</div>
-                                        )}
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </section>
-
-            {/* Projects Section */}
-            <section id="project" className={styles.section}>
-                <SectionHeader
-                    title="Featured Projects"
-                    subtitle="Key projects showcasing expertise in enterprise software development"
-                />
-                <div className={styles.projectsGrid}>
-                    {(showAllProjects ? projects : featuredProjects).map((project, index) => (
-                        <div key={project.name} className={styles.projectCard}
-                             onMouseLeave={() => setExpandedProjectTech(
-                                 (prev) => (prev === project.name ? null : prev)
-                             )}
-                             style={{animationDelay: `${index * 0.1}s`}}>
-                            <div className={styles.projectHeader}>
-                                <h3 className={styles.projectName}>{project.name}</h3>
-                                <TrendingUp className={styles.projectIcon}/>
-                            </div>
-                            <p className={styles.projectClient}>{project.client}</p>
-                            <p className={styles.projectDescription}>{project.description}</p>
-                            {project.highlights && project.highlights.length > 0 && (
-                                <ul className={styles.projectHighlights}>
-                                    {project.highlights.slice(0, 3).map((highlight, idx) => (
-                                        <li key={idx} className={styles.highlightItem}>
-                                            {highlight}
-                                        </li>
-                                    ))}
-                                </ul>
-                            )}
-                            <div className={styles.techStack}>
-                                {(expandedProjectTech === project.name
-                                    ? project.technologies
-                                    : project.technologies.slice(0, 4)).map((tech) => (
-                                    <Badge key={tech} variant="default" className={styles.techBadge}>
-                                        {tech}
-                                    </Badge>
-                                ))}
-                                {project.technologies.length > 4 && expandedProjectTech !== project.name && (
-                                    <Badge
-                                        variant="outline"
-                                        className={`${styles.techBadge} ${styles.expandableBadge}`}
-                                        onClick={() => setExpandedProjectTech(project.name)}
-                                    >
-                                        +{project.technologies.length - 4}
-                                    </Badge>
-                                )}
-                            </div>
-                            <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', alignItems: 'center' }}>
-                                {project.link && (
-                                    <a href={project.link} target="_blank" rel="noopener noreferrer"
-                                       className={styles.awardLink}>
-                                        {project.link.includes("github.com")
-                                            ? "View on GitHub"
-                                            : project.link.includes("play.google.com")
-                                                ? "View on Google Play"
-                                                : project.link.includes("chromewebstore.google.com")
-                                                    ? "View on Chrome Web Store"
-                                                    : "Visit Website"}
-                                        {" "}<ExternalLink size={14}/>
-                                    </a>
-                                )}
-                                {project.githubLink && (
-                                    <a href={project.githubLink} target="_blank" rel="noopener noreferrer"
-                                       className={styles.awardLink}>
-                                        View on GitHub <ExternalLink size={14}/>
-                                    </a>
-                                )}
-                            </div>
-                        </div>
-                    ))}
-                </div>
-                {projects.length > featuredProjects.length && (
-                    <div className={styles.showAllProjects}>
-                        <Button variant="outline" onClick={() => setShowAllProjects(!showAllProjects)}>
-                            {showAllProjects
-                                ? "Show Featured Only"
-                                : `View All ${projects.length} Projects`}
-                        </Button>
-                    </div>
-                )}
-            </section>
-
-            {/* Writing Section */}
-            <section id="writing" className={styles.section}>
-                <SectionHeader
-                    title="Writing"
-                    subtitle="Engineering deep-dives on real systems — debugging, hardening, and lessons learned"
-                />
-                <div className={styles.awardsList}>
-                    {writing.map((article, index) => (
-                        <div key={index} className={styles.awardItem} style={{animationDelay: `${index * 0.1}s`}}>
-                            <div className={styles.awardIcon}>
-                                <BookOpen/>
-                            </div>
-                            <div className={styles.awardContent}>
-                                <div style={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: '8px',
-                                    marginBottom: '4px'
-                                }}>
-                                    <h3 className={styles.awardTitle}>{article.title}</h3>
-                                    <Badge variant="outline" style={{fontSize: '11px'}}>
-                                        {article.platform}
-                                    </Badge>
-                                </div>
-                                <p className={styles.awardDescription} style={{marginBottom: '8px'}}>
-                                    {article.description}
-                                </p>
-                                <a href={article.link} target="_blank" rel="noopener noreferrer"
-                                   className={styles.awardLink}>
-                                    Read Article <ExternalLink size={14}/>
-                                </a>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </section>
-
-            {/* Education Section */}
-            <section id="education" className={`${styles.section} ${styles.sectionAlt}`}>
-                <SectionHeader title="Education"/>
-                <div className={styles.educationList}>
-                    {education.map((edu, index) => (
-                        <div key={index} className={styles.educationItem} style={{animationDelay: `${index * 0.1}s`}}>
-                            <h3 className={styles.degree}>{edu.degree}</h3>
-                            <p className={styles.institution}>{edu.institution}</p>
-                            <p className={styles.period}>{edu.period}</p>
-                        </div>
-                    ))}
-                </div>
-            </section>
-
-            {/* Awards & Achievements Section */}
-            <section id="awards" className={styles.section}>
-                <SectionHeader title="Awards & Achievements"
-                               subtitle="Recognition in competitive programming and coaching"/>
-                <div className={styles.awardsList}>
-                    {awards.map((award, index) => (
-                        <div key={index} className={styles.awardItem} style={{animationDelay: `${index * 0.1}s`}}>
-                            <div className={styles.awardIcon}>
-                                <AwardIcon/>
-                            </div>
-                            <div className={styles.awardContent}>
-                                <h3 className={styles.awardTitle}>{award.title}</h3>
-                                <p className={styles.awardDescription}>{award.description}</p>
-                                {award.link && (
-                                    <a href={award.link} target="_blank" rel="noopener noreferrer"
-                                       className={styles.awardLink}>
-                                        View Details <ExternalLink size={14}/>
-                                    </a>
-                                )}
-                            </div>
-                        </div>
-                    ))}
-                </div>
-
-                {openSource.length > 0 && (
-                    <div id="open-source">
-                        <SectionHeader title="Open Source Contributions"
-                                       subtitle="Contributing to the developer community"/>
-                        <div className={styles.awardsList}>
-                            {openSource.map((contribution, index) => (
-                                <div key={index} className={styles.awardItem}
-                                     style={{animationDelay: `${index * 0.1}s`}}>
-                                    <div className={styles.awardIcon}>
-                                        <Github/>
-                                    </div>
-                                    <div className={styles.awardContent}>
-                                        <div style={{
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            gap: '8px',
-                                            marginBottom: '4px'
-                                        }}>
-                                            <h3 className={styles.awardTitle}>{contribution.project}</h3>
-                                            <Badge variant="outline" style={{fontSize: '11px'}}>
-                                                {contribution.status}
-                                            </Badge>
-                                        </div>
-                                        <p className={styles.awardDescription} style={{marginBottom: '4px'}}>
-                                            {contribution.description}
-                                        </p>
-                                        <p className={styles.awardDescription}
-                                           style={{fontSize: '13px', opacity: 0.8, marginBottom: '8px'}}>
-                                            {contribution.contribution}
-                                        </p>
-                                        <div style={{
-                                            display: 'flex',
-                                            gap: '16px',
-                                            flexWrap: 'wrap',
-                                            alignItems: 'center',
-                                        }}>
-                                            <a href={contribution.link} target="_blank" rel="noopener noreferrer"
-                                               className={styles.awardLink}>
-                                                View on GitHub <ExternalLink size={14}/>
-                                            </a>
-                                            {contribution.storeLink && (
-                                                <a href={contribution.storeLink} target="_blank" rel="noopener noreferrer"
-                                                   className={styles.awardLink}>
-                                                    Chrome Web Store <ExternalLink size={14}/>
-                                                </a>
-                                            )}
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                )}
-
-                {certifications.length > 0 && (
-                    <>
-                        <SectionHeader title="Certifications"
-                                       subtitle="Verified credentials from HackerRank and Coursera"/>
-                        <div className={styles.awardsList}>
-                            {certifications.map((cert, index) => (
-                                <div key={index} className={styles.awardItem}
-                                     style={{animationDelay: `${index * 0.1}s`}}>
-                                    <div className={styles.awardIcon}>
-                                        <BadgeCheck/>
-                                    </div>
-                                    <div className={styles.awardContent}>
-                                        <div style={{
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            gap: '8px',
-                                            marginBottom: '4px'
-                                        }}>
-                                            <h3 className={styles.awardTitle}>{cert.title}</h3>
-                                            <Badge variant="outline" style={{fontSize: '11px'}}>
-                                                {cert.issuer}
-                                            </Badge>
-                                        </div>
-                                        {cert.date && (
-                                            <p className={styles.awardDescription}
-                                               style={{fontSize: '13px', opacity: 0.8, marginBottom: '8px'}}>
-                                                {cert.date}
-                                            </p>
-                                        )}
-                                        <a href={cert.link} target="_blank" rel="noopener noreferrer"
-                                           className={styles.awardLink}>
-                                            Verify Certificate <ExternalLink size={14}/>
-                                        </a>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </>
-                )}
-            </section>
-
-            {/* Contact Section */}
-            <section id="contact" className={styles.contactSection}>
-                <div className={styles.contactGlass}>
-                    <h2 className={styles.contactTitle}>Let's Connect</h2>
-                    <p className={styles.contactSubtitle}>
-                        I'm always open to discussing new projects, creative ideas, or opportunities to be part of your
-                        visions.
-                    </p>
-                    <div className={styles.contactGrid}>
-                        <button onClick={handleNavigateToContact} className={styles.contactCard}>
-                            <Mail className={styles.contactCardIcon}/>
-                            <span className={styles.contactCardTitle}>Email Me</span>
-                        </button>
-                        <a href={personalInfo.linkedin} target="_blank" rel="noopener noreferrer"
-                           className={styles.contactCard}>
-                            <Linkedin className={styles.contactCardIcon}/>
-                            <span className={styles.contactCardTitle}>LinkedIn</span>
-                        </a>
-                        <a href={personalInfo.github} target="_blank" rel="noopener noreferrer"
-                           className={styles.contactCard}>
-                            <Github className={styles.contactCardIcon}/>
-                            <span className={styles.contactCardTitle}>GitHub</span>
-                        </a>
-                        <a href={`tel:${personalInfo.phone}`} className={styles.contactCard}>
-                            <Phone className={styles.contactCardIcon}/>
-                            <span className={styles.contactCardTitle}>Call Me</span>
-                        </a>
-                        <a href={personalInfo.stackoverflow} target="_blank" rel="noopener noreferrer"
-                           className={styles.contactCard}>
-                            <svg className={styles.socialIcon} viewBox="0 0 24 24" fill="currentColor">
-                                <path
-                                    d="M18.986 21.865v-6.404h2.134V24H1.844v-8.539h2.13v6.404h15.012zM6.111 19.731H16.85v-2.137H6.111v2.137zm.259-4.852l10.48 2.189.451-2.07-10.478-2.187-.453 2.068zm1.359-5.056l9.705 4.53.903-1.95-9.706-4.53-.902 1.936v.014zm2.715-4.785l8.217 6.855 1.359-1.62-8.216-6.853-1.35 1.617-.01.001zM15.751 0l-1.746 1.294 6.405 8.604 1.746-1.294L15.749 0h.002z"/>
-                            </svg>
-                            <span className={styles.contactCardTitle}>Stack Overflow</span>
-                        </a>
-                    </div>
-                </div>
-            </section>
-
-            {/* Footer */}
-            <footer className={styles.footer}>
-                Crafted with passion and precision.
-                <p className={styles.footerText}>
-                    © 2018-{new Date().getFullYear()} {personalInfo.name}. All rights reserved.
-                </p>
-            </footer>
-
-            {/* Skill Modal */}
-            <SkillModal
-                isOpen={selectedSkill !== null}
-                onClose={() => setSelectedSkill(null)}
-                category={selectedSkill?.category || ""}
-                skills={selectedSkill?.skills || []}
-            />
-
-            {/* AI Chat */}
-            <FloatingChat isChatOpen={isAiChatOpen}
-                          onClose={() => triggerContactWhatsAppMe}/>
-
-            {/* Scroll to Top Button */}
-            <ScrollToTop/>
-
-            {/* WhatsApp Chat */}
-            <WhatsAppChat isChatOpen={isWhatsAppForceOpen}
-                          onClose={() => triggerContactAiChat}/>
-        </div>
+            {whatsApp > 0 && <WhatsAppChat key={whatsApp} isChatOpen/>}
+        </>
     );
 }

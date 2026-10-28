@@ -1,0 +1,63 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 15px;
+}
+
+.cardHead {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.tree {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.actions {
+  margin-top: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chart {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  font-size: 15px;
+}
+
+.barRow {
+  display: grid;
+  grid-template-columns: 12ch minmax(0, 1fr) 5ch;
+  gap: 10px;
+  align-items: center;
+}
+
+.barValue {
+  color: var(--t-muted);
+  text-align: right;
+}
+
+.dist {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+}
+
+@media (max-width: 759px) {
+  .barRow {
+    grid-template-columns: 11ch minmax(0, 1fr) 5ch;
+    gap: 8px;
+  }
+}

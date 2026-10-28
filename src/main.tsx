@@ -12,6 +12,7 @@ import "./styles/tokens/decorations.css";
 import "./styles/tokens/spacings.css";
 import "./styles/tokens/typography.css";
 import "./styles/theme.css";
+import "./styles/tokens/terminal.css";
 
 const root = document.getElementById("root");
 

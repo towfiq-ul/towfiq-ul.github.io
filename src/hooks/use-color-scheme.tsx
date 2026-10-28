@@ -5,9 +5,12 @@ type ResolvedScheme = "light" | "dark";
 
 export function useColorScheme() {
   const [configScheme, setConfigScheme] = useState<ColorScheme>(() => {
+    // Dark is the default look. Only an explicit light/dark choice from the
+    // theme toggle is honoured; "system" (stored by the previous site design)
+    // or nothing falls back to dark.
     const stored = localStorage.getItem("color-scheme");
-    if (stored === "light" || stored === "dark" || stored === "system") return stored;
-    return "system";
+    if (stored === "light" || stored === "dark") return stored;
+    return "dark";
   });
 
   const [resolvedScheme, setResolvedScheme] = useState<ResolvedScheme>(() => {

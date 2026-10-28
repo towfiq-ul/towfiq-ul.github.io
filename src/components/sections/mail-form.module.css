@@ -1,0 +1,120 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-top: 10px;
+}
+
+
+.boot {
+  display: flex;
+  flex-direction: column;
+  font-size: 15px;
+}
+
+.title {
+  margin: 0 0 6px;
+  font-size: clamp(28px, 5vw, 46px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--t-c1);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.form:hover {
+  transform: none;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 14px 18px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 16px;
+}
+
+.inputRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  font: inherit;
+  font-size: 16px;
+  line-height: 1.6;
+  padding: 10px 12px;
+  border-radius: 4px;
+  border: 1px solid var(--t-line-2);
+  background: var(--t-bg);
+  color: var(--t-ink);
+  caret-color: var(--t-c1);
+  resize: vertical;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--t-c1);
+  background: var(--t-raised);
+}
+
+.invalid {
+  border-color: var(--t-c4);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.submit {
+  min-height: 46px;
+  padding: 10px 20px;
+  font-size: 17px;
+}
+
+.log {
+  min-height: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 16px;
+}
+
+.direct {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--t-line-2);
+  font-size: 16px;
+}
+
+.direct a {
+  padding: 4px 0;
+}
+
+@media (max-width: 759px) {
+  .input {
+    font-size: 18px; /* avoids iOS zoom-on-focus */
+  }
+
+  .submit {
+    width: 100%;
+  }
+}

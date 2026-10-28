@@ -1,0 +1,135 @@
+/* `less cv.md`: the CV rendered from Markdown, filling the terminal like a pager. */
+
+.pager {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  background: var(--t-bg);
+}
+
+.toolbar {
+  flex: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 36px;
+  border-bottom: 1px solid var(--t-line);
+}
+
+.tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 22px 36px 32px;
+}
+
+.scroll:focus-visible {
+  outline: none;
+}
+
+.md {
+  max-width: 900px;
+  line-height: 1.75;
+}
+
+.md h1 {
+  margin: 0 0 6px;
+  font-size: 2em;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--t-c1);
+}
+
+.md h2 {
+  margin: 28px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px dashed var(--t-line-2);
+  font-size: 1.15em;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--t-c2);
+}
+
+.md h3 {
+  margin: 16px 0 2px;
+  font-size: 1.02em;
+  font-weight: 800;
+  color: var(--t-c1);
+}
+
+.md p {
+  margin: 0 0 8px;
+}
+
+.md em {
+  font-style: normal;
+  color: var(--t-c4);
+}
+
+.md strong {
+  font-weight: 800;
+  color: var(--t-ink);
+}
+
+.md a {
+  color: var(--t-c1);
+}
+
+.md ul {
+  margin: 0 0 8px;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.md li {
+  display: grid;
+  grid-template-columns: 2ch minmax(0, 1fr);
+  gap: 6px;
+}
+
+.md li::before {
+  content: "•";
+  color: var(--t-c3);
+}
+
+.status {
+  flex: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 4px 16px;
+  padding: 6px 16px;
+  background: var(--t-ink);
+  color: var(--t-bg);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+@media (max-width: 759px) {
+  .toolbar {
+    padding: 8px 12px;
+  }
+
+  .scroll {
+    padding: 16px 12px 24px;
+  }
+
+  .statusHint {
+    display: none;
+  }
+}

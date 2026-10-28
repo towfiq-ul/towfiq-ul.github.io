@@ -13,9 +13,9 @@ type Project = {
 
 export const projects: Project[] = [
     {
-        name: "bK-MFS App",
-        subname: "Consumer app for bK-MFS Limited",
-        client: "bK-MFS Limited (via Exabyting)",
+        name: "bKash App",
+        subname: "Consumer app for bKash Limited",
+        client: "bKash Limited (via Exabyting)",
         technologies: [
             "Java (Spring Boot)",
             "Spring Boot Web Flux",
@@ -31,7 +31,7 @@ export const projects: Project[] = [
             "Kubernetes"
         ],
         description:
-            "bK-MFS is a leading mobile financial service in Bangladesh that allows users to perform instant money transfers, bill payments, mobile recharges, and merchant transactions securely from their smartphones.",
+            "bKash is a leading mobile financial service in Bangladesh that allows users to perform instant money transfers, bill payments, mobile recharges, and merchant transactions securely from their smartphones.",
         highlights: [
             "Built and maintained scalable microservices using Java (11–21) and Spring Boot, exposing RESTful APIs and integrating third-party services",
             "Implemented modern concurrency solutions, including Virtual Threads and reactive programming",
@@ -273,18 +273,18 @@ export const projects: Project[] = [
     },
     {
         name: "Agent App MW",
-        subname: "bK-MFS Agent App Middleware",
-        client: "bK-MFS Limited",
+        subname: "bKash Agent App Middleware",
+        client: "bKash Limited",
         technologies: ["Java (Spring Boot)", "DynamoDB", "AWS", "Firebase"],
         description:
-            "Middleware service supporting bK-MFS Agent App, one of the most popular financial apps for bK-MFS Agents. Implemented Pay Bill service integration.",
-        highlights: ["Core product of bK-MFS Limited", "High-availability architecture", "AWS cloud infrastructure"],
+            "Middleware service supporting bKash Agent App, one of the most popular financial apps for bKash Agents. Implemented Pay Bill service integration.",
+        highlights: ["Core product of bKash Limited", "High-availability architecture", "AWS cloud infrastructure"],
         link: "https://play.google.com/store/apps/details?id=com.bkash.businessapp&hl=en",
     },
     {
         name: "AMS",
         subname: "Airtime Management System (AMS)",
-        client: "bK-MFS Limited",
+        client: "bKash Limited",
         technologies: ["Java (Spring Boot)", "Oracle", "JavaScript"],
         description:
             "Internal web application for automated airtime management. Features automated CSV/XLS/PDF generation, financial calculations, and email notifications.",
@@ -298,15 +298,15 @@ export const projects: Project[] = [
     {
         name: "Saving-DPS",
         subname: "Saving-DPS",
-        client: "bK-MFS Limited",
+        client: "bKash Limited",
         technologies: ["Java (Spring Boot)", "MySQL", "AWS", "JavaScript"],
-        description: "Internal service for bK-MFS App allowing customers to open DPS (Deposit Pension Scheme) accounts.",
-        highlights: ["Customer-facing feature", "Integrated with bK-MFS App", "Secure financial transactions"],
+        description: "Internal service for bKash App allowing customers to open DPS (Deposit Pension Scheme) accounts.",
+        highlights: ["Customer-facing feature", "Integrated with bKash App", "Secure financial transactions"],
     },
     {
         name: "MULTIBANK",
         subname: "MULTIBANK",
-        client: "bK-MFS Limited",
+        client: "bKash Limited",
         technologies: ["Java (Spring Boot)", "Spring Integration", "MySQL", "jQuery"],
         description:
             "Internal web application for automated bank transactions. Features SFTP inbound/outbound, configurable email notifications, and maker-checker approval flow.",
@@ -318,7 +318,7 @@ export const projects: Project[] = [
         ],
     },
     {
-        name: "bK-FinRec",
+        name: "bKash-FinRec",
         subname: "Financial reconciliation system (BanglaQR recon)",
         client: "Bangladesh's #1 Unicorn MFS",
         technologies: ["Java 21 (Spring Boot)", "Oracle", "Redis", "Thymeleaf", "LDAP"],

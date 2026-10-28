@@ -66,23 +66,37 @@ export default {
 
         let payload;
         try {
-            payload = sanitizeChatRequest(await request.json(), env.AI_MODEL);
+            payload = sanitizeChatRequest(await request.json(), env);
         } catch (err) {
             return json({ error: "Bad Request", detail: String(err.message ?? err) }, 400, cors);
         }
 
-        try {
-            const upstream = await fetch(`${env.AI_BASE_URL}/chat/completions`, {
-                method: "POST",
-                headers: {
-                    "Authorization": `Bearer ${env.AI_API_KEY}`,
-                    "Content-Type":  "application/json",
-                },
-                body: JSON.stringify(payload),
-                signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS),
-            });
+        // AI_MODEL may be a comma-separated list: the first is primary, the rest
+        // are fallbacks tried in order when a model is unavailable (404),
+        // rate-limited (429) or erroring (5xx) — so one model being pulled or
+        // throttled doesn't take the assistant down.
+        const models = String(env.AI_MODEL).split(",").map((m) => m.trim()).filter(Boolean);
+        const baseUrl = String(env.AI_BASE_URL).replace(/\/+$/, "");
 
-            const data = await upstream.json();
+        try {
+            let upstream;
+            let data;
+            for (const [i, model] of models.entries()) {
+                upstream = await fetch(`${baseUrl}/chat/completions`, {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${env.AI_API_KEY}`,
+                        "Content-Type":  "application/json",
+                    },
+                    body: JSON.stringify({ ...payload, model }),
+                    signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS),
+                });
+                data = await upstream.json();
+
+                const retryable = upstream.status === 404 || upstream.status === 429 || upstream.status >= 500;
+                if (!retryable || i === models.length - 1) break;
+                console.warn(`model ${model} failed with HTTP ${upstream.status}; falling back`);
+            }
             return json(data, upstream.status, cors);
 
         } catch (err) {
@@ -93,7 +107,7 @@ export default {
 
 // Whitelists fields and clamps values so a client can't inflate upstream cost
 // (huge max_tokens, unbounded message count/length) or smuggle unexpected params.
-function sanitizeChatRequest(body, model) {
+function sanitizeChatRequest(body, env) {
     if (!body || typeof body !== "object") throw new Error("invalid request body");
 
     const { temperature, messages, max_tokens } = body;
@@ -118,17 +132,26 @@ function sanitizeChatRequest(body, model) {
         ? Math.min(Math.max(max_tokens, 1), MAX_TOKENS_CAP)
         : MAX_TOKENS_CAP;
 
-    return {
-        model,
+    // `model` is filled in per attempt by the fallback loop in fetch().
+    const payload = {
         temperature: safeTemperature,
         max_tokens: safeMaxTokens,
         messages: safeMessages,
-        // Current upstream model (nvidia/nemotron-3-ultra-550b-a55b via
-        // OpenRouter) reasons by default at "high" effort, which alone took
-        // it from 0.6s to 41.5s on a trivial prompt in testing. Providers
-        // that don't recognize this field ignore it.
-        reasoning: { enabled: false },
     };
+
+    // Reasoning controls are provider-specific, so only send what the
+    // configured provider understands (strict APIs like Gemini's reject
+    // unknown fields). Reasoning at the default "high" effort took a model
+    // from 0.6s to 41.5s on a trivial prompt in testing.
+    if (String(env.AI_BASE_URL).includes("openrouter.ai")) {
+        payload.reasoning = { enabled: false };
+    } else if (env.AI_REASONING_EFFORT) {
+        // OpenAI-compatible APIs (incl. Gemini): minimal | low | medium | high
+        // (Gemini 2.5 also accepts "none"; Gemini 3.x can't fully disable thinking).
+        payload.reasoning_effort = env.AI_REASONING_EFFORT;
+    }
+
+    return payload;
 }
 
 function json(body, status = 200, cors = {}) {

@@ -1,0 +1,628 @@
+/* ===== Shared terminal UI =====
+ * The terminal is a fixed full-screen shell (16px top, 24px bottom, 10px sides); the page
+ * itself never scrolls — only the session scrollback inside the window does.
+ * Breakpoints: ≥1300px sidebar beside the session · 760–1299px sidebar becomes
+ * a wrapping strip · <760px edge-to-edge window. */
+
+/* ---------- page + window ---------- */
+.page {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: var(--t-page);
+  font-family: var(--t-font);
+  color: var(--t-ink);
+  overflow-wrap: anywhere;
+}
+
+.page a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.page a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.page :focus-visible {
+  outline: 2px solid var(--t-c1);
+  outline-offset: 2px;
+}
+
+.frame {
+  position: absolute;
+  top: 16px;
+  bottom: 24px;
+  left: 10px;
+  right: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.zoom {
+  zoom: var(--ui-scale, 1);
+  width: 100%;
+  max-width: 1900px;
+  /* Percentage sizes aren't scaled by `zoom`, so 100% fills the frame exactly. */
+  height: 100%;
+}
+
+.window {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--t-bg);
+  border: 1px solid var(--t-line-2);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--t-shadow);
+  font-size: 17px;
+  line-height: 1.65;
+}
+
+.window::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(transparent 50%, rgba(0, 0, 0, 0.05) 50%);
+  background-size: 100% 3px;
+  opacity: var(--t-scanlines);
+}
+
+/* ---------- title bar ---------- */
+.titleBar {
+  flex: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  padding: 8px 14px;
+  background: var(--t-panel);
+  border-bottom: 1px solid var(--t-line);
+  font-size: 15px;
+}
+
+.dots {
+  display: flex;
+  gap: 7px;
+}
+
+.dots span {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.dots span:nth-child(1) {
+  background: var(--t-c4);
+}
+
+.dots span:nth-child(2) {
+  background: var(--t-c2);
+}
+
+.dots span:nth-child(3) {
+  background: var(--t-c1);
+}
+
+.windowTitle {
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+  color: var(--t-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.titleActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ---------- body: sidebar + session ---------- */
+.body {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+}
+
+.sidebar {
+  flex: 0 0 250px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  border-right: 1px solid var(--t-line);
+  background: var(--t-panel);
+  padding: 16px 10px;
+  font-size: 15px;
+}
+
+.treeLabel {
+  margin: 0 8px 10px;
+  color: var(--t-muted);
+  font-size: 14px;
+}
+
+.tree {
+  display: flex;
+  flex-direction: column;
+}
+
+.treeRoot {
+  padding: 5px 8px;
+  color: var(--t-c2);
+  font-weight: 700;
+}
+
+.treeLink {
+  display: block;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  padding: 5px 8px;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--t-ink);
+  white-space: nowrap;
+}
+
+.treeLink:hover {
+  background: var(--t-raised);
+}
+
+.treeLinkActive {
+  background: var(--t-raised);
+  color: var(--t-c1);
+  font-weight: 700;
+}
+
+.treeBranch {
+  color: var(--t-muted);
+}
+
+.sidebarMeta {
+  margin: 24px 8px 0;
+  padding-top: 16px;
+  border-top: 1px dashed var(--t-line-2);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  color: var(--t-muted);
+}
+
+.main {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 22px 36px 28px;
+  scrollbar-color: var(--t-line-2) transparent;
+}
+
+/* ---------- prompt fragments ---------- */
+.user {
+  color: var(--t-c3);
+}
+
+.path {
+  color: var(--t-c2);
+}
+
+.muted {
+  color: var(--t-muted);
+}
+
+.c1 {
+  color: var(--t-c1);
+}
+
+.c2 {
+  color: var(--t-c2);
+}
+
+.c3 {
+  color: var(--t-c3);
+}
+
+.c4 {
+  color: var(--t-c4);
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.cursor {
+  display: inline-block;
+  width: 0.6em;
+  height: 1.1em;
+  margin-left: 8px;
+  background: var(--t-c1);
+  vertical-align: -0.18em;
+  animation: blink 1s steps(1) infinite;
+}
+
+.spinner::before {
+  content: "⠋";
+  display: inline-block;
+  margin-right: 6px;
+  color: var(--t-c1);
+  animation: spin 0.8s steps(1) infinite;
+}
+
+.boot {
+  opacity: 0;
+  animation: show 0.01s both;
+}
+
+.fadeUp {
+  animation: up 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+/* ---------- section output (renders when its command runs) ---------- */
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-top: 10px;
+}
+
+.block .item {
+  animation: up 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.h2 {
+  margin: 0;
+  font-size: clamp(24px, 3vw, 34px);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.sub {
+  margin: -10px 0 0;
+  color: var(--t-muted);
+}
+
+.h3 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 800;
+}
+
+/* ---------- boxes + grids ---------- */
+.box {
+  border: 1px solid var(--t-line-2);
+  border-radius: 8px;
+  padding: 18px 20px;
+  background: var(--t-panel);
+  font-size: 16px;
+  transition: border-color 0.25s, transform 0.25s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.box:hover {
+  border-color: var(--t-c1);
+  transform: translateY(-3px);
+}
+
+.cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--min, 300px)), 1fr));
+  gap: 14px;
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.bullet {
+  display: grid;
+  grid-template-columns: 2ch minmax(0, 1fr);
+  gap: 8px;
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--t-line-2);
+  border-radius: 8px;
+  overflow: hidden;
+  font-size: 16px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 14px;
+  padding: 13px 18px;
+  border-bottom: 1px solid var(--t-line);
+  background: var(--t-panel);
+}
+
+.row:last-child {
+  border-bottom: 0;
+}
+
+.linkOut {
+  color: var(--t-c1) !important;
+  font-weight: 700;
+}
+
+.tag {
+  font-size: 14px;
+  padding: 3px 7px;
+  border-radius: 3px;
+  border: 1px solid var(--t-line-2);
+  color: var(--t-c1);
+}
+
+/* ---------- buttons ---------- */
+.btn {
+  font: inherit;
+  font-size: 15px;
+  cursor: pointer;
+  padding: 7px 12px;
+  min-height: 40px;
+  border-radius: 6px;
+  border: 1px solid var(--t-line-2);
+  background: transparent;
+  color: var(--t-ink);
+  transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.btn:hover:not(:disabled) {
+  background: var(--t-c1);
+  border-color: var(--t-c1);
+  color: var(--t-on-c1);
+  text-decoration: none;
+}
+
+.btn:disabled {
+  cursor: progress;
+  opacity: 0.7;
+}
+
+.btnDashed {
+  border-style: dashed;
+}
+
+.btnAccent {
+  border-color: var(--t-c1);
+  color: var(--t-c1);
+  font-weight: 700;
+}
+
+.btnSolid {
+  border-color: var(--t-c1);
+  background: var(--t-c1);
+  color: var(--t-on-c1);
+  font-weight: 800;
+}
+
+/* ---------- bars + skeletons ---------- */
+.barTrack {
+  height: 14px;
+  background: var(--t-raised);
+  border-radius: 2px;
+  overflow: hidden;
+  display: flex;
+}
+
+.bar {
+  display: block;
+  height: 100%;
+  background: repeating-linear-gradient(90deg, var(--bar) 0 9px, transparent 9px 11px);
+  transform-origin: left;
+  animation: grow 1.2s cubic-bezier(0.2, 0.7, 0.2, 1) 0.3s both;
+}
+
+.skeleton {
+  background: linear-gradient(90deg, var(--t-raised) 25%, var(--t-line-2) 50%, var(--t-raised) 75%);
+  background-size: 200% 100%;
+  border-radius: 3px;
+  animation: shimmer 1.3s linear infinite;
+}
+
+/* ---------- dialog (skill tree) ---------- */
+.dialog {
+  width: min(560px, calc(100vw - 32px));
+  max-height: 80vh;
+  padding: 0;
+  border: 1px solid var(--t-c1);
+  border-radius: 10px;
+  background: var(--t-bg);
+  color: var(--t-ink);
+  font-family: var(--t-font);
+  font-size: 16px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+}
+
+.dialog::backdrop {
+  background: rgba(15, 32, 40, 0.55);
+}
+
+.dialogBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  background: var(--t-panel);
+  border-bottom: 1px solid var(--t-line);
+}
+
+.dialogBody {
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* ---------- keyframes ---------- */
+@keyframes up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes show {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes grow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes spin {
+  0% {
+    content: "⠋";
+  }
+  12% {
+    content: "⠙";
+  }
+  25% {
+    content: "⠹";
+  }
+  37% {
+    content: "⠸";
+  }
+  50% {
+    content: "⠼";
+  }
+  62% {
+    content: "⠴";
+  }
+  75% {
+    content: "⠦";
+  }
+  87% {
+    content: "⠧";
+  }
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 1299px) {
+  .body {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    flex: none;
+    max-height: 30%;
+    border-right: 0;
+    border-bottom: 1px solid var(--t-line);
+    padding: 8px 12px;
+  }
+
+  .tree {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 2px 4px;
+  }
+
+  .treeRoot,
+  .treeBranch,
+  .sidebarMeta,
+  .treeLabel {
+    display: none;
+  }
+
+  .main {
+    padding: 20px 26px 24px;
+  }
+}
+
+@media (max-width: 759px) {
+  .frame {
+    top: 10px;
+    bottom: 16px;
+    left: 0;
+    right: 0;
+  }
+
+  .window {
+    font-size: 16px;
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
+  }
+
+  .titleBar {
+    padding: 6px 10px;
+  }
+
+  .dots {
+    display: none;
+  }
+
+  .windowTitle {
+    text-align: left;
+  }
+
+  .treeLink {
+    min-height: 40px;
+  }
+
+  .main {
+    padding: 16px 12px 20px;
+  }
+
+  .box {
+    padding: 14px;
+  }
+
+  .row {
+    padding: 12px 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page *,
+  .page *::before,
+  .page *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .boot {
+    opacity: 1 !important;
+  }
+}
