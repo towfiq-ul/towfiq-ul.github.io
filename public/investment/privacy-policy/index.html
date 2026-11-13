@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy – Investment app</title>
+<meta name="description" content="Privacy policy for the Investment Android app (com.advancedinventorybd.investment).">
+<style>
+  :root { --bg:#ffffff; --ink:#1b2430; --muted:#5b6675; --accent:#18365D; --gold:#F2B544; --line:#e3e7ec; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#10161f; --ink:#e6ebf1; --muted:#9aa6b4; --accent:#8fb3e3; --line:#253142; }
+  }
+  html { -webkit-text-size-adjust:100%; }
+  body { margin:0; background:var(--bg); color:var(--ink);
+         font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+  main { max-width:760px; margin:0 auto; padding:32px 16px 64px; }
+  h1 { color:var(--accent); font-size:1.9rem; margin:0 0 4px; border-bottom:3px solid var(--gold); padding-bottom:8px; }
+  h2 { color:var(--accent); font-size:1.2rem; margin:32px 0 8px; }
+  .meta { color:var(--muted); font-size:.92rem; margin:8px 0 24px; }
+  a { color:var(--accent); }
+  table { width:100%; border-collapse:collapse; font-size:.95rem; margin:8px 0; }
+  th, td { text-align:left; vertical-align:top; padding:8px; border-bottom:1px solid var(--line); }
+  th { color:var(--muted); font-weight:600; }
+  .box { border:1px solid var(--line); border-left:4px solid var(--gold); padding:12px 16px; border-radius:6px; }
+  .wrap { overflow-x:auto; }
+</style>
+</head>
+<body>
+<main>
+<h1>Privacy Policy</h1>
+<p class="meta">Investment (Android app, package <code>com.advancedinventorybd.investment</code>)<br>
+Effective date: 13 November 2026</p>
+
+<p class="box">In short: your investment records stay on your phone. If you turn on backup, a copy is
+saved to <strong>your own</strong> Google Drive. The developer runs no servers, receives none of your
+data, and the app has no ads, analytics or tracking.</p>
+
+<p>This policy explains what data the Investment app ("the app", "we") handles, why, where it goes, and
+the choices you have. It applies only to this app.</p>
+
+<h2>1. Data the app handles</h2>
+<div class="wrap">
+<table>
+<tr><th>Data</th><th>Why</th><th>Where it is kept</th></tr>
+<tr><td>Google account name, email address and profile photo (from Google Sign-In)</td>
+    <td>To show who is signed in and to connect to your Google Drive for backups</td>
+    <td>On your phone only</td></tr>
+<tr><td>Investment records you enter or import: investment names, partner names, contribution amounts, returns, dates, notes</td>
+    <td>The core function of the app: tracking investments and splitting returns</td>
+    <td>On your phone (local database); in your Google Drive if backup is on</td></tr>
+<tr><td>A spreadsheet you choose to import (an .xlsx file, or a Google Sheet picked through Android's file picker)</td>
+    <td>To copy your existing records into the app</td>
+    <td>Read on your phone; the app does not upload it anywhere</td></tr>
+<tr><td>App settings (backup on/off, app lock on/off, review-prompt dates)</td>
+    <td>To remember your choices</td>
+    <td>On your phone only</td></tr>
+</table>
+</div>
+<p>The app does <strong>not</strong> collect your location, contacts, photos, messages, call logs, device identifiers,
+advertising ID, or browsing data. It does not ask for any Android permission besides internet access.</p>
+
+<h2>2. Google Drive backup</h2>
+<p>When you turn on backup, the app saves a single file, <code>investment-backup.json</code>, to your Google Drive
+and can restore it later. The app uses the limited <code>drive.file</code> permission, which only lets it see files it
+created itself. It cannot see or change any other file in your Drive. The backup is stored in your Google account
+under Google's own terms; the developer has no access to it.</p>
+
+<h2>3. Fingerprint / app lock</h2>
+<p>If you turn on the app lock, unlocking is handled entirely by Android's system biometric prompt. The app never
+receives, stores or sends your fingerprint, face data or screen-lock PIN; it only learns whether unlocking succeeded.</p>
+
+<h2>4. Sharing</h2>
+<p>We do not sell, rent or share your data with anyone. Data leaves your phone only in these cases, all started by you
+and all sent over encrypted (HTTPS) connections:</p>
+<ul>
+  <li><strong>Google Sign-In and Google Drive</strong> (Google LLC): to sign you in and to save or restore your backup.
+      See <a href="https://policies.google.com/privacy">Google's Privacy Policy</a>.</li>
+  <li><strong>Google Play in-app review</strong>: if you choose to rate the app, the review is handled by Google Play,
+      not by the app.</li>
+</ul>
+<p>The developer operates no servers and receives no copy of your data.</p>
+
+<h2>5. Google API Services – Limited Use</h2>
+<p>The app's use and transfer of information received from Google APIs adheres to the
+<a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>,
+including the Limited Use requirements. Google user data is used only to provide the sign-in and backup features
+described above, is not transferred to anyone else, is not used for advertising, and is not read by humans.</p>
+
+<h2>6. Security</h2>
+<p>Your data is stored in the app's private storage, which other apps cannot read. Android's automatic cloud backup
+is turned off for the app, so your records are only copied off the phone through the Drive backup you control.
+All network traffic uses HTTPS. You can add a fingerprint lock in Profile &amp; settings.</p>
+
+<h2>7. Keeping and deleting your data</h2>
+<ul>
+  <li><strong>Data on your phone:</strong> kept until you delete it. Uninstalling the app, or clearing its storage in
+      Android Settings, deletes all of it.</li>
+  <li><strong>Drive backup:</strong> delete <code>investment-backup.json</code> from your Google Drive at any time.</li>
+  <li><strong>Google access:</strong> sign out in the app, and/or remove the app's access at
+      <a href="https://myaccount.google.com/permissions">myaccount.google.com/permissions</a>.</li>
+</ul>
+<p>Because the developer holds no copy of your data, there is nothing for us to delete on our side.</p>
+
+<h2>8. Children</h2>
+<p>The app is a financial record-keeping tool meant for adults. It is not directed at children under 13, and we do
+not knowingly collect data from children.</p>
+
+<h2>9. Changes to this policy</h2>
+<p>If this policy changes, the new version will be posted on this page with a new effective date. Significant changes
+will also be mentioned in the app's release notes.</p>
+
+<h2>10. Contact</h2>
+<p>Questions about this policy or your data: <a href="mailto:towfiq106@gmail.com">towfiq106@gmail.com</a></p>
+</main>
+</body>
+</html>
