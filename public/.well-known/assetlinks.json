@@ -1,0 +1,18 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.advancedinventorybd.investment",
+      "sha256_cert_fingerprints": ["07:3E:C9:42:2E:66:11:4F:DD:99:E5:53:77:81:F4:22:C7:EC:13:B3:BF:82:6D:D4:91:DF:70:30:94:55:55:76"]
+    }
+  },
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.advancedinventorybd.investment.sit",
+      "sha256_cert_fingerprints": ["07:3E:C9:42:2E:66:11:4F:DD:99:E5:53:77:81:F4:22:C7:EC:13:B3:BF:82:6D:D4:91:DF:70:30:94:55:55:76"]
+    }
+  }
+]
