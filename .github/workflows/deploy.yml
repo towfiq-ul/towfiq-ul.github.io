@@ -49,6 +49,8 @@ jobs:
         uses: actions/upload-pages-artifact@v5
         with:
           path: './build'
+          # .well-known/assetlinks.json (Investment app's App Link) is a hidden folder.
+          include-hidden-files: true
 
   # Only pushes to master ship to production.
   deploy:
